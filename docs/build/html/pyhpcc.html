@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pyhpcc package &mdash; PyHPCC 1.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="pyhpcc" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> PyHPCC
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">pyhpcc</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">pyhpcc package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-pyhpcc.auth">pyhpcc.auth module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpcc.auth.auth"><code class="docutils literal notranslate"><span class="pre">auth</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-pyhpcc.errors">pyhpcc.errors module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpcc.errors.Error"><code class="docutils literal notranslate"><span class="pre">Error</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpcc.errors.HPCCAuthenticationError"><code class="docutils literal notranslate"><span class="pre">HPCCAuthenticationError</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpcc.errors.HPCCException"><code class="docutils literal notranslate"><span class="pre">HPCCException</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpcc.errors.HTTPException"><code class="docutils literal notranslate"><span class="pre">HTTPException</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpcc.errors.TypeError"><code class="docutils literal notranslate"><span class="pre">TypeError</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-pyhpcc.models">pyhpcc.models module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpcc.models.hpcc"><code class="docutils literal notranslate"><span class="pre">hpcc</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpcc.models.readfileinfo"><code class="docutils literal notranslate"><span class="pre">readfileinfo</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpcc.models.roxie"><code class="docutils literal notranslate"><span class="pre">roxie</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpcc.models.workunit_submit"><code class="docutils literal notranslate"><span class="pre">workunit_submit</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-pyhpcc.roxie_binder">pyhpcc.roxie_binder module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpcc.roxie_binder.wrapper"><code class="docutils literal notranslate"><span class="pre">wrapper()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-pyhpcc.thor_binder">pyhpcc.thor_binder module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpcc.thor_binder.wrapper"><code class="docutils literal notranslate"><span class="pre">wrapper()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-pyhpcc.utils">pyhpcc.utils module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpcc.utils.checkfileexistence"><code class="docutils literal notranslate"><span class="pre">checkfileexistence()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpcc.utils.convert_arg_to_utf8_str"><code class="docutils literal notranslate"><span class="pre">convert_arg_to_utf8_str()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpcc.utils.create_compile_bash_command"><code class="docutils literal notranslate"><span class="pre">create_compile_bash_command()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpcc.utils.create_compile_file_name"><code class="docutils literal notranslate"><span class="pre">create_compile_file_name()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpcc.utils.create_run_bash_command"><code class="docutils literal notranslate"><span class="pre">create_run_bash_command()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpcc.utils.desprayfile"><code class="docutils literal notranslate"><span class="pre">desprayfile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpcc.utils.getSubfileNames"><code class="docutils literal notranslate"><span class="pre">getSubfileNames()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpcc.utils.get_graph_skew"><code class="docutils literal notranslate"><span class="pre">get_graph_skew()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpcc.utils.getcsvdata"><code class="docutils literal notranslate"><span class="pre">getcsvdata()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpcc.utils.getfileStatus"><code class="docutils literal notranslate"><span class="pre">getfileStatus()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpcc.utils.getfileType"><code class="docutils literal notranslate"><span class="pre">getfileType()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyhpcc.utils.getflatdata"><code class="docutils literal notranslate"><span class="pre">getflatdata()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-pyhpcc">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">PyHPCC</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">pyhpcc</a> &raquo;</li>
+      <li>pyhpcc package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/pyhpcc.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="pyhpcc-package">
+<h1>pyhpcc package<a class="headerlink" href="#pyhpcc-package" title="Permalink to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-pyhpcc.auth">
+<span id="pyhpcc-auth-module"></span><h2>pyhpcc.auth module<a class="headerlink" href="#module-pyhpcc.auth" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyhpcc.auth.auth">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhpcc.auth.</span></span><span class="sig-name descname"><span class="pre">auth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ip</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">require_auth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">protocol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'https'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.auth.auth" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base class for HPCC authentication</p>
+<blockquote>
+<div><dl class="simple">
+<dt>ip:</dt><dd><p>The IP address of the HPCC instance</p>
+</dd>
+<dt>port:</dt><dd><p>The port of the HPCC instance</p>
+</dd>
+<dt>username:</dt><dd><p>The username for the HPCC instance</p>
+</dd>
+<dt>password:</dt><dd><p>The password for the HPCC instance</p>
+</dd>
+<dt>require_auth:</dt><dd><p>Boolean value to determine if authentication is required</p>
+</dd>
+<dt>protocol:</dt><dd><p>The protocol to use for the HPCC instance</p>
+</dd>
+<dt>oauth:</dt><dd><p>The OAuth credentials</p>
+</dd>
+<dt>session:</dt><dd><p>The session object</p>
+</dd>
+<dt>portDelimiter:</dt><dd><p>The delimiter for the port</p>
+</dd>
+<dt>pathDelimiter:</dt><dd><p>The delimiter for the path</p>
+</dd>
+<dt>hostDelimiter:</dt><dd><p>The delimiter for the host</p>
+</dd>
+</dl>
+</div></blockquote>
+<blockquote>
+<div><dl class="simple">
+<dt>get_url:</dt><dd><p>Returns a URL for the HPCC instance</p>
+</dd>
+<dt>get_username:</dt><dd><p>Returns the username</p>
+</dd>
+<dt>get_verified:</dt><dd><p>Make a request to the HPCC API to verify the credentials</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhpcc.auth.auth.get_url">
+<span class="sig-name descname"><span class="pre">get_url</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.auth.auth.get_url" title="Permalink to this definition"></a></dt>
+<dd><p>Returns a URL for the HPCC instance</p>
+<blockquote>
+<div><p>None</p>
+</div></blockquote>
+<blockquote>
+<div><p>The URL</p>
+</div></blockquote>
+<blockquote>
+<div><p>None</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhpcc.auth.auth.get_username">
+<span class="sig-name descname"><span class="pre">get_username</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.auth.auth.get_username" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the username</p>
+<blockquote>
+<div><p>None</p>
+</div></blockquote>
+<blockquote>
+<div><p>The username</p>
+</div></blockquote>
+<blockquote>
+<div><p>None</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhpcc.auth.auth.get_verified">
+<span class="sig-name descname"><span class="pre">get_verified</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.auth.auth.get_verified" title="Permalink to this definition"></a></dt>
+<dd><p>Make a request to the HPCC API to verify the credentials</p>
+<blockquote>
+<div><p>None</p>
+</div></blockquote>
+<blockquote>
+<div><p>Boolean value to determine if the credentials are valid</p>
+</div></blockquote>
+<blockquote>
+<div><p>HPCCAuthenticationError: For any errors with the authentication</p>
+</div></blockquote>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-pyhpcc.errors">
+<span id="pyhpcc-errors-module"></span><h2>pyhpcc.errors module<a class="headerlink" href="#module-pyhpcc.errors" title="Permalink to this heading"></a></h2>
+<dl class="py exception">
+<dt class="sig sig-object py" id="pyhpcc.errors.Error">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhpcc.errors.</span></span><span class="sig-name descname"><span class="pre">Error</span></span><a class="headerlink" href="#pyhpcc.errors.Error" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Base class for exceptions in this module.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="pyhpcc.errors.HPCCAuthenticationError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhpcc.errors.</span></span><span class="sig-name descname"><span class="pre">HPCCAuthenticationError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.errors.HPCCAuthenticationError" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyhpcc.errors.Error" title="pyhpcc.errors.Error"><code class="xref py py-class docutils literal notranslate"><span class="pre">Error</span></code></a></p>
+<p>Exception raised for HPCC authentication errors.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhpcc.errors.HPCCAuthenticationError.message">
+<span class="sig-name descname"><span class="pre">message</span></span><a class="headerlink" href="#pyhpcc.errors.HPCCAuthenticationError.message" title="Permalink to this definition"></a></dt>
+<dd><p>The error message</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="pyhpcc.errors.HPCCException">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhpcc.errors.</span></span><span class="sig-name descname"><span class="pre">HPCCException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.errors.HPCCException" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyhpcc.errors.Error" title="pyhpcc.errors.Error"><code class="xref py py-class docutils literal notranslate"><span class="pre">Error</span></code></a></p>
+<p>Exception raised for HPCC errors.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhpcc.errors.HPCCException.message">
+<span class="sig-name descname"><span class="pre">message</span></span><a class="headerlink" href="#pyhpcc.errors.HPCCException.message" title="Permalink to this definition"></a></dt>
+<dd><p>The error message</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="pyhpcc.errors.HTTPException">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhpcc.errors.</span></span><span class="sig-name descname"><span class="pre">HTTPException</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_errors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_codes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">api_messages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.errors.HTTPException" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyhpcc.errors.Error" title="pyhpcc.errors.Error"><code class="xref py py-class docutils literal notranslate"><span class="pre">Error</span></code></a></p>
+<p>Exception raised for HTTP errors.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhpcc.errors.HTTPException.response">
+<span class="sig-name descname"><span class="pre">response</span></span><a class="headerlink" href="#pyhpcc.errors.HTTPException.response" title="Permalink to this definition"></a></dt>
+<dd><p>The response object from the requests library</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhpcc.errors.HTTPException.api_errors">
+<span class="sig-name descname"><span class="pre">api_errors</span></span><a class="headerlink" href="#pyhpcc.errors.HTTPException.api_errors" title="Permalink to this definition"></a></dt>
+<dd><p>A list of errors returned by the HPCC API</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhpcc.errors.HTTPException.api_codes">
+<span class="sig-name descname"><span class="pre">api_codes</span></span><a class="headerlink" href="#pyhpcc.errors.HTTPException.api_codes" title="Permalink to this definition"></a></dt>
+<dd><p>A list of error codes returned by the HPCC API</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhpcc.errors.HTTPException.api_messages">
+<span class="sig-name descname"><span class="pre">api_messages</span></span><a class="headerlink" href="#pyhpcc.errors.HTTPException.api_messages" title="Permalink to this definition"></a></dt>
+<dd><p>A list of error messages returned by the HPCC API</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="pyhpcc.errors.TypeError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhpcc.errors.</span></span><span class="sig-name descname"><span class="pre">TypeError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.errors.TypeError" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyhpcc.errors.Error" title="pyhpcc.errors.Error"><code class="xref py py-class docutils literal notranslate"><span class="pre">Error</span></code></a></p>
+<p>Exception raised for type errors.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhpcc.errors.TypeError.message">
+<span class="sig-name descname"><span class="pre">message</span></span><a class="headerlink" href="#pyhpcc.errors.TypeError.message" title="Permalink to this definition"></a></dt>
+<dd><p>The error message</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-pyhpcc.models">
+<span id="pyhpcc-models-module"></span><h2>pyhpcc.models module<a class="headerlink" href="#module-pyhpcc.models" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyhpcc.models.hpcc">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhpcc.models.</span></span><span class="sig-name descname"><span class="pre">hpcc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">auth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">response_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'json'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.models.hpcc" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base class for HPCC THOR API.</p>
+<blockquote>
+<div><dl class="simple">
+<dt>auth:</dt><dd><p>The authentication object</p>
+</dd>
+<dt>timeout:</dt><dd><p>The timeout for the requests</p>
+</dd>
+<dt>response_type:</dt><dd><p>The response type for the requests</p>
+</dd>
+</dl>
+</div></blockquote>
+<blockquote>
+<div><dl class="simple">
+<dt>get_wuinfo:</dt><dd><p>Get the workunit information</p>
+</dd>
+<dt>get_wuresult:</dt><dd><p>Get the workunit result</p>
+</dd>
+<dt>getdfuInfo:</dt><dd><p>Get the DFU information</p>
+</dd>
+<dt>wuCreateAndUpdate:</dt><dd><p>Create and update the workunit</p>
+</dd>
+<dt>wuSubmit:</dt><dd><p>Submit the workunit</p>
+</dd>
+<dt>wuRun:</dt><dd><p>Run the workunit</p>
+</dd>
+<dt>get_wuquery:</dt><dd><p>Get the workunit query</p>
+</dd>
+<dt>wuQuery:</dt><dd><p>Query the workunits using filters</p>
+</dd>
+<dt>fileQuery:</dt><dd><p>Query the files using filters</p>
+</dd>
+<dt>getFileInfo:</dt><dd><p>Get the file information</p>
+</dd>
+<dt>WUWaitCompiled:</dt><dd><p>Wait for the workunit to be compiled</p>
+</dd>
+<dt>WUWaitComplete:</dt><dd><p>Wait for the workunit to be completed</p>
+</dd>
+<dt>getSubFileInfo:</dt><dd><p>Get the subfile information</p>
+</dd>
+<dt>checkFileExists:</dt><dd><p>Check if the file exists</p>
+</dd>
+<dt>TpClusterInfo:</dt><dd><p>Get the cluster information</p>
+</dd>
+<dt>Activity:</dt><dd><p>Get the activity information</p>
+</dd>
+<dt>UploadFile:</dt><dd><p>Upload the file</p>
+</dd>
+<dt>DropZoneFiles:</dt><dd><p>Get the dropzone files</p>
+</dd>
+<dt>dfuQuery:</dt><dd><p>Query the DFU files using filters</p>
+</dd>
+<dt>getDfuWorkunitInfo:</dt><dd><p>Get the DFU workunit information</p>
+</dd>
+<dt>getDfuWorkunits:</dt><dd><p>Get the DFU workunits</p>
+</dd>
+<dt>sprayVariable:</dt><dd><p>Spray a file of variable length records</p>
+</dd>
+<dt>sprayFixed:</dt><dd><p>Spray a file of fixed format</p>
+</dd>
+<dt>WUUpdate:</dt><dd><p>Update the workunit</p>
+</dd>
+<dt>getgraph:</dt><dd><p>Get the graph information</p>
+</dd>
+<dt>downloadfile:</dt><dd><p>Download the file</p>
+</dd>
+<dt>AddtoSuperfileRequest:</dt><dd><p>Add the file to the superfile</p>
+</dd>
+<dt>fileList:</dt><dd><p>Get the file list</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="py property">
+<dt class="sig sig-object py" id="pyhpcc.models.hpcc.Activity">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Activity</span></span><a class="headerlink" href="#pyhpcc.models.hpcc.Activity" title="Permalink to this definition"></a></dt>
+<dd><p>Get information about a workunit activity</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyhpcc.models.hpcc.AddtoSuperfileRequest">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">AddtoSuperfileRequest</span></span><a class="headerlink" href="#pyhpcc.models.hpcc.AddtoSuperfileRequest" title="Permalink to this definition"></a></dt>
+<dd><p>Add a file to a superfile</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyhpcc.models.hpcc.DropZoneFiles">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DropZoneFiles</span></span><a class="headerlink" href="#pyhpcc.models.hpcc.DropZoneFiles" title="Permalink to this definition"></a></dt>
+<dd><p>Get information about files in a dropzone</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyhpcc.models.hpcc.TpClusterInfo">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TpClusterInfo</span></span><a class="headerlink" href="#pyhpcc.models.hpcc.TpClusterInfo" title="Permalink to this definition"></a></dt>
+<dd><p>Get information about a cluster</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyhpcc.models.hpcc.UploadFile">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">UploadFile</span></span><a class="headerlink" href="#pyhpcc.models.hpcc.UploadFile" title="Permalink to this definition"></a></dt>
+<dd><p>Upload a file to the HPCC</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyhpcc.models.hpcc.WUUpdate">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">WUUpdate</span></span><a class="headerlink" href="#pyhpcc.models.hpcc.WUUpdate" title="Permalink to this definition"></a></dt>
+<dd><p>Update a workunit</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyhpcc.models.hpcc.WUWaitCompiled">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">WUWaitCompiled</span></span><a class="headerlink" href="#pyhpcc.models.hpcc.WUWaitCompiled" title="Permalink to this definition"></a></dt>
+<dd><p>Wait for a workunit to compile</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyhpcc.models.hpcc.WUWaitComplete">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">WUWaitComplete</span></span><a class="headerlink" href="#pyhpcc.models.hpcc.WUWaitComplete" title="Permalink to this definition"></a></dt>
+<dd><p>Wait for a workunit to complete</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyhpcc.models.hpcc.checkFileExists">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">checkFileExists</span></span><a class="headerlink" href="#pyhpcc.models.hpcc.checkFileExists" title="Permalink to this definition"></a></dt>
+<dd><p>Check if a file exists</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyhpcc.models.hpcc.dfuQuery">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dfuQuery</span></span><a class="headerlink" href="#pyhpcc.models.hpcc.dfuQuery" title="Permalink to this definition"></a></dt>
+<dd><p>Query files using filters</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyhpcc.models.hpcc.downloadfile">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">downloadfile</span></span><a class="headerlink" href="#pyhpcc.models.hpcc.downloadfile" title="Permalink to this definition"></a></dt>
+<dd><p>Download a file from the HPCC</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyhpcc.models.hpcc.fileList">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fileList</span></span><a class="headerlink" href="#pyhpcc.models.hpcc.fileList" title="Permalink to this definition"></a></dt>
+<dd><p>List files in a directory</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyhpcc.models.hpcc.fileQuery">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fileQuery</span></span><a class="headerlink" href="#pyhpcc.models.hpcc.fileQuery" title="Permalink to this definition"></a></dt>
+<dd><p>Query files using filters</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyhpcc.models.hpcc.getDfuWorkunitInfo">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">getDfuWorkunitInfo</span></span><a class="headerlink" href="#pyhpcc.models.hpcc.getDfuWorkunitInfo" title="Permalink to this definition"></a></dt>
+<dd><p>Get information about a DFU workunit</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyhpcc.models.hpcc.getDfuWorkunits">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">getDfuWorkunits</span></span><a class="headerlink" href="#pyhpcc.models.hpcc.getDfuWorkunits" title="Permalink to this definition"></a></dt>
+<dd><p>Get information about DFU workunits</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyhpcc.models.hpcc.getFileInfo">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">getFileInfo</span></span><a class="headerlink" href="#pyhpcc.models.hpcc.getFileInfo" title="Permalink to this definition"></a></dt>
+<dd><p>Get information about a file</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyhpcc.models.hpcc.getSubFileInfo">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">getSubFileInfo</span></span><a class="headerlink" href="#pyhpcc.models.hpcc.getSubFileInfo" title="Permalink to this definition"></a></dt>
+<dd><p>Get information about a subfile</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyhpcc.models.hpcc.get_wuinfo">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_wuinfo</span></span><a class="headerlink" href="#pyhpcc.models.hpcc.get_wuinfo" title="Permalink to this definition"></a></dt>
+<dd><p>Get information about a workunit</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyhpcc.models.hpcc.get_wuquery">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_wuquery</span></span><a class="headerlink" href="#pyhpcc.models.hpcc.get_wuquery" title="Permalink to this definition"></a></dt>
+<dd><p>Get the ECL query of a workunit</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyhpcc.models.hpcc.get_wuresult">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_wuresult</span></span><a class="headerlink" href="#pyhpcc.models.hpcc.get_wuresult" title="Permalink to this definition"></a></dt>
+<dd><p>Get the results of a workunit</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyhpcc.models.hpcc.getdfuInfo">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">getdfuInfo</span></span><a class="headerlink" href="#pyhpcc.models.hpcc.getdfuInfo" title="Permalink to this definition"></a></dt>
+<dd><p>Get information about a file</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyhpcc.models.hpcc.getgraph">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">getgraph</span></span><a class="headerlink" href="#pyhpcc.models.hpcc.getgraph" title="Permalink to this definition"></a></dt>
+<dd><p>Get a graph from a workunit</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyhpcc.models.hpcc.sprayFixed">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sprayFixed</span></span><a class="headerlink" href="#pyhpcc.models.hpcc.sprayFixed" title="Permalink to this definition"></a></dt>
+<dd><p>Spray a fixed file to HPCC</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyhpcc.models.hpcc.sprayVariable">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sprayVariable</span></span><a class="headerlink" href="#pyhpcc.models.hpcc.sprayVariable" title="Permalink to this definition"></a></dt>
+<dd><p>Spray a file to HPCC</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyhpcc.models.hpcc.wuCreateAndUpdate">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">wuCreateAndUpdate</span></span><a class="headerlink" href="#pyhpcc.models.hpcc.wuCreateAndUpdate" title="Permalink to this definition"></a></dt>
+<dd><p>Create and update a workunit</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyhpcc.models.hpcc.wuQuery">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">wuQuery</span></span><a class="headerlink" href="#pyhpcc.models.hpcc.wuQuery" title="Permalink to this definition"></a></dt>
+<dd><p>Query workunits using filters</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyhpcc.models.hpcc.wuRun">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">wuRun</span></span><a class="headerlink" href="#pyhpcc.models.hpcc.wuRun" title="Permalink to this definition"></a></dt>
+<dd><p>Run a workunit</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyhpcc.models.hpcc.wuSubmit">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">wuSubmit</span></span><a class="headerlink" href="#pyhpcc.models.hpcc.wuSubmit" title="Permalink to this definition"></a></dt>
+<dd><p>Submit a workunit</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyhpcc.models.readfileinfo">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhpcc.models.</span></span><span class="sig-name descname"><span class="pre">readfileinfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hpcc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logicalFileName</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fileType</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fileSizelimit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ifExists</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isSuperFile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">actualFileSize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recordCount</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">desprayIP</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">desprayPath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">desprayallowoverwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'true'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shouldDespray</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkStatus</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csvSeperatorforRead</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">','</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">readStatus</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Not</span> <span class="pre">read'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">desprayFromCluster</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csvHeaderFlag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.models.readfileinfo" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class to read the file information from the HPCC cluster</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhpcc.models.readfileinfo.hpcc">
+<span class="sig-name descname"><span class="pre">hpcc</span></span><a class="headerlink" href="#pyhpcc.models.readfileinfo.hpcc" title="Permalink to this definition"></a></dt>
+<dd><p>The hpcc object</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhpcc.models.readfileinfo.logicalFileName">
+<span class="sig-name descname"><span class="pre">logicalFileName</span></span><a class="headerlink" href="#pyhpcc.models.readfileinfo.logicalFileName" title="Permalink to this definition"></a></dt>
+<dd><p>The logical file name</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhpcc.models.readfileinfo.cluster">
+<span class="sig-name descname"><span class="pre">cluster</span></span><a class="headerlink" href="#pyhpcc.models.readfileinfo.cluster" title="Permalink to this definition"></a></dt>
+<dd><p>The cluster to read the file information from</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhpcc.models.readfileinfo.fileType">
+<span class="sig-name descname"><span class="pre">fileType</span></span><a class="headerlink" href="#pyhpcc.models.readfileinfo.fileType" title="Permalink to this definition"></a></dt>
+<dd><p>The file type</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhpcc.models.readfileinfo.fileSizelimit">
+<span class="sig-name descname"><span class="pre">fileSizelimit</span></span><a class="headerlink" href="#pyhpcc.models.readfileinfo.fileSizelimit" title="Permalink to this definition"></a></dt>
+<dd><p>The file size limit. Defaults to 25MB</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhpcc.models.readfileinfo.ifExists">
+<span class="sig-name descname"><span class="pre">ifExists</span></span><a class="headerlink" href="#pyhpcc.models.readfileinfo.ifExists" title="Permalink to this definition"></a></dt>
+<dd><p>Boolean to determine if the file exists</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhpcc.models.readfileinfo.isSuperFile">
+<span class="sig-name descname"><span class="pre">isSuperFile</span></span><a class="headerlink" href="#pyhpcc.models.readfileinfo.isSuperFile" title="Permalink to this definition"></a></dt>
+<dd><p>Boolean to determine if the file is a superfile</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhpcc.models.readfileinfo.actualFileSize">
+<span class="sig-name descname"><span class="pre">actualFileSize</span></span><a class="headerlink" href="#pyhpcc.models.readfileinfo.actualFileSize" title="Permalink to this definition"></a></dt>
+<dd><p>The actual file size</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhpcc.models.readfileinfo.recordCount">
+<span class="sig-name descname"><span class="pre">recordCount</span></span><a class="headerlink" href="#pyhpcc.models.readfileinfo.recordCount" title="Permalink to this definition"></a></dt>
+<dd><p>The number of records in the file</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhpcc.models.readfileinfo.desprayIP">
+<span class="sig-name descname"><span class="pre">desprayIP</span></span><a class="headerlink" href="#pyhpcc.models.readfileinfo.desprayIP" title="Permalink to this definition"></a></dt>
+<dd><p>The IP address to despray the file to</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhpcc.models.readfileinfo.desprayPath">
+<span class="sig-name descname"><span class="pre">desprayPath</span></span><a class="headerlink" href="#pyhpcc.models.readfileinfo.desprayPath" title="Permalink to this definition"></a></dt>
+<dd><p>The path to despray the file to</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhpcc.models.readfileinfo.desprayallowoverwrite">
+<span class="sig-name descname"><span class="pre">desprayallowoverwrite</span></span><a class="headerlink" href="#pyhpcc.models.readfileinfo.desprayallowoverwrite" title="Permalink to this definition"></a></dt>
+<dd><p>Boolean to determine if the file can be overwritten. Defaults to True</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhpcc.models.readfileinfo.shouldDespray">
+<span class="sig-name descname"><span class="pre">shouldDespray</span></span><a class="headerlink" href="#pyhpcc.models.readfileinfo.shouldDespray" title="Permalink to this definition"></a></dt>
+<dd><p>Boolean to determine if the file should be desprayed. Defaults to False</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhpcc.models.readfileinfo.checkStatus">
+<span class="sig-name descname"><span class="pre">checkStatus</span></span><a class="headerlink" href="#pyhpcc.models.readfileinfo.checkStatus" title="Permalink to this definition"></a></dt>
+<dd><p>Boolean to determine if the file status should be checked. Defaults to False</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhpcc.models.readfileinfo.csvSeperatorforRead">
+<span class="sig-name descname"><span class="pre">csvSeperatorforRead</span></span><a class="headerlink" href="#pyhpcc.models.readfileinfo.csvSeperatorforRead" title="Permalink to this definition"></a></dt>
+<dd><p>The csv seperator for reading the file. Defaults to ‘,’</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhpcc.models.readfileinfo.readStatus">
+<span class="sig-name descname"><span class="pre">readStatus</span></span><a class="headerlink" href="#pyhpcc.models.readfileinfo.readStatus" title="Permalink to this definition"></a></dt>
+<dd><p>The read status. Defaults to ‘Not Read’</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhpcc.models.readfileinfo.desprayFromCluster">
+<span class="sig-name descname"><span class="pre">desprayFromCluster</span></span><a class="headerlink" href="#pyhpcc.models.readfileinfo.desprayFromCluster" title="Permalink to this definition"></a></dt>
+<dd><p>The cluster to despray the file from</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhpcc.models.readfileinfo.csvHeaderFlag">
+<span class="sig-name descname"><span class="pre">csvHeaderFlag</span></span><a class="headerlink" href="#pyhpcc.models.readfileinfo.csvHeaderFlag" title="Permalink to this definition"></a></dt>
+<dd><p>Int to determine if the file has a csv header. Defaults to 0</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">checkIfFileExistsAndIsSuperFile:</span></span></dt>
+<dd><p>Checks if the file exists and is a superfile</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">setFilename:</span></span></dt>
+<dd><p>Sets the logical file name</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">getSubFileInformation:</span></span></dt>
+<dd><p>Gets the subfile information</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">checkfileinDFU:</span></span></dt>
+<dd><p>Checks the file in the DFU queue</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">getData:</span></span></dt>
+<dd><p>Gets the data from the file</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhpcc.models.readfileinfo.checkIfFileExistsAndIsSuperFile">
+<span class="sig-name descname"><span class="pre">checkIfFileExistsAndIsSuperFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clusterFromUser</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.models.readfileinfo.checkIfFileExistsAndIsSuperFile" title="Permalink to this definition"></a></dt>
+<dd><p>Function to check if the file exists and is a superfile</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>clusterFromUser</strong> – The cluster to check the file on</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhpcc.models.readfileinfo.checkfileinDFU">
+<span class="sig-name descname"><span class="pre">checkfileinDFU</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.models.readfileinfo.checkfileinDFU" title="Permalink to this definition"></a></dt>
+<dd><p>Function to check if the file exists in the DFU queue</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>None</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A boolean to determine if the file exists in the DFU queue</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dfuFileStatus</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhpcc.models.readfileinfo.getData">
+<span class="sig-name descname"><span class="pre">getData</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.models.readfileinfo.getData" title="Permalink to this definition"></a></dt>
+<dd><p>Function to get the data from the file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>None</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The data from the file</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>data</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhpcc.models.readfileinfo.getSubFileInformation">
+<span class="sig-name descname"><span class="pre">getSubFileInformation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.models.readfileinfo.getSubFileInformation" title="Permalink to this definition"></a></dt>
+<dd><p>Function to get the subfile information</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>None</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The subfile information if the file is a superfile, else returns a message “Not a superfile”</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>subFileInformation</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhpcc.models.readfileinfo.setFilename">
+<span class="sig-name descname"><span class="pre">setFilename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.models.readfileinfo.setFilename" title="Permalink to this definition"></a></dt>
+<dd><p>Function to set the logical file name and check if the file exists and is a superfile</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> – The logical file name</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyhpcc.models.roxie">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhpcc.models.</span></span><span class="sig-name descname"><span class="pre">roxie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">auth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">searchservice</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">roxie_port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">response_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'json'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">definition</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'submit'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.models.roxie" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base class for HPCC Roxie API</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhpcc.models.roxie.auth">
+<span class="sig-name descname"><span class="pre">auth</span></span><a class="headerlink" href="#pyhpcc.models.roxie.auth" title="Permalink to this definition"></a></dt>
+<dd><p>Authentication object</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhpcc.models.roxie.timeout">
+<span class="sig-name descname"><span class="pre">timeout</span></span><a class="headerlink" href="#pyhpcc.models.roxie.timeout" title="Permalink to this definition"></a></dt>
+<dd><p>Timeout for requests</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhpcc.models.roxie.response_type">
+<span class="sig-name descname"><span class="pre">response_type</span></span><a class="headerlink" href="#pyhpcc.models.roxie.response_type" title="Permalink to this definition"></a></dt>
+<dd><p>Type of response to return</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhpcc.models.roxie.definition">
+<span class="sig-name descname"><span class="pre">definition</span></span><a class="headerlink" href="#pyhpcc.models.roxie.definition" title="Permalink to this definition"></a></dt>
+<dd><p>Definition of the API</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhpcc.models.roxie.searchservice">
+<span class="sig-name descname"><span class="pre">searchservice</span></span><a class="headerlink" href="#pyhpcc.models.roxie.searchservice" title="Permalink to this definition"></a></dt>
+<dd><p>Search service object</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhpcc.models.roxie.roxieport">
+<span class="sig-name descname"><span class="pre">roxieport</span></span><a class="headerlink" href="#pyhpcc.models.roxie.roxieport" title="Permalink to this definition"></a></dt>
+<dd><p>Roxie port</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhpcc.models.roxie.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">auth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">response_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">definition</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">searchservice</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">roxieport</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.models.roxie.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Initialize the class</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhpcc.models.roxie.roxie_call">
+<span class="sig-name descname"><span class="pre">roxie_call</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.models.roxie.roxie_call" title="Permalink to this definition"></a></dt>
+<dd><p>Call the roxie API</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id0">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">roxie_call</span></span><a class="headerlink" href="#id0" title="Permalink to this definition"></a></dt>
+<dd><p>Call the roxie API</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>self</strong> – The object pointer</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The response from the API</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>response</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyhpcc.models.workunit_submit">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyhpcc.models.</span></span><span class="sig-name descname"><span class="pre">workunit_submit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hpcc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.models.workunit_submit" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base class for HPCC workunit submit</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhpcc.models.workunit_submit.hpcc">
+<span class="sig-name descname"><span class="pre">hpcc</span></span><a class="headerlink" href="#pyhpcc.models.workunit_submit.hpcc" title="Permalink to this definition"></a></dt>
+<dd><p>HPCC object</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhpcc.models.workunit_submit.cluster1">
+<span class="sig-name descname"><span class="pre">cluster1</span></span><a class="headerlink" href="#pyhpcc.models.workunit_submit.cluster1" title="Permalink to this definition"></a></dt>
+<dd><p>Cluster name</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pyhpcc.models.workunit_submit.cluster2">
+<span class="sig-name descname"><span class="pre">cluster2</span></span><a class="headerlink" href="#pyhpcc.models.workunit_submit.cluster2" title="Permalink to this definition"></a></dt>
+<dd><p>Cluster name</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhpcc.models.workunit_submit.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.models.workunit_submit.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Initialize the class</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">write_file:</span></span></dt>
+<dd><p>Write a file to HPCC</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_bashcommand:</span></span></dt>
+<dd><p>Get the bash command to submit a workunit</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">get_workload:</span></span></dt>
+<dd><p>Get the workload on the clusters</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">create_filename:</span></span></dt>
+<dd><p>Create a filename for the workunit</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">bash_compile:</span></span></dt>
+<dd><p>Compile the workunit</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">bash_run:</span></span></dt>
+<dd><p>Run the workunit</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">compileworkunit:</span></span></dt>
+<dd><p>Legacy function to compile the workunit</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">createworkunit:</span></span></dt>
+<dd><p>Legacy function to create the workunit</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">WUWaitCompiled:</span></span></dt>
+<dd><p>Legacy function to wait for the workunit to compile</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">WUWaitComplete:</span></span></dt>
+<dd><p>Legacy function to wait for the workunit to complete</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">runworkunit:</span></span></dt>
+<dd><p>Legacy function to run the workunit</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhpcc.models.workunit_submit.WUWaitCompiled">
+<span class="sig-name descname"><span class="pre">WUWaitCompiled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Wuid</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.models.workunit_submit.WUWaitCompiled" title="Permalink to this definition"></a></dt>
+<dd><p>Legacy function to wait for a workunit to compile</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>Wuid</strong> – The Wuid of the workunit to compile</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhpcc.models.workunit_submit.WUWaitComplete">
+<span class="sig-name descname"><span class="pre">WUWaitComplete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Wuid</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.models.workunit_submit.WUWaitComplete" title="Permalink to this definition"></a></dt>
+<dd><p>Legacy function to wait for a workunit to complete</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>Wuid</strong> – The Wuid of the workunit to compile</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhpcc.models.workunit_submit.bash_compile">
+<span class="sig-name descname"><span class="pre">bash_compile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gitrepository</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.models.workunit_submit.bash_compile" title="Permalink to this definition"></a></dt>
+<dd><p>Compile the ecl file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> – The name of the ecl file</p></li>
+<li><p><strong>gitrepository</strong> – Git repository to use</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>output</em> – The output from the bash command</p></li>
+<li><p><em>outputfile</em> – The name of the compiled ecl file - filename.eclxml</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>HPCCException:</strong> – A generic exception</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhpcc.models.workunit_submit.bash_run">
+<span class="sig-name descname"><span class="pre">bash_run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">compiledfile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.models.workunit_submit.bash_run" title="Permalink to this definition"></a></dt>
+<dd><p>Run the compiled ecl file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>compiledfile</strong> – The name of the compiled ecl file</p></li>
+<li><p><strong>cluster</strong> – The HPCC cluster to run the query on</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The output from the bash command</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>output</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>HPCCException:</strong> – A generic exception</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhpcc.models.workunit_submit.compileworkunit">
+<span class="sig-name descname"><span class="pre">compileworkunit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Wuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Cluster</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.models.workunit_submit.compileworkunit" title="Permalink to this definition"></a></dt>
+<dd><p>Legacy function to compile a workunit - use bash_compile instead</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Wuid</strong> – The Wuid of the workunit to compile</p></li>
+<li><p><strong>Cluster</strong> – The HPCC cluster to run the query on</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhpcc.models.workunit_submit.create_filename">
+<span class="sig-name descname"><span class="pre">create_filename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">QueryText</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">working_folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Jobname</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.models.workunit_submit.create_filename" title="Permalink to this definition"></a></dt>
+<dd><p>Create a filename for the ecl file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>QueryText</strong> – The ecl query</p></li>
+<li><p><strong>working_folder</strong> – The folder to write the file to</p></li>
+<li><p><strong>Jobname</strong> – The name of the ecl file</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The name of the ecl file</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>filename</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>HPCCException:</strong> – A generic exception</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhpcc.models.workunit_submit.createworkunit">
+<span class="sig-name descname"><span class="pre">createworkunit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Action</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ResultLimit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">QueryText</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Jobname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ClusterOrig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.models.workunit_submit.createworkunit" title="Permalink to this definition"></a></dt>
+<dd><p>Legacy function to create a workunit - use bash_run instead</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Action</strong> – The action to perform</p></li>
+<li><p><strong>ResultLimit</strong> – The number of results to return</p></li>
+<li><p><strong>QueryText</strong> – The ecl query</p></li>
+<li><p><strong>Jobname</strong> – The name of the ecl file</p></li>
+<li><p><strong>ClusterOrig</strong> – The HPCC cluster to run the query on</p></li>
+<li><p><strong>data</strong> – The data to pass to the query</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhpcc.models.workunit_submit.get_bashcommand">
+<span class="sig-name descname"><span class="pre">get_bashcommand</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repository</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.models.workunit_submit.get_bashcommand" title="Permalink to this definition"></a></dt>
+<dd><p>Get the bash command to compile the ecl file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> – The name of the ecl file</p></li>
+<li><p><strong>repository</strong> – Git repository to use</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>bashcommand</em> – The bash command to compile the ecl file</p></li>
+<li><p><em>outputfile</em> – The name of the compiled ecl file - filename.eclxml</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>HPCCException:</strong> – A generic exception</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhpcc.models.workunit_submit.get_workload">
+<span class="sig-name descname"><span class="pre">get_workload</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.models.workunit_submit.get_workload" title="Permalink to this definition"></a></dt>
+<dd><p>Get the workload for the given two HPCC clusters</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>self</strong> – The object pointer</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The number of jobs on each cluster</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int, int</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>HPCCException:</strong> – A generic exception</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhpcc.models.workunit_submit.runworkunit">
+<span class="sig-name descname"><span class="pre">runworkunit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Wuid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Cluster</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.models.workunit_submit.runworkunit" title="Permalink to this definition"></a></dt>
+<dd><p>Legacy function to run a workunit - use bash_run instead</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Wuid</strong> – The Wuid of the workunit to compile</p></li>
+<li><p><strong>Cluster</strong> – The HPCC cluster to run the query on</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyhpcc.models.workunit_submit.write_file">
+<span class="sig-name descname"><span class="pre">write_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">querytext</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jobname</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.models.workunit_submit.write_file" title="Permalink to this definition"></a></dt>
+<dd><p>Write a .ecl file to disk</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>querytext</strong> – The ecl query to write</p></li>
+<li><p><strong>folder</strong> – The folder to write the file to</p></li>
+<li><p><strong>jobname</strong> – The name of the ecl file</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The name of the ecl file written</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>filename</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>HPCCException:</strong> – A generic exception</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-pyhpcc.roxie_binder">
+<span id="pyhpcc-roxie-binder-module"></span><h2>pyhpcc.roxie_binder module<a class="headerlink" href="#module-pyhpcc.roxie_binder" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="pyhpcc.roxie_binder.wrapper">
+<span class="sig-prename descclassname"><span class="pre">pyhpcc.roxie_binder.</span></span><span class="sig-name descname"><span class="pre">wrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.roxie_binder.wrapper" title="Permalink to this definition"></a></dt>
+<dd><p>Decorator for HPCC Roxie class methods.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>dict</em>) – A dictionary of configuration options for HPCC Roxie class methods.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The decorated function</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>function</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="#pyhpcc.errors.TypeError" title="pyhpcc.errors.TypeError"><strong>TypeError</strong></a> – If the config parameter is not a dictionary</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-pyhpcc.thor_binder">
+<span id="pyhpcc-thor-binder-module"></span><h2>pyhpcc.thor_binder module<a class="headerlink" href="#module-pyhpcc.thor_binder" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="pyhpcc.thor_binder.wrapper">
+<span class="sig-prename descclassname"><span class="pre">pyhpcc.thor_binder.</span></span><span class="sig-name descname"><span class="pre">wrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.thor_binder.wrapper" title="Permalink to this definition"></a></dt>
+<dd><p>Decorator for HPCC THOR class methods.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config</strong> (<em>dict</em>) – A dictionary of configuration options for HPCC THOR class methods.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The decorated function</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>function</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="#pyhpcc.errors.TypeError" title="pyhpcc.errors.TypeError"><strong>TypeError</strong></a> – If the config parameter is not a dictionary</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-pyhpcc.utils">
+<span id="pyhpcc-utils-module"></span><h2>pyhpcc.utils module<a class="headerlink" href="#module-pyhpcc.utils" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="pyhpcc.utils.checkfileexistence">
+<span class="sig-prename descclassname"><span class="pre">pyhpcc.utils.</span></span><span class="sig-name descname"><span class="pre">checkfileexistence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.utils.checkfileexistence" title="Permalink to this definition"></a></dt>
+<dd><p>Parses the xml response to check if the file exists</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg</strong> (<em>str</em>) – The xml response</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>0 if the file does not exist, else a positive integer</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="#pyhpcc.errors.HPCCException" title="pyhpcc.errors.HPCCException"><strong>HPCCException</strong></a> – A generic exception.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyhpcc.utils.convert_arg_to_utf8_str">
+<span class="sig-prename descclassname"><span class="pre">pyhpcc.utils.</span></span><span class="sig-name descname"><span class="pre">convert_arg_to_utf8_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.utils.convert_arg_to_utf8_str" title="Permalink to this definition"></a></dt>
+<dd><p>Convert an argument to a UTF-8 encoded string.
+If the argument is a unicode string, encode it to UTF-8
+If the argument is not of type bytes, convert it to a string using str() and then encode it to UTF-8.
+If the argument is of type bytes, return it as is.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg</strong> (<em>str</em><em> or </em><em>bytes</em>) – The argument to convert.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The UTF-8 encoded string representation of the argument.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str or bytes</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="#pyhpcc.errors.HPCCException" title="pyhpcc.errors.HPCCException"><strong>HPCCException</strong></a> – A generic exception.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyhpcc.utils.create_compile_bash_command">
+<span class="sig-prename descclassname"><span class="pre">pyhpcc.utils.</span></span><span class="sig-name descname"><span class="pre">create_compile_bash_command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">repository</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputfile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.utils.create_compile_bash_command" title="Permalink to this definition"></a></dt>
+<dd><p>Create a bash command to compile a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>repository</strong> (<em>str</em>) – The repository to compile the file from.</p></li>
+<li><p><strong>outputfile</strong> (<em>str</em>) – The output file to write the compiled code to.</p></li>
+<li><p><strong>filename</strong> (<em>str</em>) – The filename to compile.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The bash command to compile the file.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="#pyhpcc.errors.HPCCException" title="pyhpcc.errors.HPCCException"><strong>HPCCException</strong></a> – A generic exception.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyhpcc.utils.create_compile_file_name">
+<span class="sig-prename descclassname"><span class="pre">pyhpcc.utils.</span></span><span class="sig-name descname"><span class="pre">create_compile_file_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.utils.create_compile_file_name" title="Permalink to this definition"></a></dt>
+<dd><p>Create a compiled file name from a filename.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – The ecl filename to create a compiled file name from.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The compiled file name.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="#pyhpcc.errors.HPCCException" title="pyhpcc.errors.HPCCException"><strong>HPCCException</strong></a> – A generic exception.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyhpcc.utils.create_run_bash_command">
+<span class="sig-prename descclassname"><span class="pre">pyhpcc.utils.</span></span><span class="sig-name descname"><span class="pre">create_run_bash_command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">compiledfile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ip</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jobname</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.utils.create_run_bash_command" title="Permalink to this definition"></a></dt>
+<dd><p>Create a bash command to run a compiled file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>compiledfile</strong> (<em>str</em>) – The compiled file to run.</p></li>
+<li><p><strong>cluster</strong> (<em>str</em>) – The cluster to run the compiled file on.</p></li>
+<li><p><strong>ip</strong> (<em>str</em>) – The ip address of the HPCC cluster.</p></li>
+<li><p><strong>port</strong> (<em>str</em>) – The port of the HPCC cluster.</p></li>
+<li><p><strong>username</strong> (<em>str</em>) – The username to use to connect to the HPCC cluster.</p></li>
+<li><p><strong>password</strong> (<em>str</em>) – The password to use to connect to the HPCC cluster.</p></li>
+<li><p><strong>jobname</strong> (<em>str</em>) – The name of the job to run.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The bash command to run a compiled file.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="#pyhpcc.errors.HPCCException" title="pyhpcc.errors.HPCCException"><strong>HPCCException</strong></a> – A generic exception.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyhpcc.utils.desprayfile">
+<span class="sig-prename descclassname"><span class="pre">pyhpcc.utils.</span></span><span class="sig-name descname"><span class="pre">desprayfile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hpcc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">querytext</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Cluster</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">jobn</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.utils.desprayfile" title="Permalink to this definition"></a></dt>
+<dd><p>ToDo: Desprays a file from the HPCC cluster to the local machine</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hpcc</strong> (<em>hpcc.HPCCConnection</em>) – The HPCC connection object</p></li>
+<li><p><strong>querytext</strong> (<em>str</em>) – The query text</p></li>
+<li><p><strong>Cluster</strong> (<em>str</em>) – The cluster name</p></li>
+<li><p><strong>jobn</strong> (<em>str</em>) – The job name</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The despray job id</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="#pyhpcc.errors.HPCCException" title="pyhpcc.errors.HPCCException"><strong>HPCCException</strong></a> – A generic exception.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyhpcc.utils.getSubfileNames">
+<span class="sig-prename descclassname"><span class="pre">pyhpcc.utils.</span></span><span class="sig-name descname"><span class="pre">getSubfileNames</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.utils.getSubfileNames" title="Permalink to this definition"></a></dt>
+<dd><p>Parses the xml response to get SubfileNames information</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg</strong> (<em>str</em>) – The xml response</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A pandas series containing the SubfileNames information</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pandas.Series</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="#pyhpcc.errors.HPCCException" title="pyhpcc.errors.HPCCException"><strong>HPCCException</strong></a> – A generic exception.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyhpcc.utils.get_graph_skew">
+<span class="sig-prename descclassname"><span class="pre">pyhpcc.utils.</span></span><span class="sig-name descname"><span class="pre">get_graph_skew</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.utils.get_graph_skew" title="Permalink to this definition"></a></dt>
+<dd><p>Get the graph skew from the response of a WUInfo call.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>response</strong> – str</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dictionary containing the graph skew information.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="#pyhpcc.errors.HPCCException" title="pyhpcc.errors.HPCCException"><strong>HPCCException</strong></a> – A generic exception.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyhpcc.utils.getcsvdata">
+<span class="sig-prename descclassname"><span class="pre">pyhpcc.utils.</span></span><span class="sig-name descname"><span class="pre">getcsvdata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csvSeperator</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csvHeader</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.utils.getcsvdata" title="Permalink to this definition"></a></dt>
+<dd><p>Parses the xml response to get csv data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arg</strong> (<em>str</em>) – The xml response</p></li>
+<li><p><strong>csvSeperator</strong> (<em>str</em>) – The csv seperator</p></li>
+<li><p><strong>csvHeader</strong> (<em>str</em>) – The csv header</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A pandas dataframe containing the csv data</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="#pyhpcc.errors.HPCCException" title="pyhpcc.errors.HPCCException"><strong>HPCCException</strong></a> – A generic exception.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyhpcc.utils.getfileStatus">
+<span class="sig-prename descclassname"><span class="pre">pyhpcc.utils.</span></span><span class="sig-name descname"><span class="pre">getfileStatus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.utils.getfileStatus" title="Permalink to this definition"></a></dt>
+<dd><p>Parses the xml response to get NumFiles information</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg</strong> (<em>str</em>) – The xml response</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Number of files</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="#pyhpcc.errors.HPCCException" title="pyhpcc.errors.HPCCException"><strong>HPCCException</strong></a> – A generic exception.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyhpcc.utils.getfileType">
+<span class="sig-prename descclassname"><span class="pre">pyhpcc.utils.</span></span><span class="sig-name descname"><span class="pre">getfileType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.utils.getfileType" title="Permalink to this definition"></a></dt>
+<dd><p>Parses the xml response to get FileType information</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg</strong> (<em>str</em>) – The xml response</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dictionary containing the FileType information</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="#pyhpcc.errors.HPCCException" title="pyhpcc.errors.HPCCException"><strong>HPCCException</strong></a> – A generic exception.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyhpcc.utils.getflatdata">
+<span class="sig-prename descclassname"><span class="pre">pyhpcc.utils.</span></span><span class="sig-name descname"><span class="pre">getflatdata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpcc.utils.getflatdata" title="Permalink to this definition"></a></dt>
+<dd><p>Parses the xml response to get flat data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>arg</strong> (<em>str</em>) – The xml response</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A pandas dataframe containing the flat data</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="#pyhpcc.errors.HPCCException" title="pyhpcc.errors.HPCCException"><strong>HPCCException</strong></a> – A generic exception.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-pyhpcc">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pyhpcc" title="Permalink to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="pyhpcc" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Innovation Engineering Group.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
