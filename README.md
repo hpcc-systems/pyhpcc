@@ -4,7 +4,7 @@ Pyhpcc is a Python package that allows accessing HPCC-systems via Python.
 
 PyHPCC is a Python package and wrapper built around the [HPCC Systems](https://hpccsystems.com/) web services that facilitate communication between Python and HPCC Systems. 
 # Features
-Some Core Functionalities PyHPCC supports are
+Some core functionalities PyHPCC supports are
 1. Work Unit submission through inline queries or using a Git Repository.
 2. Reading contents from a Logical file.
 3. Uploading files to a landing zone
