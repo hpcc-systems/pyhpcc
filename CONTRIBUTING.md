@@ -16,7 +16,6 @@ After installing the prerequisites, fork the repository.
 ```bash
 git clone https://github.com/<your account name>/<repository name>.git
 cd <repository name>
-npm install
 ```
 Set up the repository locally. Replace `<your account name>` with the name of the account you forked to and `<repository name>` with the repository name you forked.
 
@@ -25,4 +24,3 @@ To install the dependencies run the following command, which downloads the depen
 ``` bash
 poetry install
 ```
-
