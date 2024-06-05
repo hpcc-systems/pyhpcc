@@ -1,8 +1,8 @@
 # PyHPCC
 
-Pyhpcc is a python package that allows accessing hpcc-systems via python.
+Pyhpcc is a Python package that allows accessing HPCC-systems via Python.
 
-PyHPCC is a Python package and wrapper built around the [HPCC Systems](https://hpccsystems.com/) web services that facilitates communication between Python and HPCC Systems. 
+PyHPCC is a Python package and wrapper built around the [HPCC Systems](https://hpccsystems.com/) web services that facilitate communication between Python and HPCC Systems. 
 # Features
 Some Core Functionalities PyHPCC supports are
 1. Work Unit submission through inline queries or using a Git Repository.
@@ -13,7 +13,7 @@ Some Core Functionalities PyHPCC supports are
 
 ### Prerequisites
 
-To use PyHPCC you need these<br>
+To use PyHPCC, you need these<br>
 1. [Python3](https://www.python.org/downloads/)
 2. [ECL Client Tools](https://hpccsystems.com/download/): Select your operating systems to download client tools
 
@@ -33,7 +33,7 @@ For more examples, check the [examples](examples) folder.
 
 ## For Contributors
 Contributions to PyHPCC are welcomed and encouraged.<br>
-For specific guidelines regarding contributions, please see [CONTRIBUTING.md](CONTRIBUTING.md).
+For specific contribution guidelines, please take a look at [CONTRIBUTING.md](CONTRIBUTING.md).
 
 
 For more information about the package, please refer to the detailed documentation - https://upgraded-bassoon-daa9d010.pages.github.io/build/html/index.html
