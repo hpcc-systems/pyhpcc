@@ -4,6 +4,7 @@ from pyhpcc.auth import auth
 from pyhpcc.errors import HPCCAuthenticationError
 import config
 
+
 class TestAuth(unittest.TestCase):
 
     HPCC_HOST = config.HPCC_HOST
@@ -17,38 +18,85 @@ class TestAuth(unittest.TestCase):
 
     # Test the get_url method
     def test_get_url(self):
-        test = auth(self.HPCC_HOST, self.HPCC_PORT, self.HPCC_USERNAME, self.HPCC_PASSWORD, True, "https")
-        self.assertEqual(test.get_url(), "https://" + self.HPCC_HOST + ":" + str(self.HPCC_PORT))
+        test = auth(
+            self.HPCC_HOST,
+            self.HPCC_PORT,
+            self.HPCC_USERNAME,
+            self.HPCC_PASSWORD,
+            True,
+            "https",
+        )
+        self.assertEqual(
+            test.get_url(), "https://" + self.HPCC_HOST + ":" + str(self.HPCC_PORT)
+        )
 
     # Test the get_username method
     def test_get_username(self):
-        test = auth(self.HPCC_HOST, self.HPCC_PORT, self.HPCC_USERNAME, self.HPCC_PASSWORD, True, "https")
+        test = auth(
+            self.HPCC_HOST,
+            self.HPCC_PORT,
+            self.HPCC_USERNAME,
+            self.HPCC_PASSWORD,
+            True,
+            "https",
+        )
         self.assertEqual(test.get_username(), self.HPCC_USERNAME)
 
     # Test the get_verified method
     def test_get_verified(self):
-        test = auth(self.HPCC_HOST, self.HPCC_PORT, self.HPCC_USERNAME, self.HPCC_PASSWORD, True, "https")
+        test = auth(
+            self.HPCC_HOST,
+            self.HPCC_PORT,
+            self.HPCC_USERNAME,
+            self.HPCC_PASSWORD,
+            True,
+            "https",
+        )
         self.assertTrue(test.get_verified())
-    
+
     # Test the get_verified method with an invalid username and password
     def test_get_verified_invalid_username_password(self):
-        test = auth(self.HPCC_HOST, self.HPCC_PORT, self.DUMMY_USERNAME, self.DUMMY_PASSWORD, True, "https")
+        test = auth(
+            self.HPCC_HOST,
+            self.HPCC_PORT,
+            self.DUMMY_USERNAME,
+            self.DUMMY_PASSWORD,
+            True,
+            "https",
+        )
         self.assertRaises(HPCCAuthenticationError, test.get_verified)
 
     # Test the get_verified method with an invalid IP address
     def test_get_verified_invalid_ip(self):
-        test = auth(self.DUMMY_HPCC_HOST, self.HPCC_PORT, self.HPCC_USERNAME, self.HPCC_PASSWORD, True, "https")
-        self.assertRaises(HPCCAuthenticationError, test.get_verified)    
+        test = auth(
+            self.DUMMY_HPCC_HOST,
+            self.HPCC_PORT,
+            self.HPCC_USERNAME,
+            self.HPCC_PASSWORD,
+            True,
+            "https",
+        )
+        self.assertRaises(HPCCAuthenticationError, test.get_verified)
 
     # Test the get_verified method with an invalid port
     def test_get_verified_invalid_port(self):
-        test = auth(self.HPCC_HOST, self.DUMMY_HPCC_PORT, self.HPCC_USERNAME, self.HPCC_PASSWORD, True, "https")
+        test = auth(
+            self.HPCC_HOST,
+            self.DUMMY_HPCC_PORT,
+            self.HPCC_USERNAME,
+            self.HPCC_PASSWORD,
+            True,
+            "https",
+        )
         self.assertRaises(HPCCAuthenticationError, test.get_verified)
 
     # Test the get_verified method with only required parameters
     def test_get_verified_only_required_parameters(self):
-        test = auth(self.HPCC_HOST, self.HPCC_PORT, self.HPCC_USERNAME, self.HPCC_PASSWORD)
+        test = auth(
+            self.HPCC_HOST, self.HPCC_PORT, self.HPCC_USERNAME, self.HPCC_PASSWORD
+        )
         self.assertTrue(test.get_verified())
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()
