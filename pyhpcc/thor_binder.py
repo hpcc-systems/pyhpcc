@@ -1,6 +1,6 @@
 import re
 import requests
-import logging 
+import logging
 from pyhpcc.errors import HPCCAuthenticationError, TypeError
 from pyhpcc.utils import convert_arg_to_utf8_str
 import pyhpcc.config as conf
@@ -27,16 +27,17 @@ def wrapper(**config):
         If the config parameter is not a dictionary
 
     """
+
     class APIMethod(object):
-        api = config['api'] 
-        path = config['path']
+        api = config["api"]
+        path = config["path"]
         response_type = api.response_type
-        payload_list = config.get('payload_list', False)
-        allowed_param = config.get('allowed_param', [])
-        method = config.get('method', 'POST')
-        require_auth = config.get('require_auth', True)
-        use_cache = config.get('use_cache', True)
-        
+        payload_list = config.get("payload_list", False)
+        allowed_param = config.get("allowed_param", [])
+        method = config.get("method", "POST")
+        require_auth = config.get("require_auth", True)
+        use_cache = config.get("use_cache", True)
+
         def __init__(self, args, kwargs):
             """
             Constructor for the HPCC THOR APIMethod class.
@@ -56,24 +57,23 @@ def wrapper(**config):
             api = self.api
             self.session = api.auth.session
             if self.require_auth and not api.auth:
-                raise HPCCAuthenticationError('Authentication required for this method')
-            self.data = kwargs.pop('data', None)
-            self.files = kwargs.pop('files', None)
-            self.session.headers = kwargs.pop('headers', {})
+                raise HPCCAuthenticationError("Authentication required for this method")
+            self.data = kwargs.pop("data", None)
+            self.files = kwargs.pop("files", None)
+            self.session.headers = kwargs.pop("headers", {})
             self.build_payload(args, kwargs)
-        
 
         def build_payload(self, args, kwargs):
             """
             Builds the parameters for the API call
-            
+
             Parameters:
             ----------
                 args:
                     The positional arguments
                 kwargs:
                     The keyword arguments
-                    
+
             Returns:
             -------
                 A dictionary of parameters
@@ -90,24 +90,25 @@ def wrapper(**config):
                 if arg is None:
                     continue
                 try:
-                    self.session.params[self.allowed_param[key]] = convert_arg_to_utf8_str(arg)
+                    self.session.params[self.allowed_param[key]] = (
+                        convert_arg_to_utf8_str(arg)
+                    )
                 except:
-                    raise TypeError('Too many arguments')
-                
+                    raise TypeError("Too many arguments")
+
             for key, arg in kwargs.items():
                 if arg is None:
                     continue
                 if key in self.session.params:
-                    raise TypeError('Duplicate argument: %s' % key)
+                    raise TypeError("Duplicate argument: %s" % key)
 
                 try:
                     self.session.params[key] = convert_arg_to_utf8_str(arg)
                 except IndexError:
-                    raise TypeError('Too many arguments')
-            
-            log.info('Parameters: %s' % self.session.params)
+                    raise TypeError("Too many arguments")
 
-        
+            log.info("Parameters: %s" % self.session.params)
+
         def execute(self):
             """
             Executes the API call
@@ -133,8 +134,8 @@ def wrapper(**config):
             #     if result:
             #         self.api.cached_result = True
             #         return result
-            
-            full_url = self.api.auth.get_url() + self.path + "."+  self.response_type
+
+            full_url = self.api.auth.get_url() + self.path + "." + self.response_type
 
             # Debugging
             if conf.DEBUG:
@@ -144,31 +145,32 @@ def wrapper(**config):
                 print("self.session.data: ", self.data)
                 print("self.session.files: ", self.files)
 
-            self.session.headers['Accept_Encoding'] = 'gzip'
+            self.session.headers["Accept_Encoding"] = "gzip"
 
             # If auth is required, add auth to the session
             if self.api.auth:
                 auth = self.api.auth.oauth
-            
-            resp = self.session.request(self.method,
-                                        full_url,
-                                        data=self.data,
-                                        files=self.files,
-                                        timeout = self.api.timeout,
-                                        auth=auth)
-            
+
+            resp = self.session.request(
+                self.method,
+                full_url,
+                data=self.data,
+                files=self.files,
+                timeout=self.api.timeout,
+                auth=auth,
+            )
+
             # Check for errors
             self.api.last_response = resp
             resp.raise_for_status()
-            
-            result = resp 
+
+            result = resp
 
             # Cache the result
             # if self.use_cache and self.api.cache:
             #     self.api.cache.set(self.session.params, result)
 
             return result
-
 
     def _call(*args, **kwargs):
         """
@@ -192,4 +194,3 @@ def wrapper(**config):
         return method.execute()
 
     return _call
-
