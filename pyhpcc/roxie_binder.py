@@ -1,11 +1,10 @@
 import requests
-import logging
+import logging 
 from pyhpcc.errors import HPCCAuthenticationError, TypeError
 from pyhpcc.utils import convert_arg_to_utf8_str
 import pyhpcc.config as conf
 
 log = logging.getLogger(__name__)
-
 
 def wrapper(**config):
     """
@@ -24,15 +23,14 @@ def wrapper(**config):
     Raises
     ------
     TypeError
-        If the config parameter is not a dictionary
+        If the config parameter is not a dictionary    
     """
-
     class APIMethod(object):
-        api = config["api"]
+        api = config['api']
         response_type = api.response_type
-        method = config.get("method", "POST")
-        require_auth = config.get("require_auth", False)
-        use_cache = config.get("use_cache", True)
+        method = config.get('method', 'POST')
+        require_auth = config.get('require_auth', False)
+        use_cache = config.get('use_cache', True)
 
         def __init__(self, args, kwargs):
             """
@@ -53,22 +51,23 @@ def wrapper(**config):
             api = self.api
             self.session = api.auth.session
             if self.require_auth and not api.auth:
-                raise HPCCAuthenticationError("Authentication required for this method")
-            self.post_data = kwargs.pop("data", None)
-            self.session.headers = kwargs.pop("headers", {})
+                raise HPCCAuthenticationError('Authentication required for this method')
+            self.post_data = kwargs.pop('data', None)
+            self.session.headers = kwargs.pop('headers', {})
             self.build_parameters(args, kwargs)
 
+        
         def build_parameters(self, args, kwargs):
             """
             Builds the parameters for the API call
-
+            
             Parameters:
             ----------
                 args:
                     The positional arguments
                 kwargs:
                     The keyword arguments
-
+                    
             Returns:
             -------
                 A dictionary of parameters
@@ -84,22 +83,21 @@ def wrapper(**config):
                 if arg is None:
                     continue
                 try:
-                    self.session.params[self.allowed_param[idx]] = (
-                        convert_arg_to_utf8_str(arg)
-                    )
+                    self.session.params[self.allowed_param[idx]] = convert_arg_to_utf8_str(arg)
                 except:
-                    raise TypeError("Too many arguments")
+                    raise TypeError('Too many arguments')
             for k, arg in list(kwargs.items()):
                 # for k, arg in kwargs.items():
                 if arg is None:
                     continue
                 if k in self.session.params:
-                    raise TypeError("Duplicate argument: %s" % k)
+                    raise TypeError('Duplicate argument: %s' % k)
 
                 self.session.params[k] = convert_arg_to_utf8_str(arg)
 
             log.info("PARAMS: %r", self.session.params)
 
+        
         def execute(self):
             """
             Executes the API call
@@ -120,19 +118,8 @@ def wrapper(**config):
             self.api.cached_result = False
 
             # Build the request URL
-            full_url = (
-                self.api.auth.get_url()
-                + self.api.auth.pathDelimiter
-                + self.api.definition
-                + self.api.auth.pathDelimiter
-                + self.api.roxie_port
-                + self.api.auth.pathDelimiter
-                + self.api.searchservice
-                + self.api.auth.pathDelimiter
-                + "."
-                + self.response_type
-            )
-
+            full_url = self.api.auth.get_url() + self.api.auth.pathDelimiter + self.api.definition + self.api.auth.pathDelimiter + self.api.roxie_port + self.api.auth.pathDelimiter + self.api.searchservice + self.api.auth.pathDelimiter + "." + self.response_type
+            
             # Debugging
             if conf.DEBUG:
                 print("full_url: ", full_url)
@@ -145,19 +132,17 @@ def wrapper(**config):
                 auth = self.api.auth.oauth
 
             # Execute request
-            resp = self.session.request(
-                self.method,
-                full_url,
-                data=self.post_data,
-                timeout=self.api.timeout,
-                auth=auth,
-            )
+            resp = self.session.request(self.method,
+                                        full_url,
+                                        data=self.post_data,
+                                        timeout=self.api.timeout,
+                                        auth=auth)
 
             # Check for errors
             self.api.last_response = resp
             resp.raise_for_status()
 
-            result = resp
+            result = resp 
 
             # Cache the result
             # if self.use_cache and self.api.cache:
