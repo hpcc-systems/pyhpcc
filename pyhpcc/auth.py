@@ -1,8 +1,9 @@
 import requests
+
 from pyhpcc.errors import HPCCAuthenticationError
 
 
-class auth(object):
+class Auth(object):
     """Base class for HPCC authentication
 
     Attributes:
@@ -23,11 +24,11 @@ class auth(object):
             The OAuth credentials
         session:
             The session object
-        portDelimiter:
+        port_delimiter:
             The delimiter for the port
-        pathDelimiter:
+        path_delimiter:
             The delimiter for the path
-        hostDelimiter:
+        host_delimiter:
             The delimiter for the host
 
     Methods:
@@ -43,9 +44,9 @@ class auth(object):
     def __init__(
         self, ip, port, username, password, require_auth=True, protocol="https"
     ):
-        self.portDelimiter = ":"
-        self.pathDelimiter = "/"
-        self.hostDelimiter = "://"
+        self.port_delimiter = ":"
+        self.path_delimiter = "/"
+        self.host_delimiter = "://"
         self.ip = ip
         self.port = str(port)
         self.username = username
@@ -73,9 +74,9 @@ class auth(object):
         """
         url = (
             self.protocol
-            + self.hostDelimiter
+            + self.host_delimiter
             + self.ip
-            + self.portDelimiter
+            + self.port_delimiter
             + self.port
         )
         return url
