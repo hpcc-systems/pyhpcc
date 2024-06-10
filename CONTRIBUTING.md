@@ -24,3 +24,22 @@ To install the dependencies, run the following command, which downloads the depe
 ``` bash
 poetry install
 ```
+
+## Linting and Formatting
+PyHPCC uses [Ruff](https://docs.astral.sh/ruff/) as its formatter and linter.
+
+If you're using Visual Studio Code, install the ruff [extension](https://marketplace.visualstudio.com/items?itemName=charliermarsh.ruff)
+
+Before raising a pull request, make sure the code is formatted and lint errors are fixed using `ruff`.
+
+You can also install `ruff` using pip
+
+``` bash
+pip install ruff
+ruff check # For linting your code.
+ruff format # For formatting your code.
+```
+
+
+
+
