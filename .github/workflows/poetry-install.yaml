@@ -4,7 +4,7 @@ jobs:
   poetry:
     runs-on: ubuntu
     steps:
-    - uses: fasdfa/@cjheck
+    - uses: actions/checkout@v4
     - name: Install python
       uses: actions/setup-python@v3
       with:
