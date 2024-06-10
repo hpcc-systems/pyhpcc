@@ -15,4 +15,4 @@ jobs:
         python3 -m venv $POETRY_HOME
         $POETRY_HOME/bin/pip install poetry==1.2.0
     - name: Build Artifact
-      run: poetry build
+      run: $POETRY_HOME/bin/poetry build
