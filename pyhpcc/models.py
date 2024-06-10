@@ -30,31 +30,31 @@ class hpcc(object):
     -------
         get_wuinfo:
             Get the workunit information
-
+        
         get_wuresult:
             Get the workunit result
-
+        
         getdfuInfo:
             Get the DFU information
-
+        
         wuCreateAndUpdate:
             Create and update the workunit
-
+        
         wuSubmit:
             Submit the workunit
-
+        
         wuRun:
             Run the workunit
 
         get_wuquery:
             Get the workunit query
-
+        
         wuQuery:
             Query the workunits using filters
-
+        
         fileQuery:
             Query the files using filters
-
+        
         getFileInfo:
             Get the file information
 
@@ -63,40 +63,40 @@ class hpcc(object):
 
         WUWaitComplete:
             Wait for the workunit to be completed
-
+        
         getSubFileInfo:
             Get the subfile information
-
+        
         checkFileExists:
             Check if the file exists
-
+        
         TpClusterInfo:
             Get the cluster information
-
+        
         Activity:
             Get the activity information
-
+        
         UploadFile:
             Upload the file
 
         DropZoneFiles:
             Get the dropzone files
-
+        
         dfuQuery:
             Query the DFU files using filters
-
+        
         getDfuWorkunitInfo:
             Get the DFU workunit information
-
+        
         getDfuWorkunits:
             Get the DFU workunits
-
+        
         sprayVariable:
             Spray a file of variable length records
 
         sprayFixed:
-            Spray a file of fixed format
-
+            Spray a file of fixed format 
+        
         WUUpdate:
             Update the workunit
 
@@ -114,548 +114,514 @@ class hpcc(object):
 
     """
 
-    def __init__(self, auth, timeout=1200, response_type="json"):
+    def __init__(self, auth, timeout=1200, response_type='json'):
         self.auth = auth
         self.timeout = timeout
         self.response_type = response_type
 
     @property
     def get_wuinfo(self):
-        """Get information about a workunit"""
-        return thor_wrapper(
-            api=self,
-            path="/WsWorkunits/WUInfo",
-            payload_list=True,
-            allowed_param=[
-                "Wuid",
-                "TruncateEclTo64k",
-                "IncludeExceptions",
-                "IncludeGraphs",
-                "IncludeSourceFiles",
-                "IncludeResults",
-                "IncludeResultsViewNames",
-                "IncludeVariables",
-                "IncludeTimers",
-                "IncludeResourceURLs",
-                "IncludeDebugValues",
-                "IncludeApplicationValues",
-                "IncludeWorkflows",
-                "IncludeXmlSchemas",
-                "SuppressResultSchemas",
-                "rawxml_",
-            ],
-        )
+        """Get information about a workunit
+        """
+        return thor_wrapper(api=self,
+                            path='/WsWorkunits/WUInfo',
+                            payload_list=True,
+                            allowed_param=['Wuid',
+                                           'TruncateEclTo64k',
+                                           'IncludeExceptions',
+                                           'IncludeGraphs',
+                                           'IncludeSourceFiles',
+                                           'IncludeResults',
+                                           'IncludeResultsViewNames',
+                                           'IncludeVariables',
+                                           'IncludeTimers',
+                                           'IncludeResourceURLs',
+                                           'IncludeDebugValues',
+                                           'IncludeApplicationValues',
+                                           'IncludeWorkflows',
+                                           'IncludeXmlSchemas',
+                                           'SuppressResultSchemas',
+                                           'rawxml_'])
 
     @property
     def get_wuresult(self):
-        """Get the results of a workunit"""
+        """Get the results of a workunit
+        """
         return thor_wrapper(
             api=self,
-            path="WsWorkunits/WUResult",
-            payload_list=True,
-            allowed_param=[
-                "Wuid",
-                "Sequence",
-                "ResultName",
-                "LogicalName",
-                "Cluster",
-                "false",
-                "FilterBy",
-                "Start",
-                "Count",
-            ],
-        )
+            path='WsWorkunits/WUResult', payload_list=True,
+            allowed_param=['Wuid',
+                           'Sequence',
+                           'ResultName',
+                           'LogicalName',
+                           'Cluster',
+                           'false',
+                           'FilterBy',
+                           'Start',
+                           'Count'])
 
     @property
     def getdfuInfo(self):
-        """Get information about a file"""
+        """Get information about a file
+        """
         return thor_wrapper(
             api=self,
-            path="WsDfu/DFUInfo",
-            payload_list=True,
-            allowed_param=[
-                "Name",
-                "Cluster",
-                "UpdateDescription",
-                "FileName",
-                "FileDesc",
-            ],
-        )
+            path='WsDfu/DFUInfo', payload_list=True,
+            allowed_param=["Name",
+                           "Cluster",
+                           "UpdateDescription",
+                           "FileName",
+                           "FileDesc"])
 
     @property
     def wuCreateAndUpdate(self):
-        """Create and update a workunit"""
+        """Create and update a workunit
+        """
         return thor_wrapper(
             api=self,
-            path="WsWorkunits/WUCreateAndUpdate",
-            payload_list=True,
-            allowed_param=[
-                "Wuid",
-                "State",
-                "StateOrig",
-                "Jobname",
-                "JobnameOrig",
-                "QueryText",
-                "Action",
-                "Description",
-                "DescriptionOrig",
-                "AddDrilldownFields",
-                "ResultLimit",
-                "Protected",
-                "ProtectedOrig",
-                "PriorityClass",
-                "PriorityLevel",
-                "Scope",
-                "ScopeOrig",
-                "ClusterSelection",
-                "ClusterOrig",
-                "XmlParams",
-                "ThorSlaveIP",
-                "QueryMainDefinition",
-                "DebugValues",
-                "ApplicationValues",
-            ],
-        )
+            path='WsWorkunits/WUCreateAndUpdate', payload_list=True,
+            allowed_param=['Wuid',
+                           'State',
+                           'StateOrig',
+                           'Jobname',
+                           'JobnameOrig',
+                           'QueryText',
+                           'Action',
+                           'Description',
+                           'DescriptionOrig',
+                           'AddDrilldownFields',
+                           'ResultLimit',
+                           'Protected',
+                           'ProtectedOrig',
+                           'PriorityClass',
+                           'PriorityLevel',
+                           'Scope',
+                           'ScopeOrig',
+                           'ClusterSelection',
+                           'ClusterOrig',
+                           'XmlParams',
+                           'ThorSlaveIP',
+                           'QueryMainDefinition',
+                           'DebugValues',
+                           'ApplicationValues'])
 
     @property
     def wuSubmit(self):
-        """Submit a workunit"""
+        """Submit a workunit
+        """
         return thor_wrapper(
             api=self,
-            path="WsWorkunits/WUSubmit",
-            payload_list=True,
-            allowed_param=[
-                "Wuid",
-                "Cluster",
-                "Queue",
-                "Snapshot",
-                "MaxRunTime",
-                "BlockTillFinishTimer",
-                "SyntaxCheck",
-                "NotifyCluster",
-            ],
-        )
+            path='WsWorkunits/WUSubmit', payload_list=True,
+            allowed_param=['Wuid',
+                           'Cluster',
+                           'Queue',
+                           'Snapshot',
+                           'MaxRunTime',
+                           'BlockTillFinishTimer',
+                           'SyntaxCheck',
+                           'NotifyCluster'])
 
     @property
     def wuRun(self):
-        """Run a workunit"""
+        """Run a workunit
+        """
         return thor_wrapper(
             api=self,
-            path="WsWorkunits/WURun",
-            payload_list=True,
-            allowed_param=[
-                "QuerySet",
-                "Query",
-                "Wuid",
-                "CloneWorkunit",
-                "Cluster",
-                "Wait",
-                "Input",
-                "NoRootTag",
-                "DebugValues",
-                "Variables",
-                "ApplicationValues",
-                "ExceptionSeverity",
-            ],
-        )
+            path='WsWorkunits/WURun', payload_list=True,
+            allowed_param=['QuerySet',
+                           'Query',
+                           'Wuid',
+                           'CloneWorkunit',
+                           'Cluster',
+                           'Wait',
+                           'Input',
+                           'NoRootTag',
+                           'DebugValues',
+                           'Variables',
+                           'ApplicationValues',
+                           'ExceptionSeverity'])
 
     @property
     def get_wuquery(self):
-        """Get the ECL query of a workunit"""
+        """Get the ECL query of a workunit
+        """
         return thor_wrapper(
             api=self,
-            path="WsWorkunits/WUQuery",
-            payload_list=True,
-            allowed_param=[
-                "Wuid",
-                "Type",
-                "Cluster",
-                "RoxieCluster",
-                "Owner",
-                "State",
-                "StartDate",
-                "EndDate",
-                "ECL",
-                "Jobname",
-                "LogicalFile",
-                "LogicalFileSearchType",
-                "ApplicationValues",
-                "After",
-                "Before",
-                "Count",
-                "PageSize",
-                "PageStartFrom",
-                "PageEndAt",
-                "LastNDays",
-                "Sortby",
-                "false",
-                "CacheHint",
-            ],
-        )
+            path='WsWorkunits/WUQuery', payload_list=True,
+            allowed_param=['Wuid',
+                           'Type',
+                           'Cluster',
+                           'RoxieCluster',
+                           'Owner',
+                           'State',
+                           'StartDate',
+                           'EndDate',
+                           'ECL',
+                           'Jobname',
+                           'LogicalFile',
+                           'LogicalFileSearchType',
+                           'ApplicationValues',
+                           'After',
+                           'Before',
+                           'Count',
+                           'PageSize',
+                           'PageStartFrom',
+                           'PageEndAt',
+                           'LastNDays',
+                           'Sortby',
+                           'false',
+                           'CacheHint'])
 
     @property
     def wuQuery(self):
-        """Query workunits using filters"""
+        """Query workunits using filters
+        """
         return thor_wrapper(
             api=self,
-            path="WsWorkunits/WUQuery",
-            payload_list=True,
-            allowed_param=[
-                "Wuid",
-                "Type",
-                "Cluster",
-                "RoxieCluster",
-                "Owner",
-                "State",
-                "StartDate",
-                "EndDate",
-                "ECL",
-                "Jobname",
-                "LogicalFile",
-                "LogicalFileSearchType",
-                "ApplicationValues",
-                "After",
-                "Before",
-                "Count",
-                "PageSize",
-                "PageStartFrom",
-                "PageEndAt",
-                "LastNDays",
-                "Sortby",
-                "Descending",
-                "CacheHint",
-            ],
-        )
+            path='WsWorkunits/WUQuery', payload_list=True,
+            allowed_param=['Wuid',
+                           'Type',
+                           'Cluster',
+                           'RoxieCluster',
+                           'Owner',
+                           'State',
+                           'StartDate',
+                           'EndDate',
+                           'ECL',
+                           'Jobname',
+                           'LogicalFile',
+                           'LogicalFileSearchType',
+                           'ApplicationValues',
+                           'After',
+                           'Before',
+                           'Count',
+                           'PageSize',
+                           'PageStartFrom',
+                           'PageEndAt',
+                           'LastNDays',
+                           'Sortby',
+                           'Descending',
+                           'CacheHint'])
 
     @property
     def fileQuery(self):
-        """Query files using filters"""
+        """Query files using filters
+        """
         return thor_wrapper(
             api=self,
-            path="WsDfu/DFUQuery",
-            payload_list=True,
-            allowed_param=[
-                "LogicalName",
-                "Description",
-                "Owner",
-                "RoxieCluster",
-                "Owner",
-                "NodeGroup",
-                "FileSizeFrom",
-                "FileSizeTo",
-                "FileType",
-                "StartDate",
-                "EndDate",
-                "ToTime",
-                "PageStartFrom",
-                "PageSize",
-            ],
-        )
+            path='WsDfu/DFUQuery', payload_list=True,
+            allowed_param=['LogicalName',
+                           'Description',
+                           'Owner',
+                           'RoxieCluster',
+                           'Owner',
+                           'NodeGroup',
+                           'FileSizeFrom',
+                           'FileSizeTo',
+                           'FileType',
+                           'StartDate',
+                           'EndDate',
+                           'ToTime',
+                           'PageStartFrom',
+                           'PageSize'])
 
     @property
     def getFileInfo(self):
-        """Get information about a file"""
+        """Get information about a file
+        """
         return thor_wrapper(
             api=self,
-            path="WsWorkunits/WUResult",
-            payload_list=True,
-            allowed_param=["LogicalName", "Cluster", "Count"],
-        )
+            path='WsWorkunits/WUResult', payload_list=True,
+            allowed_param=['LogicalName',
+                           'Cluster',
+                           'Count'])
 
     @property
     def WUWaitCompiled(self):
-        """Wait for a workunit to compile"""
+        """Wait for a workunit to compile
+        """
         return thor_wrapper(
             api=self,
-            path="WsWorkunits/WUWaitCompiled",
-            payload_list=True,
-            allowed_param=["Wuid", "Wait", "ReturnOnWait"],
-        )
+            path='WsWorkunits/WUWaitCompiled', payload_list=True,
+            allowed_param=['Wuid',
+                           'Wait',
+                           'ReturnOnWait'])
 
     @property
     def WUWaitComplete(self):
-        """Wait for a workunit to complete"""
+        """Wait for a workunit to complete
+        """
         return thor_wrapper(
             api=self,
-            path="WsWorkunits/WUWaitComplete",
-            payload_list=True,
-            allowed_param=["Wuid", "Wait", "ReturnOnWait"],
-        )
+            path='WsWorkunits/WUWaitComplete', payload_list=True,
+            allowed_param=['Wuid',
+                           'Wait',
+                           'ReturnOnWait'])
 
     @property
     def getSubFileInfo(self):
-        """Get information about a subfile"""
+        """Get information about a subfile
+        """
         return thor_wrapper(
-            api=self, path="WsDfu/DFUInfo", payload_list=True, allowed_param=["Name"]
-        )
+            api=self,
+            path='WsDfu/DFUInfo', payload_list=True,
+            allowed_param=['Name'])
 
     @property
     def checkFileExists(self):
-        """Check if a file exists"""
+        """Check if a file exists
+        """
         return thor_wrapper(
             api=self,
-            path="WsDfu/DFUQuery",
-            payload_list=True,
-            allowed_param=["LogicalName"],
-        )
+            path='WsDfu/DFUQuery', payload_list=True,
+            allowed_param=['LogicalName'])
 
     @property
     def TpClusterInfo(self):
-        """Get information about a cluster"""
+        """Get information about a cluster
+        """
         return thor_wrapper(
             api=self,
-            path="WsTopology/TpClusterInfo",
-            payload_list=True,
-            allowed_param=["Name"],
-        )
+            path='WsTopology/TpClusterInfo', payload_list=True,
+            allowed_param=['Name'])
 
     @property
     def Activity(self):
-        """Get information about a workunit activity"""
+        """Get information about a workunit activity
+        """
         return thor_wrapper(
             api=self,
-            path="WsSMC/Activity",
-            payload_list=True,
-            allowed_param=["Sortby", "Descending"],
-        )
+            path='WsSMC/Activity', payload_list=True,
+            allowed_param=['Sortby', 'Descending'])
 
     @property
     def UploadFile(self):
-        """Upload a file to the HPCC"""
-        return thor_wrapper(
-            api=self,
-            path="FileSpray/UploadFile",
-            payload_list=True,
-            allowed_param=["upload_", "rawxml_", "NetAddress", "Path", "OS"],
-        )
+        """Upload a file to the HPCC
+        """
+        return thor_wrapper(api=self,
+                            path='FileSpray/UploadFile',
+                            payload_list=True,
+                            allowed_param=['upload_',
+                                           'rawxml_',
+                                           'NetAddress',
+                                           'Path',
+                                           'OS']
+                            )
 
     @property
     def DropZoneFiles(self):
-        """Get information about files in a dropzone"""
-        return thor_wrapper(
-            api=self,
-            path="FileSpray/DropZoneFiles",
-            payload_list=True,
-            allowed_param=["id", "rawxml_"],
-        )
+        """Get information about files in a dropzone
+        """
+        return thor_wrapper(api=self,
+                            path='FileSpray/DropZoneFiles',
+                            payload_list=True,
+                            allowed_param=['id',
+                                           'rawxml_']
+                            )
 
     @property
     def dfuQuery(self):
-        """Query files using filters"""
+        """Query files using filters
+        """
         return thor_wrapper(
             api=self,
-            path="WsDfu/DFUQuery",
-            payload_list=True,
-            allowed_param=[
-                "Prefix",
-                "NodeGroup",
-                "ContentType",
-                "LogicalName",
-                "Description",
-                "Owner",
-                "StartDate",
-                "EndDate",
-                "FileType",
-                "FileSizeFrom",
-                "FileSizeTo",
-                "FirstN",
-                "PageSize",
-                "PageStartFrom",
-                "Sortby",
-                "Descending",
-                "OneLevelDirFileReturn",
-                "CacheHint",
-                "MaxNumberOfFiles",
-                "IncludeSuperOwner",
-            ],
-        )
+            path='WsDfu/DFUQuery', payload_list=True,
+            allowed_param=["Prefix",
+                           "NodeGroup",
+                           "ContentType",
+                           "LogicalName",
+                           "Description",
+                           "Owner",
+                           "StartDate",
+                           "EndDate",
+                           "FileType",
+                           "FileSizeFrom",
+                           "FileSizeTo",
+                           "FirstN",
+                           "PageSize",
+                           "PageStartFrom",
+                           "Sortby",
+                           "Descending",
+                           "OneLevelDirFileReturn",
+                           "CacheHint",
+                           "MaxNumberOfFiles",
+                           "IncludeSuperOwner"])
 
     @property
     def getDfuWorkunitInfo(self):
-        """Get information about a DFU workunit"""
+        """Get information about a DFU workunit
+        """
         return thor_wrapper(
             api=self,
-            path="FileSpray/GetDFUWorkunit",
-            payload_list=True,
-            allowed_param=["wuid"],
-        )
+            path='FileSpray/GetDFUWorkunit', payload_list=True,
+            allowed_param=["wuid"])
 
     @property
     def getDfuWorkunits(self):
-        """Get information about DFU workunits"""
+        """Get information about DFU workunits
+        """
         return thor_wrapper(
             api=self,
-            path="FileSpray/GetDFUWorkunits",
-            payload_list=True,
-            allowed_param=[
-                "Wuid",
-                "Owner",
-                "Cluster",
-                "StateReq",
-                "Type",
-                "Jobname",
-                "PageSize",
-                "CurrentPage",
-                "PageStartFrom",
-                "Sortby",
-                "Descending",
-                "CacheHint",
-            ],
-        )
+            path='FileSpray/GetDFUWorkunits', payload_list=True,
+            allowed_param=["Wuid",
+                           "Owner",
+                           "Cluster",
+                           "StateReq",
+                           "Type",
+                           "Jobname",
+                           "PageSize",
+                           "CurrentPage",
+                           "PageStartFrom",
+                           "Sortby",
+                           "Descending",
+                           "CacheHint", ])
 
     @property
     def sprayVariable(self):
-        """Spray a file to HPCC"""
+        """Spray a file to HPCC
+        """
         return thor_wrapper(
             api=self,
-            path="FileSpray/SprayVariable",
-            payload_list=True,
-            allowed_param=[
-                "sourceIP",
-                "sourcePath",
-                "srcxml",
-                "sourceMaxRecordSize",
-                "sourceFormat",
-                "NoSourceCsvSeparator",
-                "sourceCsvSeparate",
-                "sourceCsvTerminate",
-                "sourceCsvQuote",
-                "sourceCsvEscape",
-                "sourceRowTag",
-                "destGroup",
-                "destLogicalName",
-                "overwrite",
-                "replicate",
-                "ReplicateOffset",
-                "maxConnections",
-                "throttle",
-                "transferBufferSize",
-                "prefix",
-                "nosplit",
-                "noRecover",
-                "compress",
-                "push",
-                "pull",
-                "encrypt",
-                "decrypt",
-                "failIfNoSourceFile",
-                "recordStructurePresent",
-                "quotedTerminator",
-                "sourceRowPath",
-                "isJSON",
-            ],
+            path='FileSpray/SprayVariable', payload_list=True,
+            allowed_param=["sourceIP",
+                           "sourcePath",
+                           "srcxml",
+                           "sourceMaxRecordSize",
+                           "sourceFormat",
+                           "NoSourceCsvSeparator",
+                           "sourceCsvSeparate",
+                           "sourceCsvTerminate",
+                           "sourceCsvQuote",
+                           "sourceCsvEscape",
+                           "sourceRowTag",
+                           "destGroup",
+                           "destLogicalName",
+                           "overwrite",
+                           "replicate",
+                           "ReplicateOffset",
+                           "maxConnections",
+                           "throttle",
+                           "transferBufferSize",
+                           "prefix",
+                           "nosplit",
+                           "noRecover",
+                           "compress",
+                           "push",
+                           "pull",
+                           "encrypt",
+                           "decrypt",
+                           "failIfNoSourceFile",
+                           "recordStructurePresent",
+                           "quotedTerminator",
+                           "sourceRowPath",
+                           "isJSON"]
         )
 
     @property
     def sprayFixed(self):
-        """Spray a fixed file to HPCC"""
+        """Spray a fixed file to HPCC
+        """
         return thor_wrapper(
             api=self,
-            path="FileSpray/SprayFixed",
-            payload_list=True,
-            allowed_param=[
-                "sourceIP",
-                "sourcePath",
-                "srcxml",
-                "sourceFormat",
-                "sourceRecordSize",
-                "destGroup",
-                "destLogicalName",
-                "overwrite",
-                "replicate",
-                "ReplicateOffset",
-                "maxConnections",
-                "throttle",
-                "transferBufferSize",
-                "prefix",
-                "nosplit",
-                "norecover",
-                "compress",
-                "push",
-                "pull",
-                "encrypt",
-                "decrypt",
-                "wrap" "failIfNoSourceFile",
-                "recordStructurePresent",
-                "quotedTerminator",
-            ],
+            path='FileSpray/SprayFixed', payload_list=True,
+            allowed_param=["sourceIP",
+                           "sourcePath",
+                           "srcxml",
+                           "sourceFormat",
+                           "sourceRecordSize",
+                           "destGroup",
+                           "destLogicalName",
+                           "overwrite",
+                           "replicate",
+                           "ReplicateOffset",
+                           "maxConnections",
+                           "throttle",
+                           "transferBufferSize",
+                           "prefix",
+                           "nosplit",
+                           "norecover",
+                           "compress",
+                           "push",
+                           "pull",
+                           "encrypt",
+                           "decrypt",
+                           "wrap"
+                           "failIfNoSourceFile",
+                           "recordStructurePresent",
+                           "quotedTerminator"]
         )
 
     @property
     def WUUpdate(self):
-        """Update a workunit"""
+        """Update a workunit
+        """
         return thor_wrapper(
             api=self,
-            path="WsWorkunits/WUUpdate",
-            payload_list=True,
+            path='WsWorkunits/WUUpdate', payload_list=True,
             allowed_param=[
-                "Wuid",
-                "State",
-                "StateOrig",
-                "Jobname",
-                "JobnameOrig",
-                "QueryText",
-                "Action",
-                "Description",
-                "DescriptionOrig",
-                "AddDrilldownFields",
-                "ResultLimit",
-                "Protected",
-                "ProtectedOrig",
-                "PriorityClass",
-                "PriorityLevel",
-                "Scope",
-                "ScopeOrig",
-                "ClusterSelection",
-                "ClusterOrig",
-                "XmlParams",
-                "ThorSlaveIP",
-                "QueryMainDefinition",
-                "DebugValues",
-                "ApplicationValues",
-            ],
+                'Wuid',
+                'State',
+                'StateOrig',
+                'Jobname',
+                'JobnameOrig',
+                'QueryText',
+                'Action',
+                'Description',
+                'DescriptionOrig',
+                'AddDrilldownFields',
+                'ResultLimit',
+                'Protected',
+                'ProtectedOrig',
+                'PriorityClass',
+                'PriorityLevel',
+                'Scope',
+                'ScopeOrig',
+                'ClusterSelection',
+                'ClusterOrig',
+                'XmlParams',
+                'ThorSlaveIP',
+                'QueryMainDefinition',
+                'DebugValues',
+                'ApplicationValues',
+            ]
         )
 
     @property
     def getgraph(self):
-        """Get a graph from a workunit"""
+        """Get a graph from a workunit
+        """
         return thor_wrapper(
             api=self,
-            path="WsWorkunits/WUGetGraph",
-            payload_list=True,
-            allowed_param=["Wuid", "GraphName", "rawxml_"],
-        )
+            path='WsWorkunits/WUGetGraph', payload_list=True,
+            allowed_param=['Wuid', 'GraphName', 'rawxml_'])
 
     @property
     def downloadfile(self):
-        """Download a file from the HPCC"""
+        """Download a file from the HPCC
+        """
         return thor_wrapper(
             api=self,
-            path="FileSpray/DownloadFile",
-            payload_list=True,
-            allowed_param=["Name", "NetAddress", "Path", "OS"],
-        )
+            path='FileSpray/DownloadFile', payload_list=True,
+            allowed_param=['Name', 'NetAddress', 'Path', 'OS'])
 
     @property
     def AddtoSuperfileRequest(self):
-        """Add a file to a superfile"""
+        """Add a file to a superfile
+        """
         return thor_wrapper(
             api=self,
-            path="WsDfu/AddtoSuperfile",
-            payload_list=True,
-            allowed_param=["Superfile", "ExistingFile"],
-        )
+            path='WsDfu/AddtoSuperfile', payload_list=True,
+            allowed_param=['Superfile', 'ExistingFile'])
 
     @property
     def fileList(self):
-        """List files in a directory"""
+        """List files in a directory
+        """
         return thor_wrapper(
             api=self,
-            method="POST",
-            path="FileSpray/FileList",
-            payload_list=True,
-            allowed_param=["Netaddr", "Path", "Mask", "OS", "rawxml_"],
-        )
+            method='POST',
+            path='FileSpray/FileList', payload_list=True,
+            allowed_param=['Netaddr', 'Path', 'Mask', 'OS', 'rawxml_'])
 
 
 class roxie(object):
@@ -686,20 +652,18 @@ class roxie(object):
             Call the roxie API
     """
 
-    def __init__(
-        self,
-        auth,
-        searchservice,
-        roxie_port,
-        timeout=1200,
-        response_type="json",
-        definition="submit",
-    ):
+    def __init__(self,
+                 auth,
+                 searchservice,
+                 roxie_port,
+                 timeout=1200,
+                 response_type='json',
+                 definition='submit'):
 
         self.auth = auth
         self.timeout = timeout
         self.response_type = response_type
-        self.definition = "WsEcl/" + definition + "/query"
+        self.definition = 'WsEcl/'+definition + '/query'
         self.searchservice = searchservice
         self.roxie_port = roxie_port
 
@@ -711,7 +675,7 @@ class roxie(object):
         ----------
             self:
                 The object pointer
-
+        
         Returns
         -------
             response:
@@ -741,10 +705,10 @@ class workunit_submit(object):
 
         write_file:
             Write a file to HPCC
-
+        
         get_bashcommand:
             Get the bash command to submit a workunit
-
+        
         get_workload:
             Get the workload on the clusters
 
@@ -753,27 +717,26 @@ class workunit_submit(object):
 
         bash_compile:
             Compile the workunit
-
+        
         bash_run:
             Run the workunit
-
+        
         compileworkunit:
             Legacy function to compile the workunit
-
+        
         createworkunit:
             Legacy function to create the workunit
-
+        
         WUWaitCompiled:
             Legacy function to wait for the workunit to compile
-
+        
         WUWaitComplete:
             Legacy function to wait for the workunit to complete
-
+        
         runworkunit:
             Legacy function to run the workunit
     """
-
-    def __init__(self, hpcc, cluster1="", cluster2=""):
+    def __init__(self, hpcc, cluster1='', cluster2=''):
         self.hpcc = hpcc
         self.cluster1 = cluster1
         self.cluster2 = cluster2
@@ -781,7 +744,7 @@ class workunit_submit(object):
 
     def write_file(self, querytext, folder, jobname):
         """Write a .ecl file to disk
-
+            
         Parameters
         ----------
             querytext:
@@ -795,7 +758,7 @@ class workunit_submit(object):
         -------
             filename:
                 The name of the ecl file written
-
+        
         Raises
         ------
             HPCCException:
@@ -803,18 +766,18 @@ class workunit_submit(object):
         """
         try:
             words = jobname.split()
-            jobname = "_".join(words)
-            filename = os.path.join(folder, jobname + ".ecl")
-            f = open(filename, "w")
+            jobname = '_'.join(words)
+            filename = os.path.join(folder, jobname + '.ecl')
+            f = open(filename, 'w')
             f.write(querytext)
             f.close
             return filename
         except Exception as e:
-            raise HPCCException("Could not write file: " + str(e))
+            raise HPCCException('Could not write file: ' + str(e))
 
     def get_bashcommand(self, filename, repository):
         """Get the bash command to compile the ecl file
-
+        
         Parameters
         ----------
             filename:
@@ -837,11 +800,10 @@ class workunit_submit(object):
         try:
             outputfile = utils.create_compile_file_name(filename)
             bashcommand = utils.create_compile_bash_command(
-                repository, outputfile, filename
-            )
+                repository, outputfile, filename)
             return bashcommand, outputfile
         except Exception as e:
-            raise HPCCException("Could not get bash command: " + str(e))
+            raise HPCCException('Could not get bash command: ' + str(e))
 
     def get_workload(self):
         """Get the workload for the given two HPCC clusters
@@ -862,23 +824,23 @@ class workunit_submit(object):
                 A generic exception
         """
         try:
-            payload = {"SortBy": "Name", "Descending": 1}
+            payload = {'SortBy': 'Name', 'Descending': 1}
 
             resp = self.hpcc.Activity(**payload).json()
             len1 = 0
             len2 = 0
-            if "Running" in list(resp["ActivityResponse"].keys()):
-                workunits = resp["ActivityResponse"]["Running"]["ActiveWorkunit"]
+            if 'Running' in list(resp['ActivityResponse'].keys()):
+                workunits = resp['ActivityResponse']['Running']['ActiveWorkunit']
                 for workunit in workunits:
-                    if workunit["TargetClusterName"] == self.cluster1:
+                    if workunit['TargetClusterName'] == self.cluster1:
                         len1 = len1 + 1
-                    if workunit["TargetClusterName"] == self.cluster2:
+                    if workunit['TargetClusterName'] == self.cluster2:
                         len2 = len2 + 1
 
             return len1, len2
 
         except Exception as e:
-            raise HPCCException("Could not get workload: " + str(e))
+            raise HPCCException('Could not get workload: ' + str(e))
 
     def create_filename(self, QueryText, working_folder, Jobname):
         """Create a filename for the ecl file
@@ -895,7 +857,7 @@ class workunit_submit(object):
         Returns
         -------
             filename:
-                The name of the ecl file
+                The name of the ecl file            
 
         Raises
         ------
@@ -906,9 +868,9 @@ class workunit_submit(object):
             self.Jobname = Jobname
             return self.write_file(QueryText, working_folder, Jobname)
         except Exception as e:
-            raise HPCCException("Could not create filename: " + str(e))
+            raise HPCCException('Could not create filename: ' + str(e))
 
-    def bash_compile(self, filename, gitrepository):
+    def bash_compile(self,  filename, gitrepository):
         """Compile the ecl file
 
         Parameters
@@ -931,14 +893,14 @@ class workunit_submit(object):
                 A generic exception
         """
         try:
-            bashcommand, outputfile = self.get_bashcommand(filename, gitrepository)
+            bashcommand, outputfile = self.get_bashcommand(
+                filename, gitrepository)
             process = subprocess.Popen(
-                bashcommand.split(), stdout=subprocess.PIPE, stderr=subprocess.STDOUT
-            )
+                bashcommand.split(), stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             output, error = process.communicate()
             return output, outputfile
         except Exception as e:
-            raise HPCCException("Could not compile: " + str(e))
+            raise HPCCException('Could not compile: ' + str(e))
 
     def bash_run(self, compiledfile, cluster):
         """Run the compiled ecl file
@@ -962,33 +924,25 @@ class workunit_submit(object):
         """
         try:
             # Select the cluster to run the query on
-            if cluster == "":
+            if cluster == '':
                 len1, len2 = self.get_workload()
                 if len2 > len1:
                     cluster = self.cluster1
                 else:
                     cluster = self.cluster2
 
-            self.Jobname = self.Jobname.replace(" ", "_")
+            self.Jobname = self.Jobname.replace(' ', '_')
             bashcommand = utils.create_run_bash_command(
-                compiledfile,
-                cluster,
-                self.hpcc.auth.ip,
-                self.hpcc.auth.port,
-                self.hpcc.auth.oauth[0],
-                self.hpcc.auth.oauth[1],
-                self.Jobname,
-            )
+                compiledfile, cluster, self.hpcc.auth.ip, self.hpcc.auth.port, self.hpcc.auth.oauth[0], self.hpcc.auth.oauth[1], self.Jobname)
             process = subprocess.Popen(
-                bashcommand.split(), stdout=subprocess.PIPE, stderr=subprocess.STDOUT
-            )
+                bashcommand.split(), stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             output, error = process.communicate()
 
             return output, error
         except Exception as e:
-            raise HPCCException("Could not run: " + str(e))
+            raise HPCCException('Could not run: ' + str(e))
 
-    def compileworkunit(self, Wuid, Cluster=""):
+    def compileworkunit(self, Wuid, Cluster=''):
         """Legacy function to compile a workunit - use bash_compile instead
 
         Parameters
@@ -998,7 +952,7 @@ class workunit_submit(object):
             Cluster:
                 The HPCC cluster to run the query on
         """
-        if Cluster == "":
+        if Cluster == '':
             len1, len2 = self.get_workload()
             if len2 > len1:
                 Cluster = self.cluster1
@@ -1010,14 +964,12 @@ class workunit_submit(object):
         except requests.exceptions.Timeout:
             w3 = self.WUWaitCompiled(Wuid=Wuid)
             w3 = json.loads(w3.text)
-            return w3["WUWaitResponse"]["StateID"]
+            return w3['WUWaitResponse']['StateID']
         else:
             w3 = json.loads(w3.text)
-            return w3["WUWaitResponse"]["StateID"]
+            return w3['WUWaitResponse']['StateID']
 
-    def createworkunit(
-        self, Action, ResultLimit, QueryText, Jobname, ClusterOrig="", data=""
-    ):
+    def createworkunit(self, Action, ResultLimit, QueryText, Jobname, ClusterOrig='', data=''):
         """Legacy function to create a workunit - use bash_run instead
 
         Parameters
@@ -1035,7 +987,7 @@ class workunit_submit(object):
             data:
                 The data to pass to the query
         """
-        if ClusterOrig == "":
+        if ClusterOrig == '':
             len1, len2 = self.get_workload()
 
             if len2 > len1:
@@ -1043,31 +995,26 @@ class workunit_submit(object):
             else:
                 ClusterOrig = self.cluster2
         if QueryText is None:
-            data = {"QueryText": data}
-            kwargs = {"data": data}
+            data = {'QueryText': data}
+            kwargs = {'data': data}
         else:
-            data = {"QueryText": QueryText}
-            kwargs = {"data": data}
+            data = {'QueryText': QueryText}
+            kwargs = {'data': data}
 
-        resp = self.hpcc.wuCreateAndUpdate(
-            Action=Action,
-            ResultLimit=ResultLimit,
-            Jobname=Jobname,
-            ClusterOrig=ClusterOrig,
-            **kwargs
-        )
+        resp = self.hpcc.wuCreateAndUpdate(Action=Action,
+                                           ResultLimit=ResultLimit,
+                                           Jobname=Jobname,
+                                           ClusterOrig=ClusterOrig, **kwargs)
 
         if resp.status_code == 200:
             resp = json.loads(resp.text)
-            if (
-                "WUUpdateResponse" in resp
-                and "Workunit" in resp["WUUpdateResponse"]
-                and "Wuid" in resp["WUUpdateResponse"]["Workunit"]
-            ):
-                return resp["WUUpdateResponse"]["Workunit"]["Wuid"]
+            if ('WUUpdateResponse' in resp
+                and 'Workunit' in resp['WUUpdateResponse']
+                    and 'Wuid' in resp['WUUpdateResponse']['Workunit']):
+                return resp['WUUpdateResponse']['Workunit']['Wuid']
 
         else:
-            raise ("workunit id not created")
+            raise ('workunit id not created')
 
     def WUWaitCompiled(self, Wuid):
         """Legacy function to wait for a workunit to compile
@@ -1079,8 +1026,7 @@ class workunit_submit(object):
         """
         try:
             logging.info(
-                "session timeout for WUWaitCompiled, starting new session for WUWaitComplete"
-            )
+                "session timeout for WUWaitCompiled, starting new session for WUWaitComplete")
             w4 = self.hpcc.WUWaitCompiled(Wuid=Wuid)
         except requests.exceptions.Timeout:
             w4 = self.WUWaitCompiled(Wuid=Wuid)
@@ -1098,8 +1044,7 @@ class workunit_submit(object):
         """
         try:
             logging.info(
-                "session timeout for WuRun, starting new session for WUWaitComplete"
-            )
+                "session timeout for WuRun, starting new session for WUWaitComplete")
             w4 = self.hpcc.WUWaitComplete(Wuid=Wuid)
         except requests.exceptions.Timeout:
             w4 = self.WUWaitComplete(Wuid=Wuid)
@@ -1107,7 +1052,7 @@ class workunit_submit(object):
         else:
             return w4
 
-    def runworkunit(self, Wuid, Cluster=""):
+    def runworkunit(self, Wuid, Cluster=''):
         """Legacy function to run a workunit - use bash_run instead
 
         Parameters
@@ -1117,7 +1062,7 @@ class workunit_submit(object):
             Cluster:
                 The HPCC cluster to run the query on
         """
-        if Cluster == "":
+        if Cluster == '':
             len1, len2 = self.get_workload()
 
             if len2 > len1:
@@ -1125,22 +1070,24 @@ class workunit_submit(object):
             else:
                 Cluster = self.cluster2
         try:
-            w4 = self.hpcc.wuRun(Wuid=Wuid, Cluster=Cluster, Variables=[])
+            w4 = self.hpcc.wuRun(Wuid=Wuid,
+                                 Cluster=Cluster,
+                                 Variables=[])
         except requests.exceptions.Timeout:
             w4 = self.WUWaitComplete(Wuid=Wuid)
             w4 = w4.json()
 
-            return w4["WUWaitResponse"]["StateID"]
+            return w4['WUWaitResponse']['StateID']
         else:
             w4 = json.loads(w4.text)
-            state = w4["WURunResponse"]["State"]
+            state = w4['WURunResponse']['State']
             return self.stateid[state]
 
 
 class readfileinfo(object):
     """
     Class to read the file information from the HPCC cluster
-
+    
     Attributes
     ----------
         hpcc:
@@ -1179,46 +1126,26 @@ class readfileinfo(object):
             The cluster to despray the file from
         csvHeaderFlag:
             Int to determine if the file has a csv header. Defaults to 0
-
+    
     Methods
     -------
         checkIfFileExistsAndIsSuperFile:
             Checks if the file exists and is a superfile
-
+        
         setFilename:
             Sets the logical file name
-
+        
         getSubFileInformation:
             Gets the subfile information
 
         checkfileinDFU:
             Checks the file in the DFU queue
-
+    
         getData:
             Gets the data from the file
     """
 
-    def __init__(
-        self,
-        hpcc,
-        logicalFileName,
-        cluster,
-        fileType,
-        fileSizelimit=25,
-        ifExists=-1,
-        isSuperFile=-1,
-        actualFileSize=-1,
-        recordCount=-1,
-        desprayIP="",
-        desprayPath="",
-        desprayallowoverwrite="true",
-        shouldDespray=False,
-        checkStatus=False,
-        csvSeperatorforRead=",",
-        readStatus="Not read",
-        desprayFromCluster="",
-        csvHeaderFlag=0,
-    ):
+    def __init__(self, hpcc, logicalFileName, cluster, fileType, fileSizelimit=25, ifExists=-1, isSuperFile=-1, actualFileSize=-1, recordCount=-1, desprayIP='', desprayPath='', desprayallowoverwrite='true', shouldDespray=False, checkStatus=False, csvSeperatorforRead=',', readStatus='Not read', desprayFromCluster='', csvHeaderFlag=0):
         """Constructor for the readfileinfo class"""
 
         self.hpcc = hpcc
@@ -1251,45 +1178,27 @@ class readfileinfo(object):
 
         self.checkStatus = True
         fileSearch = self.hpcc.fileQuery(
-            LogicalName=self.logicalFileName,
-            LogicalFileSearchType="Logical Files and Superfiles",
-        )
+            LogicalName=self.logicalFileName, LogicalFileSearchType='Logical Files and Superfiles')
         self.ifExists = utils.getfileStatus(fileSearch)
-        if self.ifExists != 0 and self.ifExists != "0":
+        if self.ifExists != 0 and self.ifExists != '0':
             arrFESF = utils.getfileType(fileSearch)
-            self.cluster = (
-                arrFESF["NodeGroup"]
-                if arrFESF["NodeGroup"] is not None
-                else clusterFromUser
-            )
-            self.ifSuperFile = (
-                arrFESF["isSuperfile"] if arrFESF["isSuperfile"] is not None else ""
-            )
-            self.actualFileSize = (
-                int(arrFESF["Totalsize"].replace(",", ""))
-                if arrFESF["Totalsize"] is not None
-                else ""
-            )
-            self.fileType = (
-                arrFESF["ContentType"]
-                if arrFESF["ContentType"] is not None
-                else self.fileType
-            )
+            self.cluster = arrFESF['NodeGroup'] if arrFESF['NodeGroup'] is not None else clusterFromUser
+            self.ifSuperFile = arrFESF['isSuperfile'] if arrFESF['isSuperfile'] is not None else ''
+            self.actualFileSize = int(arrFESF['Totalsize'].replace(
+                ',', '')) if arrFESF['Totalsize'] is not None else ''
+            self.fileType = arrFESF['ContentType'] if arrFESF['ContentType'] is not None else self.fileType
             if bool(arrFESF):
-                if arrFESF["RecordCount"] != "":
-                    self.recordCount = (
-                        0
-                        if arrFESF["RecordCount"] is None
-                        else int(arrFESF["RecordCount"].replace(",", ""))
-                    )
+                if(arrFESF['RecordCount'] != ''):
+                    self.recordCount = 0 if arrFESF['RecordCount'] is None else int(
+                        arrFESF['RecordCount'].replace(',', ''))
                 else:
                     self.recordCount = -2
         else:
-            self.fileType = ""
-            self.ifSuperFile = ""
+            self.fileType = ''
+            self.ifSuperFile = ''
             self.actualFileSize = None
             self.recordCount = None
-            self.cluster = ""
+            self.cluster = ''
             self.readStatus = "File doesn't exist"
 
     def setFilename(self, filename):
@@ -1305,7 +1214,7 @@ class readfileinfo(object):
 
     def getSubFileInformation(self):
         """Function to get the subfile information
-
+        
         Parameters
         ----------
             None
@@ -1315,13 +1224,13 @@ class readfileinfo(object):
             subFileInformation:
                 The subfile information if the file is a superfile, else returns a message "Not a superfile"
         """
-        if not self.checkStatus:
+        if(not self.checkStatus):
             self.checkIfFileExistsAndIsSuperFile(self.cluster)
-        if self.isSuperFile == 1:
+        if(self.isSuperFile == 1):
             subFileInfo = self.hpcc.getSubFileInfo(Name=self.logicalFileName)
-            return utils.getSubfileNames(subFileInfo)
+            return(utils.getSubfileNames(subFileInfo))
         else:
-            return "Not a superfile"
+            return('Not a superfile')
 
     def checkfileinDFU(self):
         """Function to check if the file exists in the DFU queue
@@ -1355,56 +1264,35 @@ class readfileinfo(object):
                 The data from the file
         """
         self.checkIfFileExistsAndIsSuperFile(self.cluster)
-        if self.ifExists != 0 and self.ifExists != "0":
-            filesizeinMB = (self.actualFileSize / 1024) / 1024
-            if (
-                filesizeinMB > self.fileSizelimit
-                or self.fileType == "xml"
-                or self.shouldDespray
-            ):
-                if self.desprayIP != "" and self.desprayPath != "":
-                    QueryString = (
-                        "IMPORT STD; STD.file.despray(~'"
-                        + self.logicalFileName
-                        + "','"
-                        + self.desprayIP
-                        + "','"
-                        + self.desprayPath
-                        + "',,,,"
-                        + self.desprayallowoverwrite
-                        + ");"
-                    )
-                    clusterfrom = ""
-                    if self.desprayFromCluster == "":
+        if self.ifExists != 0 and self.ifExists != '0':
+            filesizeinMB = (self.actualFileSize/1024)/1024
+            if(filesizeinMB > self.fileSizelimit or self.fileType == 'xml' or self.shouldDespray):
+                if(self.desprayIP != '' and self.desprayPath != ''):
+                    QueryString = "IMPORT STD; STD.file.despray(~\'"+self.logicalFileName + "\',\'" + \
+                        self.desprayIP+"\',\'"+self.desprayPath + \
+                        "\',,,,"+self.desprayallowoverwrite+");"
+                    clusterfrom = ''
+                    if(self.desprayFromCluster == ''):
                         clusterfrom = self.cluster
                     else:
                         clusterfrom = self.desprayFromCluster
-                    setattr(self.hpcc, "response_type", ".json")
+                    setattr(self.hpcc, 'response_type', '.json')
                     self.readStatus = utils.desprayfile(
-                        self.hpcc,
-                        QueryString,
-                        clusterfrom,
-                        "Despraying : " + self.logicalFileName,
-                    )
+                        self.hpcc, QueryString, clusterfrom, 'Despraying : ' + self.logicalFileName)
                 else:
-                    self.readStatus = "Unable to despray with the given input values. Please provide values for despray IP and folder"
+                    self.readStatus = 'Unable to despray with the given input values. Please provide values for despray IP and folder'
             else:
-                if self.recordCount == -2:
+                if(self.recordCount == -2):
                     countupdated = 9223372036854775807
                 else:
                     countupdated = self.recordCount
                     flatcsvresp = self.hpcc.getFileInfo(
-                        LogicalName=self.logicalFileName,
-                        Cluster=self.cluster,
-                        Count=countupdated,
-                    )
-                    if self.fileType == "flat":
-                        self.readStatus = "Read"
-                        return utils.getflatdata(flatcsvresp)
+                        LogicalName=self.logicalFileName, Cluster=self.cluster, Count=countupdated)
+                    if(self.fileType == 'flat'):
+                        self.readStatus = 'Read'
+                        return(utils.getflatdata(flatcsvresp))
                     else:
-                        self.readStatus = "Read"
-                        return utils.getcsvdata(
-                            flatcsvresp, self.csvSeperatorforRead, self.csvHeaderFlag
-                        )
+                        self.readStatus = 'Read'
+                        return(utils.getcsvdata(flatcsvresp, self.csvSeperatorforRead, self.csvHeaderFlag))
         else:
             self.readStatus = "File doesn't exist"
