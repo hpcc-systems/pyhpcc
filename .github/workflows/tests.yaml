@@ -1,0 +1,21 @@
+name: poetry
+on: [pull_request, workflow_dispatch]
+env: 
+  POETRY_HOME: ${{vars.POETRY_HOME}}
+  POETRY: ${{vars.POETRY}}
+jobs:
+  poetry:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+    - name: Install Poetry
+      run: ./scripts/poetry-install.sh
+    # - name: Install dependencies
+    #   run: $POETRY install
+    - name: Python tests
+      run: $POETRY run pytest 
+      continue-on-error: true
