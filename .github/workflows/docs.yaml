@@ -1,8 +1,5 @@
 name: Make docs
-on: 
-    pull_request_target:
-      branches:
-        - main, dev
+on: [pull_request]
 env: 
   POETRY_HOME: ${{vars.POETRY_HOME}}
   POETRY: ${{vars.POETRY}}

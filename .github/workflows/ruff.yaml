@@ -1,8 +1,5 @@
 name: Ruff
-on: 
-  pull_request_target:
-    branches:
-      - main, dev
+on: [pull_request]
 jobs:
   ruff:
     runs-on: ubuntu-latest
