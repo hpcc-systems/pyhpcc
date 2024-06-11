@@ -1,8 +1,5 @@
 name: poetry
 on: [push, pull_request, workflow_dispatch]
-env: 
-  POETRY_HOME: /opt/poetry
-  POETRY: /opt/poetry/bin/poetry
 jobs:
   poetry:
     runs-on: ubuntu-latest
@@ -13,9 +10,7 @@ jobs:
       with:
         python-version: "3.12"
     - name: Install Poetry
-      run: |
-        python3 -m venv $POETRY_HOME
-        $POETRY_HOME/bin/pip install poetry==1.2.0
+      run: ./scripts/poetry-install.sh
     - name: Install dependencies
       run: $POETRY install
     # - name: Build Artifact
