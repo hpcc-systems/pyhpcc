@@ -1,5 +1,8 @@
 name: poetry
 on: [push, pull_request, workflow_dispatch]
+env: 
+  POETRY_HOME: ${{vars.POETRY_HOME}}
+  POETRY: ${{vars.POETRY}}
 jobs:
   poetry:
     runs-on: ubuntu-latest
@@ -12,12 +15,12 @@ jobs:
     - name: Install Poetry
       run: ./scripts/poetry-install.sh
     - name: Install dependencies
-      run: ${{vars.POETRY}} install
+      run: $POETRY install
     # - name: Build Artifact
     #   run: $POETRY build
     - name: Lint with ruff
       uses: chartboost/ruff-action@v1
       continue-on-error: true
     - name: Python tests
-      run: ${{vars.POETRY}} run pytest 
+      run: $POETRY run pytest 
       continue-on-error: true
