@@ -1,0 +1,20 @@
+name: poetry
+on: [push, pull_request]
+env: 
+  POETRY_HOME: ${{vars.POETRY_HOME}}
+  POETRY: ${{vars.POETRY}}
+jobs:
+  poetry:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+    - name: Install Poetry and dependencies
+      run: ./scripts/poetry-install.sh
+    - name: Check docs
+      working-directory: ./docs
+      run: $POETRY run make html
+      continue-on-error: true
