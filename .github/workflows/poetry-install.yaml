@@ -12,7 +12,7 @@ jobs:
     - name: Install Poetry
       run: ./scripts/poetry-install.sh
     - name: Install dependencies
-      run: $POETRY install
+      run: /opt/poetry/bin/poetry install
     # - name: Build Artifact
     #   run: $POETRY build
     - name: Lint with ruff
