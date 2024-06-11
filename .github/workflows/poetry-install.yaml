@@ -2,7 +2,7 @@ name: poetry
 on: [push, pull_request, workflow_dispatch]
 env: 
   POETRY_HOME: /opt/poetry
-  POETRY: $POETRY_HOME/bin/poetry
+  POETRY: $opt/poetry/bin/poetry
 jobs:
   poetry:
     runs-on: ubuntu-latest
