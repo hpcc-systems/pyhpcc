@@ -24,3 +24,6 @@ jobs:
     - name: Python tests
       run: $POETRY run pytest 
       continue-on-error: true
+    - name: Check docs
+      run: $POETRY run make html
+      continue-on-error: true
