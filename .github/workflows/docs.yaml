@@ -1,5 +1,8 @@
-name: poetry
-on: [push, pull_request]
+name: Make docs
+on: 
+    pull_request:
+      branches:
+        - main, dev
 env: 
   POETRY_HOME: ${{vars.POETRY_HOME}}
   POETRY: ${{vars.POETRY}}

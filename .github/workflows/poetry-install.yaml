@@ -1,5 +1,8 @@
-name: poetry
-on: [pull_request, push, workflow_dispatch]
+name: poetry-install
+on: 
+  pull_request:
+    branches:
+      - features/gh_actions
 env: 
   POETRY_HOME: ${{vars.POETRY_HOME}}
   POETRY: ${{vars.POETRY}}

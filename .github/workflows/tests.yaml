@@ -1,5 +1,8 @@
-name: poetry
-on: [pull_request, push]
+name: Run tests
+on: 
+    pull_request:
+      branches:
+        - main, dev
 env: 
   POETRY_HOME: ${{vars.POETRY_HOME}}
   POETRY: ${{vars.POETRY}}
