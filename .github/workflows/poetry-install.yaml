@@ -10,9 +10,7 @@ jobs:
       with:
         python-version: "3.12"
     - name: Install Poetry
-      run: |
-        python3 -m venv ${{vars.POETRY_HOME}}
-        ${{vars.POETRY_HOME}}/bin/pip install poetry==1.2.0
+      run: ./scripts/poetry-install.sh
     - name: Install dependencies
       run: ${{vars.POETRY}} install
     # - name: Build Artifact
