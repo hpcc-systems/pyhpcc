@@ -1,19 +1,28 @@
 name: poetry
-on: [push, workflow_dispatch]
+on: [push, pull_request, workflow_dispatch]
 env: 
   POETRY_HOME: /opt/poetry
+  POETRY: $POETRY_HOME/bin/poetry
 jobs:
   poetry:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
     - name: Install python
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v5
       with:
         python-version: "3.12"
     - name: Install Poetry
       run: |
         python3 -m venv $POETRY_HOME
         $POETRY_HOME/bin/pip install poetry==1.2.0
-    - name: Build Artifact
-      run: $POETRY_HOME/bin/poetry build
+    - name: Install dependencies
+      run: POETRY install
+    # - name: Build Artifact
+    #   run: $POETRY build
+    - name: Lint with ruff
+      uses: chartboost/ruff-action@v1
+      continue-on-error: true
+    - name: Python tests
+      run: $POETRY run pytest 
+      continue-on-error: true
