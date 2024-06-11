@@ -1,5 +1,8 @@
 name: Ruff
-on: [workflow_dispatch]
+on: 
+  pull_request:
+    branches:
+      - main, dev
 jobs:
   ruff:
     runs-on: ubuntu-latest
