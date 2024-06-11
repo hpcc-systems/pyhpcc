@@ -14,7 +14,7 @@ jobs:
         python3 -m venv ${{vars.POETRY_HOME}}
         ${{vars.POETRY_HOME}}/bin/pip install poetry==1.2.0
     - name: Install dependencies
-      run: $POETRY install
+      run: ${{vars.POETRY}} install
     # - name: Build Artifact
     #   run: $POETRY build
     - name: Lint with ruff
