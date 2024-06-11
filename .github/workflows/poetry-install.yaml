@@ -11,8 +11,8 @@ jobs:
         python-version: "3.12"
     - name: Install Poetry
       run: |
-        python3 -m venv $POETRY_HOME
-        $POETRY_HOME/bin/pip install poetry==1.2.0
+        python3 -m venv ${{vars.POETRY_HOME}}
+        ${{vars.POETRY_HOME}}/bin/pip install poetry==1.2.0
     - name: Install dependencies
       run: $POETRY install
     # - name: Build Artifact
@@ -21,5 +21,5 @@ jobs:
       uses: chartboost/ruff-action@v1
       continue-on-error: true
     - name: Python tests
-      run: $POETRY run pytest 
+      run: ${{vars.POETRY}} run pytest 
       continue-on-error: true
