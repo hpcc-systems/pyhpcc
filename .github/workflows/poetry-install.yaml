@@ -1,6 +1,6 @@
 name: poetry-install
 on: 
-  pull_request:
+  pull_request_target:
     branches:
       - features/gh_actions
 env: 
