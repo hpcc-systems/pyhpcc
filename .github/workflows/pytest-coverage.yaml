@@ -1,4 +1,4 @@
-name: Make docs
+name: Test Coverage
 on: 
   push:
     branches:
