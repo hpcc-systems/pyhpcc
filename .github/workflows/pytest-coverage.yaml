@@ -24,8 +24,8 @@ jobs:
         run: ./scripts/poetry-install.sh
       - name: Run coverage
         run: |
-          coverage run -m pytest
-          coverage xml
+          $POETRY run coverage run -m pytest
+          $POETRY run coverage xml
       - name: Get Cover 
         uses: orgoro/coverage@v3.1
         with:
