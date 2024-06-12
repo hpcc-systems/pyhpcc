@@ -49,5 +49,15 @@ poetry run coverage run
 poetry run coverage report
 ```
 
+## Submitting an PR
+[Create a PR](https://help.github.com/articles/creating-a-pull-request/) with the following configuration:
+
+The base branch is the main repo's main branch.
+- PR name: copy-and-paste the relevant issue name and include the issue number in front in square brackets, e.g. `[#1020] Make bash_runcommand in WorkUnitSubmit class configurable `
+- PR description: mention the issue number in this format: Fixes #1020. Doing so will automatically close the related issue once the PR is merged.
+- Please Ensure that "Allow edits from maintainers" is ticked.
+- Please describe the changes you have made in your branch and how they resolve the issue.  
+
+
 
 
