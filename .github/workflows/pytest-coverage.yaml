@@ -1,9 +1,11 @@
-name: 'coverage'
-on:
+name: Make docs
+on: 
+  push:
+    branches:
+      main
   pull_request:
     branches:
-    - master
-    - main
+      main
   workflow_dispatch:
 jobs:
   coverage:
