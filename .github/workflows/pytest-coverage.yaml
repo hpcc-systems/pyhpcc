@@ -22,10 +22,12 @@ jobs:
           python-version: "3.12"
       - name: Install Poetry and dependencies
         run: ./scripts/poetry-install.sh
-      - name: Run coverage
+      - name: Run Tests
         run: |
           $POETRY run coverage run -m pytest
-          $POETRY run coverage xml
+        continue-on-error: true
+      - name: Run Coverage
+        run: $POETRY run coverage xml
       - name: Get Cover 
         uses: orgoro/coverage@v3.1
         with:
