@@ -1,0 +1,27 @@
+name: 'coverage'
+on:
+  pull_request:
+    branches:
+    - master
+      - main
+jobs:
+  coverage:
+    name: PyTest coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Poetry and dependencies
+        run: ./scripts/poetry-install.sh    
+      - name: Run coverage
+        run: |
+          coverage run -m pytest
+          coverage xml
+      - name: Get Cover 
+        uses: orgoro/coverage@v3.1
+        with:
+          coverageFile: ./coverage.xml
+          token: ${{ secrets.GITHUB_TOKEN }}
