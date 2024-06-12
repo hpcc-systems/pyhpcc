@@ -7,6 +7,9 @@ on:
     branches:
       main
   workflow_dispatch:
+env: 
+  POETRY_HOME: ${{vars.POETRY_HOME}}
+  POETRY: ${{vars.POETRY}}
 jobs:
   coverage:
     name: PyTest coverage
@@ -19,12 +22,12 @@ jobs:
           python-version: "3.12"
       - name: Install Poetry and dependencies
         run: ./scripts/poetry-install.sh
-      # - name: Run coverage
-      #   run: |
-      #     coverage run -m pytest
-      #     coverage xml
-      # - name: Get Cover 
-      #   uses: orgoro/coverage@v3.1
-      #   with:
-      #     coverageFile: ./coverage.xml
-      #     token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run coverage
+        run: |
+          coverage run -m pytest
+          coverage xml
+      - name: Get Cover 
+        uses: orgoro/coverage@v3.1
+        with:
+          coverageFile: ./coverage.xml
+          token: ${{ secrets.GITHUB_TOKEN }}
