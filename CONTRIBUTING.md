@@ -41,5 +41,13 @@ ruff format # For formatting your code.
 ```
 
 
+## PR Guidelines
+For test coverage, please make sure to have more than 85% code coverage for both the individual and overall.
+To check code coverage, run the following commands
+``` bash
+poetry run coverage run
+poetry run coverage report
+```
+
 
 

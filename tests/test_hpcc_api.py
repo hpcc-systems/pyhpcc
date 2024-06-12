@@ -1,12 +1,13 @@
 # Unit tests to test the authentication module
-import config
 import os  # used by test_UploadFile
 import unittest
-
 from datetime import datetime  # used by test_UploadFile
-from pyhpcc.auth import auth
-from pyhpcc.models import hpcc
+
+import config
+
+from pyhpcc.auth import Auth
 from pyhpcc.errors import HPCCException
+from pyhpcc.models import hpcc
 
 
 class TestHPCCAPI(unittest.TestCase):
@@ -19,7 +20,7 @@ class TestHPCCAPI(unittest.TestCase):
     DUMMY_HPCC_HOST = config.DUMMY_HPCC_HOST
     DUMMY_HPCC_PORT = config.DUMMY_HPCC_PORT
 
-    AUTH_OBJ = auth(HPCC_HOST, HPCC_PORT, HPCC_USERNAME, HPCC_PASSWORD, True, "https")
+    AUTH_OBJ = Auth(HPCC_HOST, HPCC_PORT, HPCC_USERNAME, HPCC_PASSWORD, True, "https")
     HPCC_OBJ = hpcc(AUTH_OBJ)
 
     # Used by test_AddtoSuperfileRequest, test_getSubFileInfoall
