@@ -16,7 +16,7 @@ jobs:
         with:
           python-version: "3.12"
       - name: Install Poetry and dependencies
-        run: ./scripts/poetry-install.sh    
+        run: ./scripts/poetry-install.sh
       - name: Run coverage
         run: |
           coverage run -m pytest
