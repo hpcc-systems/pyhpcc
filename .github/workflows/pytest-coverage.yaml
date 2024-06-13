@@ -1,0 +1,35 @@
+name: Test Coverage
+on: 
+  push:
+    branches:
+      main
+  pull_request:
+    branches:
+      main
+  workflow_dispatch:
+env: 
+  POETRY_HOME: ${{vars.POETRY_HOME}}
+  POETRY: ${{vars.POETRY}}
+jobs:
+  coverage:
+    name: PyTest coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Poetry and dependencies
+        run: ./scripts/poetry-install.sh
+      - name: Run Tests
+        run: |
+          $POETRY run coverage run -m pytest
+        continue-on-error: true
+      - name: Run Coverage
+        run: $POETRY run coverage xml
+      - name: Get Cover 
+        uses: orgoro/coverage@v3.1
+        with:
+          coverageFile: ./coverage.xml
+          token: ${{ secrets.GITHUB_TOKEN }}

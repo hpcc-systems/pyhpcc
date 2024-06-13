@@ -1,0 +1,32 @@
+name: Run tests
+on: 
+  push:
+    branches:
+      main
+  pull_request:
+    branches:
+      main
+env: 
+  POETRY_HOME: ${{vars.POETRY_HOME}}
+  POETRY: ${{vars.POETRY}}
+  HPCC_USERNAME: ${{ secrets.HPCC_USERNAME }}
+  HPCC_PASSWORD: ${{ secrets.HPCC_PASSWORD }}
+  DUMMY_USERNAME: ${{ secrets.DUMMY_USERNAME }}
+  DUMMY_PASSWORD: ${{ secrets.DUMMY_PASSWORD }}
+  HPCC_HOST: ${{ secrets.HPCC_HOST }}
+  HPCC_PORT: ${{ secrets.HPCC_PORT }}
+  DUMMY_HOST: ${{ secrets.DUMMY_HOST }}
+  DUMMY_PORT: ${{ secrets.DUMMY_PORT }}
+jobs:
+  poetry:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+    - name: Install Poetry and dependencies
+      run: ./scripts/poetry-install.sh
+    - name: Python tests
+      run: $POETRY run pytest 
