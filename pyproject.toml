@@ -20,8 +20,13 @@ elementpath = "^3.0.2" # XPath selectors for XML Data structures
 pytest = "^7.1.3"
 pytest-mock = "^3.0.2"
 
+[tool.poetry.group.coverage.dependencies]
+coverage = "^7.5.3"
 
-
+#For Python Coverage
+[tool.coverage.run]
+command_line = "-m pytest"
+source = ["."]
 
 
 [build-system]
