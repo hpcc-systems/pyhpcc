@@ -1,0 +1,32 @@
+name: Make build and push
+on: 
+  push:
+    branches:
+      features/gh_actions
+env: 
+  POETRY_HOME: ${{vars.POETRY_HOME}}
+  POETRY: ${{vars.POETRY}}
+jobs:
+  poetry:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+    - name: Install Poetry and dependencies
+      run: ./scripts/poetry-install.sh
+    - name: Make build
+      run: $POETRY build
+    # - uses: actions/checkout@v4
+    - name: Push build to main branch
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        mkdir build
+        cp dist/* build/
+        git add build/
+        git commit -m "Commit build files"
+        git push
+           
