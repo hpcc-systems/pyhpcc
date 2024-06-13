@@ -7,7 +7,7 @@ env:
   POETRY_HOME: ${{vars.POETRY_HOME}}
   POETRY: ${{vars.POETRY}}
 jobs:
-  poetry:
+  Push-build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -24,9 +24,11 @@ jobs:
       run: |
         git config user.name "github-actions[bot]"
         git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-        mkdir build
+        git fetch
+        mkdir -p build
         cp dist/* build/
         git add build/
         git commit -m "Commit build files"
         git push
+        
            
