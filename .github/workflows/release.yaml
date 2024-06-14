@@ -1,0 +1,48 @@
+name: release
+on:
+  release:
+    types: [published]
+
+
+env: 
+  POETRY_HOME: ${{vars.POETRY_HOME}}
+  POETRY: ${{vars.POETRY}}
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+    - name: Install Poetry and dependencies
+      run: ./scripts/poetry-install.sh
+    - name: Make build
+      run: $POETRY build
+    - uses: actions/upload-artifact@v4 # v4.3.3
+      with:
+        name: distfiles
+        path: dist/
+        if-no-files-found: error
+
+  upload-github:
+    name: Upload (GitHub)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    needs: build
+    steps:
+      # We need to be in a git repo for gh to work.
+      - uses: actions/checkout@v4 # v4.1.4
+
+      - uses: actions/download-artifact@v4 # v4.1.7
+        with:
+          name: distfiles
+          path: dist/
+
+      - run: gh release upload ${{ github.event.release.tag_name }} dist/*.{tar.gz,whl}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        
+           
