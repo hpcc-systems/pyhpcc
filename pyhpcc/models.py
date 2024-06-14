@@ -1,16 +1,18 @@
-import subprocess
-import os
 import json
 import logging
+import os
+import subprocess
+
 import requests
-from pyhpcc.thor_binder import wrapper as thor_wrapper
-from pyhpcc.roxie_binder import wrapper as roxie_wrapper
-from pyhpcc.errors import HPCCException
+
 import pyhpcc.config as conf
 import pyhpcc.utils as utils
+from pyhpcc.errors import HPCCException
+from pyhpcc.roxie_binder import wrapper as roxie_wrapper
+from pyhpcc.thor_binder import wrapper as thor_wrapper
 
 
-class hpcc(object):
+class HPCC(object):
     """
     Base class for HPCC THOR API.
 
@@ -25,88 +27,88 @@ class hpcc(object):
 
     Methods:
     -------
-        get_wuinfo:
+        get_wu_info:
             Get the workunit information
 
-        get_wuresult:
+        get_wu_result:
             Get the workunit result
 
-        getdfuInfo:
+        get_dfu_info:
             Get the DFU information
 
-        wuCreateAndUpdate:
+        wu_create_and_update:
             Create and update the workunit
 
-        wuSubmit:
+        wu_submit:
             Submit the workunit
 
-        wuRun:
+        wu_run:
             Run the workunit
 
-        get_wuquery:
+        get_wu_query:
             Get the workunit query
 
-        wuQuery:
+        wu_query:
             Query the workunits using filters
 
-        fileQuery:
+        file_query:
             Query the files using filters
 
-        getFileInfo:
+        get_file_info:
             Get the file information
 
-        WUWaitCompiled:
+        wu_wait_compiled:
             Wait for the workunit to be compiled
 
-        WUWaitComplete:
+        wu_wait_complete:
             Wait for the workunit to be completed
 
-        getSubFileInfo:
+        get_subfile_info:
             Get the subfile information
 
-        checkFileExists:
+        check_file_exists:
             Check if the file exists
 
-        TpClusterInfo:
+        tp_cluster_info:
             Get the cluster information
 
-        Activity:
+        activity:
             Get the activity information
 
-        UploadFile:
+        upload_file:
             Upload the file
 
-        DropZoneFiles:
+        drop_zone_files:
             Get the dropzone files
 
-        dfuQuery:
+        dfu_query:
             Query the DFU files using filters
 
-        getDfuWorkunitInfo:
+        get_dfu_workunit_info:
             Get the DFU workunit information
 
-        getDfuWorkunits:
+        get_dfu_workunits:
             Get the DFU workunits
 
-        sprayVariable:
+        spray_variable:
             Spray a file of variable length records
 
-        sprayFixed:
+        spray_fixed:
             Spray a file of fixed format
 
-        WUUpdate:
+        wu_update:
             Update the workunit
 
-        getgraph:
+        get_graph:
             Get the graph information
 
-        downloadfile:
+        download_file:
             Download the file
 
-        AddtoSuperfileRequest:
+        add_to_superfile_request:
             Add the file to the superfile
 
-        fileList:
+        file_list:
             Get the file list
 
     """
@@ -117,7 +119,7 @@ class hpcc(object):
         self.response_type = response_type
 
     @property
-    def get_wuinfo(self):
+    def get_wu_info(self):
         """Get information about a workunit"""
         return thor_wrapper(
             api=self,
@@ -144,7 +146,7 @@ class hpcc(object):
         )
 
     @property
-    def get_wuresult(self):
+    def get_wu_result(self):
         """Get the results of a workunit"""
         return thor_wrapper(
             api=self,
@@ -164,7 +166,7 @@ class hpcc(object):
         )
 
     @property
-    def getdfuInfo(self):
+    def get_dfu_info(self):
         """Get information about a file"""
         return thor_wrapper(
             api=self,
@@ -180,7 +182,7 @@ class hpcc(object):
         )
 
     @property
-    def wuCreateAndUpdate(self):
+    def wu_create_and_update(self):
         """Create and update a workunit"""
         return thor_wrapper(
             api=self,
@@ -215,7 +217,7 @@ class hpcc(object):
         )
 
     @property
-    def wuSubmit(self):
+    def wu_submit(self):
         """Submit a workunit"""
         return thor_wrapper(
             api=self,
@@ -234,7 +236,7 @@ class hpcc(object):
         )
 
     @property
-    def wuRun(self):
+    def wu_run(self):
         """Run a workunit"""
         return thor_wrapper(
             api=self,
@@ -257,7 +259,7 @@ class hpcc(object):
         )
 
     @property
-    def get_wuquery(self):
+    def get_wu_query(self):
         """Get the ECL query of a workunit"""
         return thor_wrapper(
             api=self,
@@ -291,7 +293,7 @@ class hpcc(object):
         )
 
     @property
-    def wuQuery(self):
+    def wu_query(self):
         """Query workunits using filters"""
         return thor_wrapper(
             api=self,
@@ -325,7 +327,7 @@ class hpcc(object):
         )
 
     @property
-    def fileQuery(self):
+    def file_query(self):
         """Query files using filters"""
         return thor_wrapper(
             api=self,
@@ -350,7 +352,7 @@ class hpcc(object):
         )
 
     @property
-    def getFileInfo(self):
+    def get_file_info(self):
         """Get information about a file"""
         return thor_wrapper(
             api=self,
@@ -360,7 +362,7 @@ class hpcc(object):
         )
 
     @property
-    def WUWaitCompiled(self):
+    def wu_wait_compiled(self):
         """Wait for a workunit to compile"""
         return thor_wrapper(
             api=self,
@@ -370,7 +372,7 @@ class hpcc(object):
         )
 
     @property
-    def WUWaitComplete(self):
+    def wu_wait_complete(self):
         """Wait for a workunit to complete"""
         return thor_wrapper(
             api=self,
@@ -380,14 +382,14 @@ class hpcc(object):
         )
 
     @property
-    def getSubFileInfo(self):
+    def get_subfile_info(self):
         """Get information about a subfile"""
         return thor_wrapper(
             api=self, path="WsDfu/DFUInfo", payload_list=True, allowed_param=["Name"]
         )
 
     @property
-    def checkFileExists(self):
+    def check_file_exists(self):
         """Check if a file exists"""
         return thor_wrapper(
             api=self,
@@ -397,7 +399,7 @@ class hpcc(object):
         )
 
     @property
-    def TpClusterInfo(self):
+    def tp_cluster_info(self):
         """Get information about a cluster"""
         return thor_wrapper(
             api=self,
@@ -407,7 +409,7 @@ class hpcc(object):
         )
 
     @property
-    def Activity(self):
+    def activity(self):
         """Get information about a workunit activity"""
         return thor_wrapper(
             api=self,
@@ -417,7 +419,7 @@ class hpcc(object):
         )
 
     @property
-    def UploadFile(self):
+    def upload_file(self):
         """Upload a file to the HPCC"""
         return thor_wrapper(
             api=self,
@@ -427,7 +429,7 @@ class hpcc(object):
         )
 
     @property
-    def DropZoneFiles(self):
+    def drop_zone_files(self):
         """Get information about files in a dropzone"""
         return thor_wrapper(
             api=self,
@@ -437,7 +439,7 @@ class hpcc(object):
         )
 
     @property
-    def dfuQuery(self):
+    def dfu_query(self):
         """Query files using filters"""
         return thor_wrapper(
             api=self,
@@ -468,7 +470,7 @@ class hpcc(object):
         )
 
     @property
-    def getDfuWorkunitInfo(self):
+    def get_dfu_workunit_info(self):
         """Get information about a DFU workunit"""
         return thor_wrapper(
             api=self,
@@ -478,7 +480,7 @@ class hpcc(object):
         )
 
     @property
-    def getDfuWorkunits(self):
+    def get_dfu_workunits(self):
         """Get information about DFU workunits"""
         return thor_wrapper(
             api=self,
@@ -501,7 +503,7 @@ class hpcc(object):
         )
 
     @property
-    def sprayVariable(self):
+    def spray_variable(self):
         """Spray a file to HPCC"""
         return thor_wrapper(
             api=self,
@@ -544,7 +546,7 @@ class hpcc(object):
         )
 
     @property
-    def sprayFixed(self):
+    def spray_fixed(self):
         """Spray a fixed file to HPCC"""
         return thor_wrapper(
             api=self,
@@ -579,7 +581,7 @@ class hpcc(object):
         )
 
     @property
-    def WUUpdate(self):
+    def wu_update(self):
         """Update a workunit"""
         return thor_wrapper(
             api=self,
@@ -614,7 +616,7 @@ class hpcc(object):
         )
 
     @property
-    def getgraph(self):
+    def get_graph(self):
         """Get a graph from a workunit"""
         return thor_wrapper(
             api=self,
@@ -624,7 +626,7 @@ class hpcc(object):
         )
 
     @property
-    def downloadfile(self):
+    def download_file(self):
         """Download a file from the HPCC"""
         return thor_wrapper(
             api=self,
@@ -634,7 +636,7 @@ class hpcc(object):
         )
 
     @property
-    def AddtoSuperfileRequest(self):
+    def add_to_superfile_request(self):
         """Add a file to a superfile"""
         return thor_wrapper(
             api=self,
@@ -644,7 +646,7 @@ class hpcc(object):
         )
 
     @property
-    def fileList(self):
+    def file_list(self):
         """List files in a directory"""
         return thor_wrapper(
             api=self,
@@ -655,7 +657,7 @@ class hpcc(object):
         )
 
 
-class roxie(object):
+class Roxie(object):
     """
     Base class for HPCC Roxie API
 
@@ -669,14 +671,14 @@ class roxie(object):
             Type of response to return
         definition:
             Definition of the API
-        searchservice:
+        search_service:
             Search service object
-        roxieport:
+        roxie_port:
             Roxie port
 
     Methods
     -------
-        __init__(auth, timeout, response_type, definition, searchservice, roxieport)
+        __init__(auth, timeout, response_type, definition, search_service, roxie_port)
             Initialize the class
 
         roxie_call(self)
@@ -686,7 +688,7 @@ class roxie(object):
     def __init__(
         self,
         auth,
-        searchservice,
+        search_service,
         roxie_port,
         timeout=1200,
         response_type="json",
@@ -696,7 +698,7 @@ class roxie(object):
         self.timeout = timeout
         self.response_type = response_type
         self.definition = "WsEcl/" + definition + "/query"
-        self.searchservice = searchservice
+        self.search_service = search_service
         self.roxie_port = roxie_port
 
     @property
@@ -717,7 +719,7 @@ class roxie(object):
         return roxie_wrapper(api=self)
 
 
-class workunit_submit(object):
+class WorkunitSubmit(object):
     """
     Base class for HPCC workunit submit
 
@@ -738,13 +740,13 @@ class workunit_submit(object):
         write_file:
             Write a file to HPCC
 
-        get_bashcommand:
+        get_bash_command:
             Get the bash command to submit a workunit
 
-        get_workload:
+        get_work_load:
             Get the workload on the clusters
 
-        create_filename:
+        create_file_name:
             Create a filename for the workunit
 
         bash_compile:
@@ -753,19 +755,19 @@ class workunit_submit(object):
         bash_run:
             Run the workunit
 
-        compileworkunit:
+        compile_workunit:
             Legacy function to compile the workunit
 
-        createworkunit:
+        create_workunit:
             Legacy function to create the workunit
 
-        WUWaitCompiled:
+        wu_wait_compiled:
             Legacy function to wait for the workunit to compile
 
-        WUWaitComplete:
+        wu_wait_complete:
             Legacy function to wait for the workunit to complete
 
-        runworkunit:
+        run_workunit:
             Legacy function to run the workunit
     """
 
@@ -775,21 +777,21 @@ class workunit_submit(object):
         self.cluster2 = cluster2
         self.stateid = conf.WORKUNIT_STATE_MAP
 
-    def write_file(self, querytext, folder, jobname):
+    def write_file(self, query_text, folder, job_name):
         """Write a .ecl file to disk
 
         Parameters
         ----------
-            querytext:
+            query_text:
                 The ecl query to write
             folder:
                 The folder to write the file to
-            jobname:
+            job_name:
                 The name of the ecl file
 
         Returns
         -------
-            filename:
+            file_name:
                 The name of the ecl file written
 
         Raises
@@ -798,31 +800,31 @@ class workunit_submit(object):
                 A generic exception
         """
         try:
-            words = jobname.split()
-            jobname = "_".join(words)
-            filename = os.path.join(folder, jobname + ".ecl")
-            f = open(filename, "w")
-            f.write(querytext)
+            words = job_name.split()
+            job_name = "_".join(words)
+            file_name = os.path.join(folder, job_name + ".ecl")
+            f = open(file_name, "w")
+            f.write(query_text)
             f.close
-            return filename
+            return file_name
         except Exception as e:
             raise HPCCException("Could not write file: " + str(e))
 
-    def get_bashcommand(self, filename, repository):
+    def get_bash_command(self, file_name, repository):
         """Get the bash command to compile the ecl file
 
         Parameters
         ----------
-            filename:
+            file_name:
                 The name of the ecl file
             repository:
                 Git repository to use
 
         Returns
         -------
-            bashcommand:
+            bash_command:
                 The bash command to compile the ecl file
-            outputfile:
+            output_file:
                 The name of the compiled ecl file - filename.eclxml
 
         Raises
@@ -831,15 +833,15 @@ class workunit_submit(object):
                 A generic exception
         """
         try:
-            outputfile = utils.create_compile_file_name(filename)
-            bashcommand = utils.create_compile_bash_command(
-                repository, outputfile, filename
+            output_file = utils.create_compile_file_name(file_name)
+            bash_command = utils.create_compile_bash_command(
+                repository, output_file, file_name
             )
-            return bashcommand, outputfile
+            return bash_command, output_file
         except Exception as e:
             raise HPCCException("Could not get bash command: " + str(e))
 
-    def get_workload(self):
+    def get_work_load(self):
         """Get the workload for the given two HPCC clusters
 
         Parameters
@@ -860,7 +862,7 @@ class workunit_submit(object):
         try:
             payload = {"SortBy": "Name", "Descending": 1}
 
-            resp = self.hpcc.Activity(**payload).json()
+            resp = self.hpcc.activity(**payload).json()
             len1 = 0
             len2 = 0
             if "Running" in list(resp["ActivityResponse"].keys()):
@@ -876,21 +878,21 @@ class workunit_submit(object):
         except Exception as e:
             raise HPCCException("Could not get workload: " + str(e))
 
-    def create_filename(self, QueryText, working_folder, Jobname):
+    def create_file_name(self, query_text, working_folder, job_name):
         """Create a filename for the ecl file
 
         Parameters
         ----------
-            QueryText:
+            query_text:
                 The ecl query
             working_folder:
                 The folder to write the file to
-            Jobname:
+            job_name:
                 The name of the ecl file
 
         Returns
         -------
-            filename:
+            file_name:
                 The name of the ecl file
 
         Raises
@@ -899,26 +901,26 @@ class workunit_submit(object):
                 A generic exception
         """
         try:
-            self.Jobname = Jobname
-            return self.write_file(QueryText, working_folder, Jobname)
+            self.job_name = job_name
+            return self.write_file(query_text, working_folder, job_name)
         except Exception as e:
-            raise HPCCException("Could not create filename: " + str(e))
+            raise HPCCException("Could not create file name: " + str(e))
 
-    def bash_compile(self, filename, gitrepository):
+    def bash_compile(self, file_name, git_repository):
         """Compile the ecl file
 
         Parameters
         ----------
-            filename:
+            file_name:
                 The name of the ecl file
-            gitrepository:
+            git_repository:
                 Git repository to use
 
         Returns
         -------
             output:
                 The output from the bash command
-            outputfile:
+            output_file:
                 The name of the compiled ecl file - filename.eclxml
 
         Raises
@@ -927,21 +929,21 @@ class workunit_submit(object):
                 A generic exception
         """
         try:
-            bashcommand, outputfile = self.get_bashcommand(filename, gitrepository)
+            bash_command, output_file = self.get_bash_command(file_name, git_repository)
             process = subprocess.Popen(
-                bashcommand.split(), stdout=subprocess.PIPE, stderr=subprocess.STDOUT
+                bash_command.split(), stdout=subprocess.PIPE, stderr=subprocess.STDOUT
             )
             output, error = process.communicate()
-            return output, outputfile
+            return output, output_file
         except Exception as e:
             raise HPCCException("Could not compile: " + str(e))
 
-    def bash_run(self, compiledfile, cluster):
+    def bash_run(self, compiled_file, cluster):
         """Run the compiled ecl file
 
         Parameters
         ----------
-            compiledfile:
+            compiled_file:
                 The name of the compiled ecl file
             cluster:
                 The HPCC cluster to run the query on
@@ -959,24 +961,24 @@ class workunit_submit(object):
         try:
             # Select the cluster to run the query on
             if cluster == "":
-                len1, len2 = self.get_workload()
+                len1, len2 = self.get_work_load()
                 if len2 > len1:
                     cluster = self.cluster1
                 else:
                     cluster = self.cluster2
 
-            self.Jobname = self.Jobname.replace(" ", "_")
-            bashcommand = utils.create_run_bash_command(
-                compiledfile,
+            self.job_name = self.job_name.replace(" ", "_")
+            bash_command = utils.create_run_bash_command(
+                compiled_file,
                 cluster,
                 self.hpcc.auth.ip,
                 self.hpcc.auth.port,
                 self.hpcc.auth.oauth[0],
                 self.hpcc.auth.oauth[1],
-                self.Jobname,
+                self.job_name,
             )
             process = subprocess.Popen(
-                bashcommand.split(), stdout=subprocess.PIPE, stderr=subprocess.STDOUT
+                bash_command.split(), stdout=subprocess.PIPE, stderr=subprocess.STDOUT
             )
             output, error = process.communicate()
 
@@ -984,72 +986,72 @@ class workunit_submit(object):
         except Exception as e:
             raise HPCCException("Could not run: " + str(e))
 
-    def compileworkunit(self, Wuid, Cluster=""):
+    def compile_workunit(self, wuid, cluster=""):
         """Legacy function to compile a workunit - use bash_compile instead
 
         Parameters
         ----------
-            Wuid:
+            wuid:
                 The Wuid of the workunit to compile
-            Cluster:
+            cluster:
                 The HPCC cluster to run the query on
         """
-        if Cluster == "":
-            len1, len2 = self.get_workload()
+        if cluster == "":
+            len1, len2 = self.get_work_load()
             if len2 > len1:
-                Cluster = self.cluster1
+                cluster = self.cluster1
             else:
-                Cluster = self.cluster2
-        self.hpcc.wuSubmit(Wuid=Wuid, Cluster=Cluster)
+                cluster = self.cluster2
+        self.hpcc.wu_submit(Wuid=wuid, Cluster=cluster)
         try:
-            w3 = self.hpcc.WUWaitCompiled(Wuid=Wuid)
+            w3 = self.hpcc.wu_wait_compiled(Wuid=wuid)
         except requests.exceptions.Timeout:
-            w3 = self.WUWaitCompiled(Wuid=Wuid)
+            w3 = self.wu_wait_compiled(wuid=wuid)
             w3 = json.loads(w3.text)
             return w3["WUWaitResponse"]["StateID"]
         else:
             w3 = json.loads(w3.text)
             return w3["WUWaitResponse"]["StateID"]
 
-    def createworkunit(
-        self, Action, ResultLimit, QueryText, Jobname, ClusterOrig="", data=""
+    def create_workunit(
+        self, action, result_limit, query_text, job_name, cluster_orig="", data=""
     ):
         """Legacy function to create a workunit - use bash_run instead
 
         Parameters
         ----------
-            Action:
+            action:
                 The action to perform
-            ResultLimit:
+            result_limit:
                 The number of results to return
-            QueryText:
+            query_text:
                 The ecl query
-            Jobname:
+            job_name:
                 The name of the ecl file
-            ClusterOrig:
+            cluster_orig:
                 The HPCC cluster to run the query on
             data:
                 The data to pass to the query
         """
-        if ClusterOrig == "":
-            len1, len2 = self.get_workload()
+        if cluster_orig == "":
+            len1, len2 = self.get_work_load()
 
             if len2 > len1:
-                ClusterOrig = self.cluster1
+                cluster_orig = self.cluster1
             else:
-                ClusterOrig = self.cluster2
-        if QueryText is None:
+                cluster_orig = self.cluster2
+        if query_text is None:
             data = {"QueryText": data}
             kwargs = {"data": data}
         else:
-            data = {"QueryText": QueryText}
+            data = {"QueryText": query_text}
             kwargs = {"data": data}
 
-        resp = self.hpcc.wuCreateAndUpdate(
-            Action=Action,
-            ResultLimit=ResultLimit,
-            Jobname=Jobname,
-            ClusterOrig=ClusterOrig,
+        resp = self.hpcc.wu_create_and_update(
+            Action=action,
+            ResultLimit=result_limit,
+            Jobname=job_name,
+            ClusterOrig=cluster_orig,
             **kwargs,
         )
 
@@ -1065,7 +1067,7 @@ class workunit_submit(object):
         else:
             raise ("workunit id not created")
 
-    def WUWaitCompiled(self, Wuid):
+    def wu_wait_compiled(self, wuid):
         """Legacy function to wait for a workunit to compile
 
         Parameters
@@ -1075,55 +1077,55 @@ class workunit_submit(object):
         """
         try:
             logging.info(
-                "session timeout for WUWaitCompiled, starting new session for WUWaitComplete"
+                "session timeout for wu_wait_compiled, starting new session for wu_wait_complete"
             )
-            w4 = self.hpcc.WUWaitCompiled(Wuid=Wuid)
+            w4 = self.hpcc.wu_wait_compiled(Wuid=wuid)
         except requests.exceptions.Timeout:
-            w4 = self.WUWaitCompiled(Wuid=Wuid)
+            w4 = self.wu_wait_compiled(wuid=wuid)
             return w4
         else:
             return w4
 
-    def WUWaitComplete(self, Wuid):
+    def wu_wait_complete(self, wuid):
         """Legacy function to wait for a workunit to complete
 
         Parameters
         ----------
-            Wuid:
+            wuid:
                 The Wuid of the workunit to compile
         """
         try:
             logging.info(
-                "session timeout for WuRun, starting new session for WUWaitComplete"
+                "session timeout for WuRun, starting new session for wu_wait_complete"
             )
-            w4 = self.hpcc.WUWaitComplete(Wuid=Wuid)
+            w4 = self.hpcc.wu_wait_complete(Wuid=wuid)
         except requests.exceptions.Timeout:
-            w4 = self.WUWaitComplete(Wuid=Wuid)
+            w4 = self.wu_wait_complete(wuid=wuid)
             return w4
         else:
             return w4
 
-    def runworkunit(self, Wuid, Cluster=""):
+    def run_workunit(self, wuid, cluster=""):
         """Legacy function to run a workunit - use bash_run instead
 
         Parameters
         ----------
-            Wuid:
+            wuid:
                 The Wuid of the workunit to compile
-            Cluster:
+            cluster:
                 The HPCC cluster to run the query on
         """
-        if Cluster == "":
-            len1, len2 = self.get_workload()
+        if cluster == "":
+            len1, len2 = self.get_work_load()
 
             if len2 > len1:
-                Cluster = self.cluster1
+                cluster = self.cluster1
             else:
-                Cluster = self.cluster2
+                cluster = self.cluster2
         try:
-            w4 = self.hpcc.wuRun(Wuid=Wuid, Cluster=Cluster, Variables=[])
+            w4 = self.hpcc.wu_run(Wuid=wuid, Cluster=cluster, Variables=[])
         except requests.exceptions.Timeout:
-            w4 = self.WUWaitComplete(Wuid=Wuid)
+            w4 = self.wu_wait_complete(wuid=wuid)
             w4 = w4.json()
 
             return w4["WUWaitResponse"]["StateID"]
@@ -1133,7 +1135,7 @@ class workunit_submit(object):
             return self.stateid[state]
 
 
-class readfileinfo(object):
+class ReadFileInfo(object):
     """
     Class to read the file information from the HPCC cluster
 
@@ -1141,165 +1143,165 @@ class readfileinfo(object):
     ----------
         hpcc:
             The hpcc object
-        logicalFileName:
+        logical_file_name:
             The logical file name
         cluster:
             The cluster to read the file information from
-        fileType:
+        file_type:
             The file type
-        fileSizelimit:
+        file_size_limit:
             The file size limit. Defaults to 25MB
-        ifExists:
+        if_exists:
             Boolean to determine if the file exists
-        isSuperFile:
+        is_superfile:
             Boolean to determine if the file is a superfile
-        actualFileSize:
+        actual_file_size:
             The actual file size
-        recordCount:
+        record_count:
             The number of records in the file
-        desprayIP:
+        despray_ip:
             The IP address to despray the file to
-        desprayPath:
+        despray_path:
             The path to despray the file to
-        desprayallowoverwrite:
+        despray_allow_overwrite:
             Boolean to determine if the file can be overwritten. Defaults to True
-        shouldDespray:
+        should_despray:
             Boolean to determine if the file should be desprayed. Defaults to False
-        checkStatus:
+        check_status:
             Boolean to determine if the file status should be checked. Defaults to False
-        csvSeperatorforRead:
+        csv_separator_for_read:
             The csv seperator for reading the file. Defaults to ','
-        readStatus:
+        read_status:
             The read status. Defaults to 'Not Read'
-        desprayFromCluster:
+        despray_from_cluster:
             The cluster to despray the file from
-        csvHeaderFlag:
+        csv_header_flag:
             Int to determine if the file has a csv header. Defaults to 0
 
     Methods
     -------
-        checkIfFileExistsAndIsSuperFile:
+        check_if_file_exists_and_is_super_file:
             Checks if the file exists and is a superfile
 
-        setFilename:
+        set_file_name:
             Sets the logical file name
 
-        getSubFileInformation:
+        get_sub_file_information:
             Gets the subfile information
 
-        checkfileinDFU:
+        check_file_in_dfu:
             Checks the file in the DFU queue
 
-        getData:
+        get_data:
             Gets the data from the file
     """
 
     def __init__(
         self,
         hpcc,
-        logicalFileName,
+        logical_file_name,
         cluster,
-        fileType,
-        fileSizelimit=25,
-        ifExists=-1,
-        isSuperFile=-1,
-        actualFileSize=-1,
-        recordCount=-1,
-        desprayIP="",
-        desprayPath="",
-        desprayallowoverwrite="true",
-        shouldDespray=False,
-        checkStatus=False,
-        csvSeperatorforRead=",",
-        readStatus="Not read",
-        desprayFromCluster="",
-        csvHeaderFlag=0,
+        file_type,
+        file_size_limit=25,
+        if_exists=-1,
+        is_superfile=-1,
+        actual_file_size=-1,
+        record_count=-1,
+        despray_ip="",
+        despray_path="",
+        despray_allow_overwrite="true",
+        should_despray=False,
+        check_status=False,
+        csv_separator_for_read=",",
+        read_status="Not read",
+        despray_from_cluster="",
+        csv_header_flag=0,
     ):
-        """Constructor for the readfileinfo class"""
+        """Constructor for the ReadFileInfo class"""
 
         self.hpcc = hpcc
-        self.logicalFileName = logicalFileName
+        self.logical_file_name = logical_file_name
         self.cluster = cluster
-        self.fileSizelimit = fileSizelimit
-        self.fileType = fileType
-        self.ifExists = ifExists
-        self.isSuperFile = isSuperFile
-        self.actualFileSize = actualFileSize
-        self.recordCount = recordCount
-        self.desprayIP = desprayIP
-        self.desprayPath = desprayPath
-        self.desprayallowoverwrite = desprayallowoverwrite
-        self.shouldDespray = shouldDespray
-        self.checkStatus = checkStatus
-        self.csvSeperatorforRead = csvSeperatorforRead
-        self.readStatus = readStatus
-        self.desprayFromCluster = desprayFromCluster
-        self.csvHeaderFlag = csvHeaderFlag
+        self.file_size_limit = file_size_limit
+        self.file_type = file_type
+        self.if_exists = if_exists
+        self.if_superfile = is_superfile
+        self.actual_file_size = actual_file_size
+        self.record_count = record_count
+        self.despray_ip = despray_ip
+        self.despray_path = despray_path
+        self.despray_allow_overwrite = despray_allow_overwrite
+        self.should_despray = should_despray
+        self.check_status = check_status
+        self.csv_separator_for_read = csv_separator_for_read
+        self.read_status = read_status
+        self.despray_from_cluster = despray_from_cluster
+        self.csv_header_flag = csv_header_flag
 
-    def checkIfFileExistsAndIsSuperFile(self, clusterFromUser):
+    def check_if_file_exists_and_is_super_file(self, cluster_from_user):
         """Function to check if the file exists and is a superfile
 
         Parameters
         ----------
-            clusterFromUser:
+            cluster_from_user:
                 The cluster to check the file on
         """
 
-        self.checkStatus = True
-        fileSearch = self.hpcc.fileQuery(
-            LogicalName=self.logicalFileName,
+        self.check_status = True
+        file_search = self.hpcc.file_query(
+            LogicalName=self.logical_file_name,
             LogicalFileSearchType="Logical Files and Superfiles",
         )
-        self.ifExists = utils.getfileStatus(fileSearch)
-        if self.ifExists != 0 and self.ifExists != "0":
-            arrFESF = utils.getfileType(fileSearch)
+        self.if_exists = utils.get_file_status(file_search)
+        if self.if_exists != 0 and self.if_exists != "0":
+            arrFESF = utils.get_file_type(file_search)
             self.cluster = (
                 arrFESF["NodeGroup"]
                 if arrFESF["NodeGroup"] is not None
-                else clusterFromUser
+                else cluster_from_user
             )
-            self.ifSuperFile = (
+            self.if_super_file = (
                 arrFESF["isSuperfile"] if arrFESF["isSuperfile"] is not None else ""
             )
-            self.actualFileSize = (
+            self.actual_file_size = (
                 int(arrFESF["Totalsize"].replace(",", ""))
                 if arrFESF["Totalsize"] is not None
                 else ""
             )
-            self.fileType = (
+            self.file_type = (
                 arrFESF["ContentType"]
                 if arrFESF["ContentType"] is not None
-                else self.fileType
+                else self.file_type
             )
             if bool(arrFESF):
                 if arrFESF["RecordCount"] != "":
-                    self.recordCount = (
+                    self.record_count = (
                         0
                         if arrFESF["RecordCount"] is None
                         else int(arrFESF["RecordCount"].replace(",", ""))
                     )
                 else:
-                    self.recordCount = -2
+                    self.record_count = -2
         else:
-            self.fileType = ""
-            self.ifSuperFile = ""
-            self.actualFileSize = None
-            self.recordCount = None
+            self.file_type = ""
+            self.if_super_file = ""
+            self.actual_file_size = None
+            self.record_count = None
             self.cluster = ""
-            self.readStatus = "File doesn't exist"
+            self.read_status = "File doesn't exist"
 
-    def setFilename(self, filename):
+    def set_file_name(self, file_name):
         """Function to set the logical file name and check if the file exists and is a superfile
 
         Parameters
         ----------
-            filename:
+            file_name:
                 The logical file name
         """
-        self.logicalFileName = filename
-        self.checkIfFileExistsAndIsSuperFile(self.cluster)
+        self.logical_file_name = file_name
+        self.check_if_file_exists_and_is_super_file(self.cluster)
 
-    def getSubFileInformation(self):
+    def get_sub_file_information(self):
         """Function to get the subfile information
 
         Parameters
@@ -1311,15 +1313,15 @@ class readfileinfo(object):
             subFileInformation:
                 The subfile information if the file is a superfile, else returns a message "Not a superfile"
         """
-        if not self.checkStatus:
-            self.checkIfFileExistsAndIsSuperFile(self.cluster)
-        if self.isSuperFile == 1:
-            subFileInfo = self.hpcc.getSubFileInfo(Name=self.logicalFileName)
-            return utils.getSubfileNames(subFileInfo)
+        if not self.check_status:
+            self.check_if_file_exists_and_is_super_file(self.cluster)
+        if self.if_superfile == 1:
+            sub_file_info = self.hpcc.get_subfile_info(Name=self.logical_file_name)
+            return utils.get_subfile_names(sub_file_info)
         else:
             return "Not a superfile"
 
-    def checkfileinDFU(self):
+    def check_file_in_dfu(self):
         """Function to check if the file exists in the DFU queue
 
         Parameters
@@ -1331,14 +1333,14 @@ class readfileinfo(object):
             dfuFileStatus:
                 A boolean to determine if the file exists in the DFU queue
         """
-        statusDetails = self.hpcc.checkFileExists(Name=self.logicalFileName)
-        status = utils.checkfileexistence(statusDetails)
+        status_details = self.hpcc.check_file_exists(Name=self.logical_file_name)
+        status = utils.check_file_existence(status_details)
         if status == 0:
             return False
         else:
             return True
 
-    def getData(self):
+    def get_data(self):
         """Function to get the data from the file
 
         Parameters
@@ -1350,57 +1352,59 @@ class readfileinfo(object):
             data:
                 The data from the file
         """
-        self.checkIfFileExistsAndIsSuperFile(self.cluster)
-        if self.ifExists != 0 and self.ifExists != "0":
-            filesizeinMB = (self.actualFileSize / 1024) / 1024
+        self.check_if_file_exists_and_is_super_file(self.cluster)
+        if self.if_exists != 0 and self.if_exists != "0":
+            file_size_in_mb = (self.actual_file_size / 1024) / 1024
             if (
-                filesizeinMB > self.fileSizelimit
-                or self.fileType == "xml"
-                or self.shouldDespray
+                file_size_in_mb > self.file_size_limit
+                or self.file_type == "xml"
+                or self.should_despray
             ):
-                if self.desprayIP != "" and self.desprayPath != "":
-                    QueryString = (
+                if self.despray_ip != "" and self.despray_path != "":
+                    query_string = (
                         "IMPORT STD; STD.file.despray(~'"
-                        + self.logicalFileName
+                        + self.logical_file_name
                         + "','"
-                        + self.desprayIP
+                        + self.despray_ip
                         + "','"
-                        + self.desprayPath
+                        + self.despray_path
                         + "',,,,"
-                        + self.desprayallowoverwrite
+                        + self.despray_allow_overwrite
                         + ");"
                     )
-                    clusterfrom = ""
-                    if self.desprayFromCluster == "":
-                        clusterfrom = self.cluster
+                    cluster_from = ""
+                    if self.despray_from_cluster == "":
+                        cluster_from = self.cluster
                     else:
-                        clusterfrom = self.desprayFromCluster
+                        cluster_from = self.despray_from_cluster
                     setattr(self.hpcc, "response_type", ".json")
-                    self.readStatus = utils.desprayfile(
+                    self.read_status = utils.despray_file(
                         self.hpcc,
-                        QueryString,
-                        clusterfrom,
-                        "Despraying : " + self.logicalFileName,
+                        query_string,
+                        cluster_from,
+                        "Despraying : " + self.logical_file_name,
                     )
                 else:
-                    self.readStatus = "Unable to despray with the given input values. Please provide values for despray IP and folder"
+                    self.read_status = "Unable to despray with the given input values. Please provide values for despray IP and folder"
             else:
-                if self.recordCount == -2:
-                    countupdated = 9223372036854775807
+                if self.record_count == -2:
+                    count_updated = 9223372036854775807
                 else:
-                    countupdated = self.recordCount
-                    flatcsvresp = self.hpcc.getFileInfo(
-                        LogicalName=self.logicalFileName,
+                    count_updated = self.record_count
+                    flat_csv_resp = self.hpcc.get_file_info(
+                        LogicalName=self.logical_file_name,
                         Cluster=self.cluster,
-                        Count=countupdated,
+                        Count=count_updated,
                     )
-                    if self.fileType == "flat":
-                        self.readStatus = "Read"
-                        return utils.getflatdata(flatcsvresp)
+                    if self.file_type == "flat":
+                        self.read_status = "Read"
+                        return utils.get_flat_data(flat_csv_resp)
                     else:
-                        self.readStatus = "Read"
-                        return utils.getcsvdata(
-                            flatcsvresp, self.csvSeperatorforRead, self.csvHeaderFlag
+                        self.read_status = "Read"
+                        return utils.get_csv_data(
+                            flat_csv_resp,
+                            self.csv_separator_for_read,
+                            self.csv_header_flag,
                         )
         else:
-            self.readStatus = "File doesn't exist"
+            self.read_status = "File doesn't exist"
