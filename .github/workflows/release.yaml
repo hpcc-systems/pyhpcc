@@ -20,7 +20,7 @@ jobs:
       run: ./scripts/poetry-install.sh
     - name: Make build
       run: $POETRY build
-    - uses: actions/upload-artifact@v4 # v4.3.3
+    - uses: actions/upload-artifact@v4
       with:
         name: distfiles
         path: dist/
@@ -33,10 +33,9 @@ jobs:
       contents: write
     needs: build
     steps:
-      # We need to be in a git repo for gh to work.
-      - uses: actions/checkout@v4 # v4.1.4
+      - uses: actions/checkout@v4
 
-      - uses: actions/download-artifact@v4 # v4.1.7
+      - uses: actions/download-artifact@v4
         with:
           name: distfiles
           path: dist/
