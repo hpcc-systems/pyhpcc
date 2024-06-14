@@ -122,13 +122,13 @@ def wrapper(**config):
             # Build the request URL
             full_url = (
                 self.api.auth.get_url()
-                + self.api.auth.pathDelimiter
+                + self.api.auth.path_delimiter
                 + self.api.definition
-                + self.api.auth.pathDelimiter
+                + self.api.auth.path_delimiter
                 + self.api.roxie_port
-                + self.api.auth.pathDelimiter
-                + self.api.searchservice
-                + self.api.auth.pathDelimiter
+                + self.api.auth.path_delimiter
+                + self.api.search_service
+                + self.api.auth.path_delimiter
                 + "."
                 + self.response_type
             )

@@ -1,7 +1,8 @@
-import six
-import xml.etree.ElementTree as ET
-import pandas as pd
 import sys
+import xml.etree.ElementTree as ET
+
+import pandas as pd
+import six
 
 if sys.version_info[0] < 3:
     from StringIO import StringIO
@@ -48,7 +49,7 @@ def convert_arg_to_utf8_str(arg):
         raise e
 
 
-def create_compile_bash_command(repository, outputfile, filename):
+def create_compile_bash_command(repository, output_file, file_name):
     """
     Create a bash command to compile a file.
 
@@ -56,9 +57,9 @@ def create_compile_bash_command(repository, outputfile, filename):
     ----------
     repository : str
         The repository to compile the file from.
-    outputfile : str
+    output_file : str
         The output file to write the compiled code to.
-    filename : str
+    file_name : str
         The filename to compile.
 
     Returns
@@ -73,19 +74,19 @@ def create_compile_bash_command(repository, outputfile, filename):
     """
     try:
         return """ eclcc -legacy  -I {0}  -platform=thor  -E -o {1} {2} -wu""".format(
-            repository, outputfile, filename
+            repository, output_file, file_name
         )
     except HPCCException as e:
         raise e
 
 
-def create_compile_file_name(filename):
+def create_compile_file_name(file_name):
     """
     Create a compiled file name from a filename.
 
     Parameters
     ----------
-    filename : str
+    file_name : str
         The ecl filename to create a compiled file name from.
 
     Returns
@@ -99,20 +100,20 @@ def create_compile_file_name(filename):
         A generic exception.
     """
     try:
-        return filename.split(".")[0] + ".eclxml"
+        return file_name.split(".")[0] + ".eclxml"
     except HPCCException as e:
         raise e
 
 
 def create_run_bash_command(
-    compiledfile, cluster, ip, port, username, password, jobname
+    compiled_file, cluster, ip, port, user_name, password, job_name
 ):
     """
     Create a bash command to run a compiled file.
 
     Parameters
     ----------
-    compiledfile : str
+    compiled_file : str
         The compiled file to run.
     cluster : str
         The cluster to run the compiled file on.
@@ -120,11 +121,11 @@ def create_run_bash_command(
         The ip address of the HPCC cluster.
     port : str
         The port of the HPCC cluster.
-    username : str
+    user_name : str
         The username to use to connect to the HPCC cluster.
     password : str
         The password to use to connect to the HPCC cluster.
-    jobname : str
+    job_name : str
         The name of the job to run.
 
     Returns
@@ -139,7 +140,7 @@ def create_run_bash_command(
     """
     try:
         return """ecl run {0} --limit=100 --wait=0 --target={1}  --server={2} --ssl --port={3} -u={4} -pw={5} --name={6} -v""".format(
-            compiledfile, cluster, ip, port, username, password, jobname
+            compiled_file, cluster, ip, port, user_name, password, job_name
         )
     except HPCCException as e:
         raise e
@@ -188,7 +189,7 @@ def get_graph_skew(response):
         raise e
 
 
-def getfileStatus(arg):
+def get_file_status(arg):
     """
     Parses the xml response to get NumFiles information
 
@@ -217,7 +218,7 @@ def getfileStatus(arg):
         raise e
 
 
-def getfileType(arg):
+def get_file_type(arg):
     """
     Parses the xml response to get FileType information
 
@@ -243,9 +244,9 @@ def getfileType(arg):
         # Loop through the xml and get the FileType information
         for child in argET:
             if child.tag == "DFULogicalFiles":
-                for dfufile in child:
-                    if dfufile.tag == "DFULogicalFile":
-                        for fileinfo in dfufile:
+                for dfu_file in child:
+                    if dfu_file.tag == "DFULogicalFile":
+                        for fileinfo in dfu_file:
                             if fileinfo.tag == "NodeGroup":
                                 data_dict.update({fileinfo.tag: fileinfo.text})
                             if fileinfo.tag == "isSuperfile":
@@ -261,7 +262,7 @@ def getfileType(arg):
         raise e
 
 
-def getSubfileNames(arg):
+def get_subfile_names(arg):
     """
     Parses the xml response to get SubfileNames information
 
@@ -282,20 +283,20 @@ def getSubfileNames(arg):
     """
     try:
         argET = ET.fromstring(arg.content)
-        subfilenamelist = []
+        subfile_name_list = []
         for child in argET:
             if child.tag == "DFUInfoResponse":
-                for dfufile in child:
-                    if dfufile.tag == "subfiles":
-                        for fileinfo in dfufile:
-                            if fileinfo.tag == "Item":
-                                subfilenamelist.append(fileinfo.text)
-        return pd.Series(subfilenamelist)
+                for dfu_file in child:
+                    if dfu_file.tag == "subfiles":
+                        for file_info in dfu_file:
+                            if file_info.tag == "Item":
+                                subfile_name_list.append(file_info.text)
+        return pd.Series(subfile_name_list)
     except HPCCException as e:
         raise e
 
 
-def getflatdata(arg):
+def get_flat_data(arg):
     """
     Parses the xml response to get flat data
 
@@ -323,15 +324,15 @@ def getflatdata(arg):
                     if child.tag == "Dataset":
                         for row in child:
                             data_dict = {}
-                            for rowdata in row:
-                                data_dict[rowdata.tag] = rowdata.text
+                            for row_data in row:
+                                data_dict[row_data.tag] = row_data.text
                             list_dict.append(data_dict)
         return pd.DataFrame(list_dict)
     except HPCCException as e:
         raise e
 
 
-def getcsvdata(arg, csvSeperator, csvHeader):
+def get_csv_data(arg, csv_separator, csv_header):
     """
     Parses the xml response to get csv data
 
@@ -339,9 +340,9 @@ def getcsvdata(arg, csvSeperator, csvHeader):
     ----------
     arg : str
         The xml response
-    csvSeperator : str
+    csv_separator : str
         The csv seperator
-    csvHeader : str
+    csv_header : str
         The csv header
 
     Returns
@@ -363,27 +364,27 @@ def getcsvdata(arg, csvSeperator, csvHeader):
                     if child.tag == "Dataset":
                         for row in child:
                             data_dict = {}
-                            for rowdata in row:
-                                data_dict[rowdata.tag] = rowdata.text + "\n"
+                            for row_data in row:
+                                data_dict[row_data.tag] = row_data.text + "\n"
                             list_dict.append(data_dict)
-        xmlstr = ""
-        for eachdict in list_dict:
-            for key, value in list(eachdict.items()):
+        xml_str = ""
+        for each_dict in list_dict:
+            for key, value in list(each_dict.items()):
                 if key == "line":
                     if "None" in str(value):
-                        xmlstr = xmlstr
+                        xml_str = xml_str
                     else:
-                        xmlstr = xmlstr + str(value)
-        csvformatdata = StringIO(xmlstr)
-        if csvHeader == 0:
-            return pd.read_csv(csvformatdata, sep=csvSeperator, header=csvHeader)
+                        xml_str = xml_str + str(value)
+        csv_format_data = StringIO(xml_str)
+        if csv_header == 0:
+            return pd.read_csv(csv_format_data, sep=csv_separator, header=csv_header)
         else:
-            return pd.read_csv(csvformatdata, sep=csvSeperator, header=None)
+            return pd.read_csv(csv_format_data, sep=csv_separator, header=None)
     except HPCCException as e:
         raise e
 
 
-def checkfileexistence(arg):
+def check_file_existence(arg):
     """
     Parses the xml response to check if the file exists
 
@@ -436,7 +437,7 @@ def checkfileexistence(arg):
         raise e
 
 
-def desprayfile(hpcc, querytext, Cluster, jobn):
+def despray_file(hpcc, query_text, cluster, jobn):
     """
     ToDo: Desprays a file from the HPCC cluster to the local machine
 
@@ -444,9 +445,9 @@ def desprayfile(hpcc, querytext, Cluster, jobn):
     ----------
     hpcc : hpcc.HPCCConnection
         The HPCC connection object
-    querytext : str
+    query_text : str
         The query text
-    Cluster : str
+    cluster : str
         The cluster name
     jobn : str
         The job name
@@ -464,9 +465,9 @@ def desprayfile(hpcc, querytext, Cluster, jobn):
     try:
         if hpcc is None:
             raise HPCCException("HPCC Connection is not established")
-        if querytext is None:
+        if query_text is None:
             raise HPCCException("Query text is not provided")
-        if Cluster is None:
+        if cluster is None:
             raise HPCCException("Cluster name is not provided")
         if jobn is None:
             raise HPCCException("Job name is not provided")

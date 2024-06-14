@@ -1,7 +1,8 @@
 import os
-from pyhpcc.auth import auth
-from pyhpcc.models import hpcc
-from pyhpcc.models import workunit_submit as ws
+
+from pyhpcc.auth import Auth
+from pyhpcc.models import HPCC
+from pyhpcc.models import WorkunitSubmit as ws
 
 # Configurations
 environment = "<Your environment url>"  # Eg: myuniversity.hpccsystems.io
@@ -17,7 +18,7 @@ job_name = "Basic job submission"
 working_folder = os.getcwd()  # Folder to generate .ecl, .eclxml, .eclxml.xml
 
 try:
-    auth_object = auth(
+    auth_object = Auth(
         environment,
         port,
         user_name,
@@ -25,17 +26,17 @@ try:
         require_auth=required_auth,
         protocol=protocol,
     )
-    hpcc_object = hpcc(auth=auth_object)
+    hpcc_object = HPCC(auth=auth_object)
     work_s = ws(hpcc_object, cluster, cluster)
-    file_name = work_s.create_filename(
-        QueryText=ecl_query, working_folder=working_folder, Jobname=job_name
+    file_name = work_s.create_file_name(
+        query_text=ecl_query, working_folder=working_folder, Jobname=job_name
     )
-    output, output_file = work_s.bash_compile(filename=file_name, gitrepository="")
+    output, output_file = work_s.bash_compile(file_name=file_name, git_repository="")
     if str(output).find("error") == -1:
         output, error = work_s.bash_run(output_file, cluster=cluster)
         index = str(output).find("running")
         wuid = str(output)[: index - 1]
-        _ = work_s.WUWaitComplete(wuid)
+        _ = work_s.wu_wait_complete(wuid)
     else:
         print(str(output))
     print(f"{wuid} submitted successfully")
