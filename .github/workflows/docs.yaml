@@ -10,7 +10,7 @@ env:
   POETRY_HOME: ${{vars.POETRY_HOME}}
   POETRY: ${{vars.POETRY}}
 jobs:
-  poetry:
+  docs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
