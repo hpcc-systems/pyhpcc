@@ -2,9 +2,8 @@
 import unittest
 
 import config
-
-from pyhpcc.auth import Auth
 from pyhpcc.errors import HPCCAuthenticationError
+from pyhpcc.models.auth import Auth
 
 
 class TestAuth(unittest.TestCase):
