@@ -1,8 +1,8 @@
 import os
 
-from pyhpcc.auth import Auth
-from pyhpcc.models import HPCC
-from pyhpcc.models import WorkunitSubmit as ws
+from pyhpcc.models.auth import Auth
+from pyhpcc.models.hpcc import HPCC
+from pyhpcc.models.workunit_submit import WorkunitSubmit as ws
 
 # Configurations
 environment = "<Your environment url>"  # Eg: myuniversity.hpccsystems.io
