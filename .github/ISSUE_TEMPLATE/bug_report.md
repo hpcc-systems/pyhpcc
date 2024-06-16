@@ -23,7 +23,7 @@ If applicable, add screenshots to help explain your problem.
 
 **Desktop (please complete the following information):**
  - OS: [e.g. Windows, Mac, Linux]
- - Version [e.g. 22]
+ - PyHPCC Version [e.g. 22]
 
 
 **Additional context**
