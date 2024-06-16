@@ -8,8 +8,7 @@ import requests
 import pyhpcc.config as conf
 import pyhpcc.utils as utils
 from pyhpcc.errors import HPCCException
-from pyhpcc.roxie_binder import wrapper as roxie_wrapper
-from pyhpcc.thor_binder import wrapper as thor_wrapper
+from pyhpcc.wrappers import roxie_wrapper, thor_wrapper
 
 
 class HPCC(object):
