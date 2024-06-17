@@ -5,7 +5,7 @@
 <!-- e.g. [#1020] Make bash_runcommand in WorkUnitSubmit class configurable -->
 
 <!-- Add the issue number to the "Fixes" keyword below. This will automatically close the issue once the PR is merged -->
-Fixes #
+Fixes [#<JIRA ID>](https://hpccsystems.atlassian.net/browse/HPCC-<JIRA ID>)
 
 ### Type of change: <!--- Bug, Feature, Test, Doc -->
 
