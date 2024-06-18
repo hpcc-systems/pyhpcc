@@ -4,10 +4,9 @@ import unittest
 from datetime import datetime  # used by test_upload_file
 
 import config
-
-from pyhpcc.auth import Auth
 from pyhpcc.errors import HPCCException
-from pyhpcc.models import HPCC
+from pyhpcc.models.auth import Auth
+from pyhpcc.models.hpcc import HPCC
 
 
 class TestHPCCAPI(unittest.TestCase):
