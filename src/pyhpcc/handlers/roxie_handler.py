@@ -7,7 +7,7 @@ from pyhpcc.utils import convert_arg_to_utf8_str
 log = logging.getLogger(__name__)
 
 
-def wrapper(**config):
+def roxie_handler(**config):
     """
     Decorator for HPCC Roxie class methods.
 

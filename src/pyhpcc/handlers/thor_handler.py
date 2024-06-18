@@ -1,12 +1,13 @@
 import logging
+
+import pyhpcc.config as conf
 from pyhpcc.errors import HPCCAuthenticationError, TypeError
 from pyhpcc.utils import convert_arg_to_utf8_str
-import pyhpcc.config as conf
 
 log = logging.getLogger(__name__)
 
 
-def wrapper(**config):
+def thor_handler(**config):
     """Decorator for HPCC THOR class methods.
 
     Parameters
