@@ -8,6 +8,7 @@ if sys.version_info[0] < 3:
     from StringIO import StringIO
 else:
     from io import StringIO
+from pyhpcc.command_config import CompileConfig
 from pyhpcc.errors import HPCCException
 
 """
@@ -49,37 +50,6 @@ def convert_arg_to_utf8_str(arg):
         raise e
 
 
-def create_compile_bash_command(repository, output_file, file_name):
-    """
-    Create a bash command to compile a file.
-
-    Parameters
-    ----------
-    repository : str
-        The repository to compile the file from.
-    output_file : str
-        The output file to write the compiled code to.
-    file_name : str
-        The filename to compile.
-
-    Returns
-    -------
-    str
-        The bash command to compile the file.
-
-    Raises
-    ------
-    HPCCException
-        A generic exception.
-    """
-    try:
-        return """ eclcc -legacy  -I {0}  -platform=thor  -E -o {1} {2} -wu""".format(
-            repository, output_file, file_name
-        )
-    except HPCCException as e:
-        raise e
-
-
 def create_compile_file_name(file_name):
     """
     Create a compiled file name from a filename.
@@ -101,47 +71,6 @@ def create_compile_file_name(file_name):
     """
     try:
         return file_name.split(".")[0] + ".eclxml"
-    except HPCCException as e:
-        raise e
-
-
-def create_run_bash_command(
-    compiled_file, cluster, ip, port, user_name, password, job_name
-):
-    """
-    Create a bash command to run a compiled file.
-
-    Parameters
-    ----------
-    compiled_file : str
-        The compiled file to run.
-    cluster : str
-        The cluster to run the compiled file on.
-    ip : str
-        The ip address of the HPCC cluster.
-    port : str
-        The port of the HPCC cluster.
-    user_name : str
-        The username to use to connect to the HPCC cluster.
-    password : str
-        The password to use to connect to the HPCC cluster.
-    job_name : str
-        The name of the job to run.
-
-    Returns
-    -------
-    str
-        The bash command to run a compiled file.
-
-    Raises
-    ------
-    HPCCException
-        A generic exception.
-    """
-    try:
-        return """ecl run {0} --limit=100 --wait=0 --target={1}  --server={2} --ssl --port={3} -u={4} -pw={5} --name={6} -v""".format(
-            compiled_file, cluster, ip, port, user_name, password, job_name
-        )
     except HPCCException as e:
         raise e
 

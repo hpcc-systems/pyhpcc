@@ -7,7 +7,11 @@ import requests
 
 import pyhpcc.config as conf
 import pyhpcc.utils as utils
-from pyhpcc.errors import HPCCException
+from pyhpcc.command_config import CompileConfig, RunConfig
+from pyhpcc.errors import HPCCException, RunConfigException
+from pyhpcc.models.hpcc import HPCC
+
+log = logging.getLogger(__name__)
 
 
 class WorkunitSubmit(object):
@@ -62,7 +66,7 @@ class WorkunitSubmit(object):
             Legacy function to run the workunit
     """
 
-    def __init__(self, hpcc, cluster1="", cluster2=""):
+    def __init__(self, hpcc: HPCC, cluster1="", cluster2=""):
         self.hpcc = hpcc
         self.cluster1 = cluster1
         self.cluster2 = cluster2
@@ -101,15 +105,15 @@ class WorkunitSubmit(object):
         except Exception as e:
             raise HPCCException("Could not write file: " + str(e))
 
-    def get_bash_command(self, file_name, repository):
+    def get_bash_command(self, file_name, compile_config: CompileConfig):
         """Get the bash command to compile the ecl file
 
         Parameters
         ----------
             file_name:
                 The name of the ecl file
-            repository:
-                Git repository to use
+            config:
+                CompileConfig object
 
         Returns
         -------
@@ -124,10 +128,11 @@ class WorkunitSubmit(object):
                 A generic exception
         """
         try:
-            output_file = utils.create_compile_file_name(file_name)
-            bash_command = utils.create_compile_bash_command(
-                repository, output_file, file_name
-            )
+            if "-o" not in compile_config.options:
+                output_file = utils.create_compile_file_name(file_name)
+                compile_config.set_output_file(output_file)
+            bash_command = compile_config.create_compile_bash_command(file_name)
+            log.info(bash_command)
             return bash_command, output_file
         except Exception as e:
             raise HPCCException("Could not get bash command: " + str(e))
@@ -197,15 +202,15 @@ class WorkunitSubmit(object):
         except Exception as e:
             raise HPCCException("Could not create file name: " + str(e))
 
-    def bash_compile(self, file_name, git_repository):
+    def bash_compile(self, file_name: str, options: dict = None):
         """Compile the ecl file
 
         Parameters
         ----------
             file_name:
                 The name of the ecl file
-            git_repository:
-                Git repository to use
+            options:
+                dictionary of eclcc compiler options
 
         Returns
         -------
@@ -220,7 +225,10 @@ class WorkunitSubmit(object):
                 A generic exception
         """
         try:
-            bash_command, output_file = self.get_bash_command(file_name, git_repository)
+            if options is None:
+                options = conf.DEFAULT_COMPILE_OPTIONS
+            compile_config = CompileConfig(options)
+            bash_command, output_file = self.get_bash_command(file_name, compile_config)
             process = subprocess.Popen(
                 bash_command.split(), stdout=subprocess.PIPE, stderr=subprocess.STDOUT
             )
@@ -229,7 +237,7 @@ class WorkunitSubmit(object):
         except Exception as e:
             raise HPCCException("Could not compile: " + str(e))
 
-    def bash_run(self, compiled_file, cluster):
+    def bash_run(self, compiled_file, options: dict = None):
         """Run the compiled ecl file
 
         Parameters
@@ -251,29 +259,31 @@ class WorkunitSubmit(object):
         """
         try:
             # Select the cluster to run the query on
-            if cluster == "":
+            if options is None:
+                options = conf.DEFUALT_RUN_OPTIONS
+            run_config = RunConfig(options)
+            if conf.CLUSTER_PARAM not in run_config.options:
                 len1, len2 = self.get_work_load()
                 if len2 > len1:
                     cluster = self.cluster1
                 else:
                     cluster = self.cluster2
-
-            self.job_name = self.job_name.replace(" ", "_")
-            bash_command = utils.create_run_bash_command(
-                compiled_file,
-                cluster,
-                self.hpcc.auth.ip,
-                self.hpcc.auth.port,
-                self.hpcc.auth.oauth[0],
-                self.hpcc.auth.oauth[1],
-                self.job_name,
-            )
+                run_config.set_target(cluster)
+            if conf.JOB_NAME_PARAM not in run_config.options:
+                self.job_name = self.job_name.replace(" ", "_")
+                run_config.set_job_name(self.job_name)
+            if conf.LIMIT_PARAM not in run_config.options:
+                run_config.set_limit(conf.DEFAULT_LIMIT)
+            run_config.set_auth_params(self.hpcc.auth)
+            bash_command = run_config.create_run_bash_command(compiled_file)
             process = subprocess.Popen(
                 bash_command.split(), stdout=subprocess.PIPE, stderr=subprocess.STDOUT
             )
             output, error = process.communicate()
 
             return output, error
+        except RunConfigException:
+            raise
         except Exception as e:
             raise HPCCException("Could not run: " + str(e))
 
