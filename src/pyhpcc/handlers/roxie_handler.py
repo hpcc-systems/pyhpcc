@@ -1,7 +1,7 @@
 import logging
 
 import pyhpcc.config as conf
-from pyhpcc.errors import HPCCAuthenticationError, TypeError
+from pyhpcc.errors import HPCCAuthenticationError
 from pyhpcc.utils import convert_arg_to_utf8_str
 
 log = logging.getLogger(__name__)
