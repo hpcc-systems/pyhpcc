@@ -2,7 +2,7 @@ import copy
 import os
 import subprocess
 
-import config
+import conftest
 import pytest
 from pyhpcc.command_config import CompileConfig
 from pyhpcc.config import OUTPUT_FILE_OPTION
@@ -12,10 +12,10 @@ from pyhpcc.models.workunit_submit import WorkunitSubmit
 
 DUMMY_OUTPUT = "dummy_output"
 
-HPCC_HOST = config.HPCC_HOST
-HPCC_PASSWORD = config.HPCC_PASSWORD
-HPCC_PORT = config.HPCC_PORT
-HPCC_USERNAME = config.HPCC_USERNAME
+HPCC_HOST = conftest.HPCC_HOST
+HPCC_PASSWORD = conftest.HPCC_PASSWORD
+HPCC_PORT = conftest.HPCC_PORT
+HPCC_USERNAME = conftest.HPCC_USERNAME
 ENV = "LOCAL"
 
 
@@ -146,7 +146,7 @@ def test_create_file(tmp_path, ws, content, job_name, expected_file):
 
 # Test if compilation is working for bash_compile: Runs only in local
 @pytest.mark.skipif(
-    config.ENV != "LOCAL",
+    conftest.ENV != "LOCAL",
     reason="ECL Client Tools required. Can't run on github runner",
 )
 @pytest.mark.parametrize(
