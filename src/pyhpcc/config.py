@@ -28,29 +28,27 @@ WORKUNIT_STATE_MAP = {
 }
 
 
-platforms = {"hthor", "thor", "roxie"}
-
 DEFAULT_COMPILE_OPTIONS = {"-platform": "thor", "-wu": True, "-E": True}
 DEFUALT_RUN_OPTIONS = {}
 
-CLUSTER_PARAM = "--target"
-JOB_NAME_PARAM = "--name"
-LIMIT_PARAM = "--limit"
+CLUSTER_OPTION = "--target"
+JOB_NAME_OPTION = "--name"
+LIMIT_OPTION = "--limit"
 DEFAULT_LIMIT = 100
 USER_OPTIONS = ["-u", "--username"]
 PASSWORD_OPTIONS = ["-pw", "--password"]
 SERVER_OPTIONS = ["-s", "--s"]
-PORT_OPTION = ["--port"]
+PORT_OPTION = "--port"
+OUTPUT_FILE_OPTION = "-o"
 VERBOSE_OPTIONS = [
     "-v",
     "--verbose",
 ]
-RUN_AUTH_OPTIONS = {*USER_OPTIONS, *PASSWORD_OPTIONS, *SERVER_OPTIONS, *PORT_OPTION}
+RUN_AUTH_OPTIONS = {*USER_OPTIONS, *PASSWORD_OPTIONS, *SERVER_OPTIONS, PORT_OPTION}
 
 COMPILE_OPTIONS = {
     "-I",
     "-L",
-    "-o",
     "-manifest",
     "--main",
     "-syntax",
@@ -84,7 +82,8 @@ COMPILE_OPTIONS = {
     *VERBOSE_OPTIONS,
     "-wxxxx",
     "--version",
-    CLUSTER_PARAM,
+    CLUSTER_OPTION,
+    OUTPUT_FILE_OPTION,
 }
 
 RUN_OPTIONS = {
@@ -118,12 +117,12 @@ RUN_OPTIONS = {
     "--cert",
     "--key",
     "--cacert",
-    *PORT_OPTION,
+    PORT_OPTION,
     *USER_OPTIONS,
     *PASSWORD_OPTIONS,
     "--wait-connect",
     "--wait-read",
-    CLUSTER_PARAM,
-    JOB_NAME_PARAM,
+    CLUSTER_OPTION,
+    JOB_NAME_OPTION,
     *VERBOSE_OPTIONS,
 }

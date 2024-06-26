@@ -2,6 +2,7 @@ import json
 import logging
 import os
 import subprocess
+from collections import Counter
 
 import requests
 
@@ -64,12 +65,20 @@ class WorkunitSubmit(object):
 
         run_workunit:
             Legacy function to run the workunit
+
+        configure_run_config:
+            Creates run config from given options
     """
 
-    def __init__(self, hpcc: HPCC, cluster1="", cluster2=""):
-        self.hpcc = hpcc
-        self.cluster1 = cluster1
-        self.cluster2 = cluster2
+    def __init__(
+        self,
+        hpcc: HPCC,
+        clusters: tuple,
+    ):
+        if len(clusters) == 0:
+            raise ValueError("Minimum one cluster should be specified")
+        self.hpcc: HPCC = hpcc
+        self.clusters: tuple = clusters
         self.stateid = conf.WORKUNIT_STATE_MAP
 
     def write_file(self, query_text, folder, job_name):
@@ -128,16 +137,19 @@ class WorkunitSubmit(object):
                 A generic exception
         """
         try:
-            if "-o" not in compile_config.options:
+            if conf.OUTPUT_FILE_OPTION not in compile_config.options:
                 output_file = utils.create_compile_file_name(file_name)
                 compile_config.set_output_file(output_file)
+            else:
+                output_file = compile_config.get_option(conf.OUTPUT_FILE_OPTION)
+            log.info(compile_config.options)
             bash_command = compile_config.create_compile_bash_command(file_name)
             log.info(bash_command)
             return bash_command, output_file
         except Exception as e:
             raise HPCCException("Could not get bash command: " + str(e))
 
-    def get_work_load(self):
+    def get_least_active_cluster(self):
         """Get the workload for the given two HPCC clusters
 
         Parameters
@@ -156,23 +168,41 @@ class WorkunitSubmit(object):
                 A generic exception
         """
         try:
+            if len(self.clusters) == 1:
+                return self.clusters[0]
             payload = {"SortBy": "Name", "Descending": 1}
-
-            resp = self.hpcc.activity(**payload).json()
-            len1 = 0
-            len2 = 0
-            if "Running" in list(resp["ActivityResponse"].keys()):
-                workunits = resp["ActivityResponse"]["Running"]["ActiveWorkunit"]
-                for workunit in workunits:
-                    if workunit["TargetClusterName"] == self.cluster1:
-                        len1 = len1 + 1
-                    if workunit["TargetClusterName"] == self.cluster2:
-                        len2 = len2 + 1
-
-            return len1, len2
-
+            return self.get_cluster_from_response(self.hpcc.activity(**payload).json())
         except Exception as e:
             raise HPCCException("Could not get workload: " + str(e))
+
+    def get_cluster_from_response(self, resp):
+        """Extract the cluster from the Activity API Response
+
+        Parameters
+        ----------
+            self:
+                The object pointer
+            resp:
+                Activity API response
+
+        Returns
+        -------
+            str
+                Cluster with least activity
+
+        Raises
+        ------
+            HPCCException:
+                A generic exception
+        """
+        cluster_activity = Counter(self.clusters)
+        if "Running" in list(resp["ActivityResponse"].keys()):
+            workunits = resp["ActivityResponse"]["Running"]["ActiveWorkunit"]
+            for workunit in workunits:
+                cluster = workunit["TargetClusterName"]
+                if cluster in cluster_activity:
+                    cluster_activity[cluster] -= 1
+        return cluster_activity.most_common(1)[0][0]
 
     def create_file_name(self, query_text, working_folder, job_name):
         """Create a filename for the ecl file
@@ -258,23 +288,7 @@ class WorkunitSubmit(object):
                 A generic exception
         """
         try:
-            # Select the cluster to run the query on
-            if options is None:
-                options = conf.DEFUALT_RUN_OPTIONS
-            run_config = RunConfig(options)
-            if conf.CLUSTER_PARAM not in run_config.options:
-                len1, len2 = self.get_work_load()
-                if len2 > len1:
-                    cluster = self.cluster1
-                else:
-                    cluster = self.cluster2
-                run_config.set_target(cluster)
-            if conf.JOB_NAME_PARAM not in run_config.options:
-                self.job_name = self.job_name.replace(" ", "_")
-                run_config.set_job_name(self.job_name)
-            if conf.LIMIT_PARAM not in run_config.options:
-                run_config.set_limit(conf.DEFAULT_LIMIT)
-            run_config.set_auth_params(self.hpcc.auth)
+            run_config = self.configure_run_config(options)
             bash_command = run_config.create_run_bash_command(compiled_file)
             process = subprocess.Popen(
                 bash_command.split(), stdout=subprocess.PIPE, stderr=subprocess.STDOUT
@@ -287,6 +301,32 @@ class WorkunitSubmit(object):
         except Exception as e:
             raise HPCCException("Could not run: " + str(e))
 
+    def configure_run_config(self, options: dict) -> RunConfig:
+        """Creates run config from given options
+
+        Parameters
+        ----------
+            options:
+                dict of run config options
+
+        Returns
+        -------
+            run_config:
+                Returns RunConfig object configured with additional options
+        """
+        if options is None:
+            options = conf.DEFUALT_RUN_OPTIONS
+        run_config = RunConfig(options)
+        if conf.CLUSTER_OPTION not in run_config.options:
+            run_config.set_target(self.get_least_active_cluster())
+        if conf.JOB_NAME_OPTION not in run_config.options:
+            self.job_name = self.job_name.replace(" ", "_")
+            run_config.set_job_name(self.job_name)
+        if conf.LIMIT_OPTION not in run_config.options:
+            run_config.set_limit(conf.DEFAULT_LIMIT)
+        run_config.set_auth_params(self.hpcc.auth)
+        return run_config
+
     def compile_workunit(self, wuid, cluster=""):
         """Legacy function to compile a workunit - use bash_compile instead
 
@@ -298,11 +338,8 @@ class WorkunitSubmit(object):
                 The HPCC cluster to run the query on
         """
         if cluster == "":
-            len1, len2 = self.get_work_load()
-            if len2 > len1:
-                cluster = self.cluster1
-            else:
-                cluster = self.cluster2
+            cluster = self.get_least_active_cluster()
+
         self.hpcc.wu_submit(Wuid=wuid, Cluster=cluster)
         try:
             w3 = self.hpcc.wu_wait_compiled(Wuid=wuid)
@@ -335,12 +372,7 @@ class WorkunitSubmit(object):
                 The data to pass to the query
         """
         if cluster_orig == "":
-            len1, len2 = self.get_work_load()
-
-            if len2 > len1:
-                cluster_orig = self.cluster1
-            else:
-                cluster_orig = self.cluster2
+            cluster_orig = self.get_least_active_cluster()
         if query_text is None:
             data = {"QueryText": data}
             kwargs = {"data": data}
@@ -417,12 +449,7 @@ class WorkunitSubmit(object):
                 The HPCC cluster to run the query on
         """
         if cluster == "":
-            len1, len2 = self.get_work_load()
-
-            if len2 > len1:
-                cluster = self.cluster1
-            else:
-                cluster = self.cluster2
+            cluster = self.get_least_active_cluster()
         try:
             w4 = self.hpcc.wu_run(Wuid=wuid, Cluster=cluster, Variables=[])
         except requests.exceptions.Timeout:

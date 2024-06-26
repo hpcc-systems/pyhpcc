@@ -4,6 +4,26 @@ We value your interest in contributing to `PyHPCC.`
 
 Thank you
 
+## Project Structure
+```
+.
+└── pyhpcc/
+    ├── .github # contains build, release, test and other gh actions
+    ├── docs/ # contains files for documentation
+    ├── examples/ # contains starter examples
+    ├── src/
+    │   ├── pyhpcc/
+    │   │   ├── handlers/ # contains thor and roxie handler
+    │   │   └── models/ # contains classes auth, workunit submit
+    │   └── tests/
+    │       ├── models/
+    │       ├── test_files/ # contains resource files needed for testing
+    │       └── hanlders/
+    ├── pyproject.toml # Project config
+    ├── CONTRIBUTING.md
+    └── README.md
+```
+
 ## Set up the repository locally.
 ## Prerequisites
 Before starting to develop, make sure you install the following software:
@@ -23,6 +43,15 @@ To install the dependencies, run the following command, which downloads the depe
 
 ``` bash
 poetry install
+```
+
+## How to run tests  
+Since ecl client tools aren't installed in the GitHub runner, some tests are skipped in the github runner.
+
+Some tests will fail if `ecl client tools` aren't installed.
+
+```
+pytest run # Run in project root
 ```
 
 ## Linting and Formatting
@@ -57,7 +86,3 @@ The base branch is the main repo's main branch.
 - PR description: mention the issue number in this format: Fixes #1020. Doing so will automatically close the related issue once the PR is merged.
 - Please Ensure that "Allow edits from maintainers" is ticked.
 - Please describe the changes you have made in your branch and how they resolve the issue.  
-
-
-
-

@@ -8,7 +8,6 @@ if sys.version_info[0] < 3:
     from StringIO import StringIO
 else:
     from io import StringIO
-from pyhpcc.command_config import CompileConfig
 from pyhpcc.errors import HPCCException
 
 """

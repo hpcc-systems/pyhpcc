@@ -13,13 +13,14 @@ class DUMMY_SECRETS:
     DUMMY_HPCC_PORT = 0
     WUID = ""
     DEBUG = False
+    ENV = "LOCAL"
 
 
 try:
     import my_secret
 except Exception:
     my_secret = DUMMY_SECRETS
-
+ENV_VAR = "ENV"
 ## HPCC Config
 HPCC_USERNAME = os.environ.get("HPCC_USERNAME") or my_secret.HPCC_USERNAME
 HPCC_PASSWORD = os.environ.get("HPCC_PASSWORD") or my_secret.HPCC_PASSWORD
@@ -31,3 +32,4 @@ HPCC_PROTOCOL = os.environ.get("HPCC_PROTOCOL") or my_secret.HPCC_PROTOCOL
 DUMMY_HPCC_HOST = os.environ.get("DUMMY_HPCC_HOST") or my_secret.DUMMY_HPCC_HOST
 DUMMY_HPCC_PORT = os.environ.get("DUMMY_HPCC_PORT") or my_secret.DUMMY_HPCC_PORT
 WUID = os.environ.get("WUID") or my_secret.WUID
+ENV = os.environ.get(ENV_VAR) or my_secret.ENV

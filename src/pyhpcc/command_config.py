@@ -1,7 +1,11 @@
 import logging
 
 from pyhpcc.config import (
+    CLUSTER_OPTION,
     COMPILE_OPTIONS,
+    JOB_NAME_OPTION,
+    LIMIT_OPTION,
+    OUTPUT_FILE_OPTION,
     PASSWORD_OPTIONS,
     PORT_OPTION,
     RUN_AUTH_OPTIONS,
@@ -35,6 +39,9 @@ class CompileConfig(object):
         create_compile_bash_command:
             Generate the eclcc command for the given options and input_file
 
+        get_option:
+            Retrieves the compile config option
+
 
     """
 
@@ -43,30 +50,34 @@ class CompileConfig(object):
 
     def validate_options(self):
         """Validate if the compiler options are supported or not"""
-        invalid_options = set()
+        invalid_options = []
         for option in self.options:
             if option not in COMPILE_OPTIONS and not (
                 option.startswith("-R") or option.startswith("-f")
             ):
-                invalid_options.add(option)
+                invalid_options.append(option)
         if len(invalid_options) > 0:
             raise CompileConfigException(str(invalid_options))
 
     def set_output_file(self, output_file):
         """Set name of output file (default a.out if linking to"""
-        self.options["-o"] = output_file
+        self.options[OUTPUT_FILE_OPTION] = output_file
 
     def create_compile_bash_command(self, input_file):
         """Generate the eclcc command for the given options and input_file"""
         self.validate_options()
         eclcc_command = "eclcc"
         for key, value in self.options.items():
-            if isinstance(value, bool):
+            if value is bool:
                 eclcc_command += f" {key}"
             else:
                 eclcc_command += f" {key} {value}"
         eclcc_command = f"{eclcc_command} {input_file}"
         return eclcc_command
+
+    def get_option(self, option):
+        """Get the option available for the option"""
+        return self.options[option]
 
 
 class RunConfig(object):
@@ -106,6 +117,10 @@ class RunConfig(object):
 
         set_password:
             Set password for accessing ecl services
+
+        get_option:
+            Retrieves the run config option
+
     """
 
     def __init__(self, options: dict):
@@ -125,17 +140,17 @@ class RunConfig(object):
                 f"Invalid options not supported by pyhpcc {str(invalid_options)}"
             )
 
-    def create_run_bash_command(self, target_file=""):
+    def create_run_bash_command(self, target_file):
         """Generate the ecl command for the given options and target_file"""
         self.validate_options()
         ecl_command = "ecl run"
         params = ""
         for key, value in self.options.items():
-            if isinstance(value, bool):
+            if value is bool:
                 params += f" {key}"
             else:
                 params += f" {key} {value}"
-        ecl_command = f"{ecl_command} {target_file} {params}"
+        ecl_command = f"{ecl_command} {target_file}{params}"
         log.info(ecl_command)
         return ecl_command
 
@@ -152,15 +167,15 @@ class RunConfig(object):
 
     def set_target(self, target):
         """Set the target"""
-        self.options["--target"] = target
+        self.options[CLUSTER_OPTION] = target
 
     def set_job_name(self, job_name):
         """Specify the job name for the workunit"""
-        self.options["--name"] = job_name
+        self.options[JOB_NAME_OPTION] = job_name
 
     def set_limit(self, limit):
         """Sets the result limit for the query"""
-        self.options["--limit"] = limit
+        self.options[LIMIT_OPTION] = limit
 
     def set_server(self, server):
         """Set IP of server running ecl services (eclwatch)"""
@@ -168,7 +183,7 @@ class RunConfig(object):
 
     def set_port(self, port):
         """Set ECL services port"""
-        self.options[PORT_OPTION[0]] = port
+        self.options[PORT_OPTION] = port
 
     def set_username(self, username):
         """Set username for accessing ecl services"""
@@ -177,3 +192,7 @@ class RunConfig(object):
     def set_password(self, password):
         """Set password for accessing ecl services"""
         self.options[PASSWORD_OPTIONS[0]] = password
+
+    def get_option(self, option):
+        """Get the option available for the option"""
+        return self.options[option]
