@@ -28,11 +28,11 @@ WORKUNIT_STATE_MAP = {
 }
 
 
-DEFAULT_COMPILE_OPTIONS = {"-platform": "thor", "-wu": True, "-E": True}
+DEFAULT_COMPILE_OPTIONS = {"-platform": "thor", "-wu": bool, "-E": bool}
 DEFUALT_RUN_OPTIONS = {}
 
 CLUSTER_OPTION = "--target"
-JOB_NAME_OPTION = "--name"
+JOB_NAME_OPTION = "--job-name"
 LIMIT_OPTION = "--limit"
 DEFAULT_LIMIT = 100
 USER_OPTIONS = ["-u", "--username"]

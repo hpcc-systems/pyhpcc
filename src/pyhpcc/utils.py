@@ -1,3 +1,4 @@
+import re
 import sys
 import xml.etree.ElementTree as ET
 
@@ -8,6 +9,7 @@ if sys.version_info[0] < 3:
     from StringIO import StringIO
 else:
     from io import StringIO
+from pyhpcc.config import WORKUNIT_STATE_MAP
 from pyhpcc.errors import HPCCException
 
 """
@@ -404,3 +406,100 @@ def despray_file(hpcc, query_text, cluster, jobn):
 
     except HPCCException as e:
         raise e
+
+
+RUN_UNWANTED_PATTERNS = [
+    r"jsocket\([0-9]+,[0-9]+\) ",
+    "deploying",
+    "Deployed",
+    "Running",
+    "Using eclcc path ",
+]
+
+
+RUN_ERROR_MSG_PATTERN = [
+    "401: Unauthorized",
+    "Error checking ESP configuration",
+    "Bad host name/ip:",
+]
+
+COMPILE_ERROR_MIDDLE_PATTERN = [
+    r"\(\d+,\d+\): error C([0-9]){3,6}",
+]
+
+COMPILE_ERROR_PATTERN = [
+    "Error: ",
+    "Failed to compile ",
+]
+FAILED_STATUS = "FAILED"
+
+WUID_PATTERN = "^(wuid): (W[0-9]+-[0-9]+)$"
+WUID = "wuid"
+STATE_PATTERN = f"^(state): ({"|".join(WORKUNIT_STATE_MAP.keys())})$"
+STATE = "state"
+
+
+def parse_bash_run_output(response: bytes):
+    parsed_response = {}
+    wu_info = {WUID: None, STATE: None}
+    misc_info = {"message": []}
+    error = {}
+    messages = []
+    error_messages = []
+    response = response.decode()
+    raw_output = response
+    response = response.split("\n")
+    wuid_found = False
+    state_found = False
+    for line in response:
+        line = line.strip()
+        if line == "" or re.match("|".join(RUN_UNWANTED_PATTERNS), line, re.IGNORECASE):
+            continue
+        if not wuid_found:
+            if wuid_match := re.match(WUID_PATTERN, line):
+                wu_info[WUID] = wuid_match.group(2)
+                continue
+        if not state_found:
+            if state_match := re.match(STATE_PATTERN, line):
+                wu_info[STATE] = state_match.group(2)
+                continue
+        if re.match("|".join(RUN_ERROR_MSG_PATTERN), line, re.IGNORECASE):
+            error_messages.append(line)
+            continue
+        messages.append(line)
+    if (
+        (state_found and wu_info[STATE] == FAILED_STATUS) or wu_info[STATE] is None
+    ) and len(error_messages) > 0:
+        error["message"] = error_messages
+        parsed_response.update(error=error)
+    misc_info["message"] = messages
+    parsed_response.update(raw_output=raw_output)
+    parsed_response.update(wu_info=wu_info)
+    parsed_response.update(misc_info=misc_info)
+    return parsed_response
+
+
+def parse_bash_compile_output(response):
+    errors = []
+    parsed_response = {}
+    response = response.decode()
+    raw_output = response
+    response = response.split("\n")
+    for line in response:
+        line = line.strip()
+        if line == "":
+            continue
+
+        line = line.strip()
+        if re.match("|".join(COMPILE_ERROR_PATTERN), line) or re.search(
+            "|".join(COMPILE_ERROR_MIDDLE_PATTERN), line
+        ):
+            errors.append(line)
+            continue
+    if len(errors) == 0:
+        parsed_response["status"] = "success"
+    else:
+        parsed_response["status"] = "error"
+        parsed_response["errors"] = errors
+    parsed_response["raw_output"] = raw_output
+    return parsed_response

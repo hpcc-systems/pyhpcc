@@ -3,21 +3,21 @@ import os  # used by test_upload_file
 import unittest
 from datetime import datetime  # used by test_upload_file
 
-import config
+import conftest
 from pyhpcc.errors import HPCCException
 from pyhpcc.models.auth import Auth
 from pyhpcc.models.hpcc import HPCC
 
 
 class TestHPCCAPI(unittest.TestCase):
-    HPCC_HOST = config.HPCC_HOST
-    HPCC_PORT = config.HPCC_PORT
-    HPCC_USERNAME = config.HPCC_USERNAME
-    HPCC_PASSWORD = config.HPCC_PASSWORD
-    DUMMY_USERNAME = config.DUMMY_USERNAME
-    DUMMY_PASSWORD = config.DUMMY_PASSWORD
-    DUMMY_HPCC_HOST = config.DUMMY_HPCC_HOST
-    DUMMY_HPCC_PORT = config.DUMMY_HPCC_PORT
+    HPCC_HOST = conftest.HPCC_HOST
+    HPCC_PORT = conftest.HPCC_PORT
+    HPCC_USERNAME = conftest.HPCC_USERNAME
+    HPCC_PASSWORD = conftest.HPCC_PASSWORD
+    DUMMY_USERNAME = conftest.DUMMY_USERNAME
+    DUMMY_PASSWORD = conftest.DUMMY_PASSWORD
+    DUMMY_HPCC_HOST = conftest.DUMMY_HPCC_HOST
+    DUMMY_HPCC_PORT = conftest.DUMMY_HPCC_PORT
 
     AUTH_OBJ = Auth(HPCC_HOST, HPCC_PORT, HPCC_USERNAME, HPCC_PASSWORD, True, "https")
     HPCC_OBJ = HPCC(AUTH_OBJ)
