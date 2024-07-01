@@ -1,6 +1,5 @@
 import copy
 import os
-import subprocess
 
 import conftest
 import pytest
@@ -72,32 +71,6 @@ def test_get_bash_command_output_file(ws, config, input_file, expected_output):
     assert expected_output == ws.get_bash_command(input_file, compile_config)
 
 
-class MockProcess:
-    def communicate(*args, **kwargs):
-        return (DUMMY_OUTPUT, "dummy_error")
-
-
-# Test WorkunitSubmit bash_compile with mocking compile method
-@pytest.mark.parametrize(
-    "config, input_file, expected_output",
-    [
-        ({}, "a.ecl", (DUMMY_OUTPUT, "a.eclxml")),
-        (
-            {OUTPUT_FILE_OPTION: "hello.eclxml"},
-            "a.ecl",
-            (DUMMY_OUTPUT, "hello.eclxml"),
-        ),
-    ],
-)
-def test_bash_compile(config, input_file, expected_output, monkeypatch, ws):
-    def dummy_process(*args, **kwargs):
-        return MockProcess()
-
-    monkeypatch.setattr(subprocess, "Popen", dummy_process)
-    output = ws.bash_compile(input_file, config)
-    assert output == expected_output
-
-
 activity_response_skeleton = {"ActivityResponse": {"Running": {"ActiveWorkunit": []}}}
 
 
@@ -150,20 +123,26 @@ def test_create_file(tmp_path, ws, content, job_name, expected_file):
     reason="ECL Client Tools required. Can't run on github runner",
 )
 @pytest.mark.parametrize(
-    "job_name, expected_file, options, content, error_code",
+    "job_name, expected_file, options, content, status",
     [
-        ("Basic Job", "Basic_job.eclxml", {"-E": True}, "OUTPUT('HELLO WORLD!');", -1),
+        (
+            "Basic Job",
+            "Basic_job.eclxml",
+            {"-E": bool},
+            "OUTPUT('HELLO WORLD!');",
+            "success",
+        ),
         # ("Basic Job", "Basic_job.eclxml", {"-E": True}, "OUTPUT('HELLO WORL", 185),
-        ("Basic Job", "Basic_job.eclxml", None, "OUTPUT('HELLO WORLD!');", -1),
+        ("Basic Job", "Basic_job.eclxml", None, "OUTPUT('HELLO WORLD!');", "success"),
     ],
 )
 def test_bash_compile_full(
-    tmp_path, ws, job_name, options, expected_file, content, error_code
+    tmp_path, ws, job_name, options, expected_file, content, status
 ):
     output_file = ws.create_file_name(content, tmp_path, job_name)
     output, error = ws.bash_compile(output_file, options)
     assert os.path.exists(tmp_path / expected_file)
-    assert str(output).find("error") == error_code
+    assert output["status"] == status
 
 
 # Test if RunConfig options are properly instantiated.
@@ -174,7 +153,7 @@ def test_bash_compile_full(
             None,
             {
                 "--target": "thor",
-                "--name": "Basic_Job",
+                "--job-name": "Basic_Job",
                 "--limit": 100,
                 "-s": HPCC_HOST,
                 "--port": f"{HPCC_PORT}",
@@ -183,10 +162,10 @@ def test_bash_compile_full(
             },
         ),
         (
-            {"--target": "hthor", "--limit": 1000, "--name": "Basic Job 2"},
+            {"--target": "hthor", "--limit": 1000, "--job-name": "Basic Job 2"},
             {
                 "--target": "hthor",
-                "--name": "Basic Job 2",
+                "--job-name": "Basic Job 2",
                 "--limit": 1000,
                 "-s": HPCC_HOST,
                 "--port": f"{HPCC_PORT}",

@@ -259,11 +259,13 @@ class WorkunitSubmit(object):
                 options = conf.DEFAULT_COMPILE_OPTIONS
             compile_config = CompileConfig(options)
             bash_command, output_file = self.get_bash_command(file_name, compile_config)
+            print(bash_command)
             process = subprocess.Popen(
                 bash_command.split(), stdout=subprocess.PIPE, stderr=subprocess.STDOUT
             )
             output, error = process.communicate()
-            return output, output_file
+            parsed_output = utils.parse_bash_compile_output(output)
+            return parsed_output, output_file
         except Exception as e:
             raise HPCCException("Could not compile: " + str(e))
 
@@ -294,8 +296,7 @@ class WorkunitSubmit(object):
                 bash_command.split(), stdout=subprocess.PIPE, stderr=subprocess.STDOUT
             )
             output, error = process.communicate()
-
-            return output, error
+            return utils.parse_bash_run_output(output)
         except RunConfigException:
             raise
         except Exception as e:
