@@ -14,7 +14,6 @@ class DUMMY_SECRETS:
     WUID = ""
     DEBUG = False
     ENV = "LOCAL"
-    DEV = "DEV"
 
 
 try:

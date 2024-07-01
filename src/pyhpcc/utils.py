@@ -431,7 +431,7 @@ COMPILE_ERROR_PATTERN = [
     "Error: ",
     "Failed to compile ",
 ]
-FAILED_STATUS = "FAILED"
+FAILED_STATUS = {"failed", "aborted", "aborting"}
 
 WUID_PATTERN = "^(wuid): (W[0-9]+-[0-9]+)$"
 WUID = "wuid"
@@ -468,7 +468,7 @@ def parse_bash_run_output(response: bytes):
             continue
         messages.append(line)
     if (
-        (state_found and wu_info[STATE] == FAILED_STATUS) or wu_info[STATE] is None
+        (state_found and wu_info[STATE] in FAILED_STATUS) or wu_info[STATE] is None
     ) and len(error_messages) > 0:
         error["message"] = error_messages
         parsed_response.update(error=error)
