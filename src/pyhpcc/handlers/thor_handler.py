@@ -140,7 +140,6 @@ def thor_handler(**config):
 
             # Debugging
             if conf.DEBUG:
-                print("Came jere")
                 print("full_url: ", full_url)
                 print("self.session.params: ", self.session.params)
                 print("self.session.headers: ", self.session.headers)
