@@ -130,8 +130,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-my_secret.py
-test_hpcc.py
+tests/my_secret.py
 
 # Miscellaneous folders
 Dummy/
