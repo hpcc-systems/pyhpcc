@@ -1,7 +1,7 @@
 import logging
 
 import pyhpcc.config as conf
-from pyhpcc.errors import HPCCAuthenticationError, TypeError
+from pyhpcc.errors import HPCCAuthenticationError
 from pyhpcc.utils import convert_arg_to_utf8_str
 
 log = logging.getLogger(__name__)
@@ -134,7 +134,9 @@ def thor_handler(**config):
             #         self.api.cached_result = True
             #         return result
 
-            full_url = self.api.auth.get_url() + self.path + "." + self.response_type
+            full_url = (
+                self.api.auth.get_url() + "/" + self.path + "." + self.response_type
+            )
 
             # Debugging
             if conf.DEBUG:
