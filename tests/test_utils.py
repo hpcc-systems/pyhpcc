@@ -82,6 +82,4 @@ def test_bash_compile(resp, expected_output):
 def test_bash_run(resp, expected_output):
     output = utils.parse_bash_run_output(resp)
     expected_output["raw_output"] = resp.decode()
-    print(output)
     assert output == expected_output
-    # assert 0

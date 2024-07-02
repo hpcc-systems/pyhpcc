@@ -5,6 +5,7 @@ from pyhpcc.config import (
     COMPILE_OPTIONS,
     JOB_NAME_OPTION,
     LIMIT_OPTION,
+    MASKED_PASSWORD,
     OUTPUT_FILE_OPTION,
     PASSWORD_OPTIONS,
     PORT_OPTION,
@@ -140,7 +141,7 @@ class RunConfig(object):
                 f"Invalid options not supported by pyhpcc {str(invalid_options)}"
             )
 
-    def create_run_bash_command(self, target_file):
+    def create_run_bash_command(self, target_file, password_mask=False):
         """Generate the ecl command for the given options and target_file"""
         self.validate_options()
         ecl_command = "ecl run"
@@ -149,7 +150,10 @@ class RunConfig(object):
             if value is bool:
                 params += f" {key}"
             else:
-                params += f" {key} {value}"
+                if key in PASSWORD_OPTIONS and password_mask:
+                    params += f" {key} {MASKED_PASSWORD}"
+                else:
+                    params += f" {key} {value}"
         ecl_command = f"{ecl_command} {target_file}{params}"
         log.info(ecl_command)
         return ecl_command

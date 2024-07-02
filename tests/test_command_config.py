@@ -1,7 +1,13 @@
 import conftest
 import pytest
 from pyhpcc.command_config import CompileConfig, RunConfig
-from pyhpcc.config import PASSWORD_OPTIONS, PORT_OPTION, SERVER_OPTIONS, USER_OPTIONS
+from pyhpcc.config import (
+    MASKED_PASSWORD,
+    PASSWORD_OPTIONS,
+    PORT_OPTION,
+    SERVER_OPTIONS,
+    USER_OPTIONS,
+)
 from pyhpcc.errors import CompileConfigException, RunConfigException
 from pyhpcc.models.auth import Auth
 
@@ -205,6 +211,30 @@ def test_run_config_validation_errors(options):
 def test_create_run_bash_command(file_name, options, expected_output):
     run_config = RunConfig(options)
     cmd = run_config.create_run_bash_command(file_name)
+    assert set(cmd.split(" ")) == set(expected_output.split(" "))
+
+
+@pytest.mark.parametrize(
+    "file_name, options, expected_output",
+    [
+        (
+            "/usr/loc/Basic_job_submission.eclxml",
+            {
+                "--target": "thor",
+                "--job-name": "my_custom_workunit",
+                "--limit": 100,
+                "-s": conftest.HPCC_HOST,
+                "--port": conftest.HPCC_PORT,
+                "-u": conftest.HPCC_USERNAME,
+                "-pw": conftest.HPCC_PASSWORD,
+            },
+            f"ecl run /usr/loc/Basic_job_submission.eclxml --target thor --job-name my_custom_workunit --limit 100 -s {conftest.HPCC_HOST} --port {conftest.HPCC_PORT} -u {conftest.HPCC_USERNAME} -pw {MASKED_PASSWORD}",
+        ),
+    ],
+)
+def test_create_run_bash_command_mask_password(file_name, options, expected_output):
+    run_config = RunConfig(options)
+    cmd = run_config.create_run_bash_command(file_name, password_mask=True)
     assert set(cmd.split(" ")) == set(expected_output.split(" "))
 
 

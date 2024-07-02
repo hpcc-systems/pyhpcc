@@ -27,10 +27,10 @@ WORKUNIT_STATE_MAP = {
     "statesize": 17,
 }
 
-
 DEFAULT_COMPILE_OPTIONS = {"-platform": "thor", "-wu": bool, "-E": bool}
 DEFUALT_RUN_OPTIONS = {}
 
+COMMAND = "command"
 CLUSTER_OPTION = "--target"
 JOB_NAME_OPTION = "--job-name"
 LIMIT_OPTION = "--limit"
@@ -44,6 +44,7 @@ VERBOSE_OPTIONS = [
     "-v",
     "--verbose",
 ]
+MASKED_PASSWORD = "*****"
 RUN_AUTH_OPTIONS = {*USER_OPTIONS, *PASSWORD_OPTIONS, *SERVER_OPTIONS, PORT_OPTION}
 
 COMPILE_OPTIONS = {
@@ -126,3 +127,25 @@ RUN_OPTIONS = {
     JOB_NAME_OPTION,
     *VERBOSE_OPTIONS,
 }
+
+
+RUN_ERROR_MSG_PATTERN = [
+    "401: Unauthorized",
+    "Error checking ESP configuration",
+    "Bad host name/ip:",
+]
+
+COMPILE_ERROR_MIDDLE_PATTERN = [
+    r"\(\d+,\d+\): error C([0-9]){3,6}",
+]
+
+COMPILE_ERROR_PATTERN = [
+    "Error: ",
+    "Failed to compile ",
+]
+FAILED_STATUS = {"failed", "aborted", "aborting"}
+
+WUID_PATTERN = "^(wuid): (W[0-9]+-[0-9]+)$"
+WUID = "wuid"
+STATE_PATTERN = f"^(state): ({"|".join(WORKUNIT_STATE_MAP.keys())})$"
+STATE = "state"

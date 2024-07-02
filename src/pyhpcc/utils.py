@@ -9,7 +9,16 @@ if sys.version_info[0] < 3:
     from StringIO import StringIO
 else:
     from io import StringIO
-from pyhpcc.config import WORKUNIT_STATE_MAP
+from pyhpcc.config import (
+    COMPILE_ERROR_MIDDLE_PATTERN,
+    COMPILE_ERROR_PATTERN,
+    FAILED_STATUS,
+    RUN_ERROR_MSG_PATTERN,
+    STATE,
+    STATE_PATTERN,
+    WUID,
+    WUID_PATTERN,
+)
 from pyhpcc.errors import HPCCException
 
 """
@@ -417,29 +426,20 @@ RUN_UNWANTED_PATTERNS = [
 ]
 
 
-RUN_ERROR_MSG_PATTERN = [
-    "401: Unauthorized",
-    "Error checking ESP configuration",
-    "Bad host name/ip:",
-]
-
-COMPILE_ERROR_MIDDLE_PATTERN = [
-    r"\(\d+,\d+\): error C([0-9]){3,6}",
-]
-
-COMPILE_ERROR_PATTERN = [
-    "Error: ",
-    "Failed to compile ",
-]
-FAILED_STATUS = {"failed", "aborted", "aborting"}
-
-WUID_PATTERN = "^(wuid): (W[0-9]+-[0-9]+)$"
-WUID = "wuid"
-STATE_PATTERN = f"^(state): ({"|".join(WORKUNIT_STATE_MAP.keys())})$"
-STATE = "state"
-
-
 def parse_bash_run_output(response: bytes):
+    """
+    Parse raw run output to user-friendly JSON format
+
+    Parameters
+    ----------
+    response : binary string
+        ecl run output
+
+    Returns
+    -------
+    response: dict
+        parsed run output
+    """
     parsed_response = {}
     wu_info = {WUID: None, STATE: None}
     misc_info = {"message": []}
@@ -480,6 +480,19 @@ def parse_bash_run_output(response: bytes):
 
 
 def parse_bash_compile_output(response):
+    """
+    Parse raw compiler output to user-friendly JSON format
+
+    Parameters
+    ----------
+    response : binary string
+        eclcc compiler output
+
+    Returns
+    -------
+    response: dict
+        parsed compiler output
+    """
     errors = []
     parsed_response = {}
     response = response.decode()
