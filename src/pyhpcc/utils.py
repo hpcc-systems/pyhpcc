@@ -14,6 +14,7 @@ from pyhpcc.config import (
     COMPILE_ERROR_PATTERN,
     FAILED_STATUS,
     RUN_ERROR_MSG_PATTERN,
+    RUN_UNWANTED_PATTERNS,
     STATE,
     STATE_PATTERN,
     WUID,
@@ -128,14 +129,14 @@ def get_graph_skew(response):
         raise e
 
 
-def get_file_status(arg):
+def get_file_status(response):
     """
     Parses the xml response to get NumFiles information
 
     Parameters
     ----------
-    arg : str
-        The xml response
+    response :
+        Response Object
 
     Returns
     -------
@@ -148,23 +149,26 @@ def get_file_status(arg):
         A generic exception.
     """
     try:
-        root = ET.fromstring(arg)
-        for child in root:
-            if child.tag == "NumFiles":
-                return child.text
-
+        NUM_FILES = "NumFiles"
+        DFU_QUERY_RESPONSE = "DFUQueryResponse"
+        response = response.json()
+        response = response[DFU_QUERY_RESPONSE]
+        if NUM_FILES in response:
+            return response[NUM_FILES]
+        else:
+            return 0
     except HPCCException as e:
         raise e
 
 
-def get_file_type(arg):
+def get_file_type(response):
     """
     Parses the xml response to get FileType information
 
     Parameters
     ----------
-    arg : str
-        The xml response
+    response : Response
+        The Response object
 
     Returns
     -------
@@ -177,25 +181,29 @@ def get_file_type(arg):
         A generic exception.
     """
     try:
-        argET = ET.fromstring(arg.content)
+        response = response.json()
         data_dict = {}
+        DFU_LOGICAL_FILES = "DFULogicalFiles"
+        DFU_QUERY_RESPONSE = "DFUQueryResponse"
+        DFU_LOGICAL_FILE = "DFULogicalFile"
+        NODE_GROUP = "NodeGroup"
+        IS_SUPER_FILE = "isSuperfile"
+        TOTAL_SIZE = "Totalsize"
+        RECORD_COUNT = "RecordCount"
+        CONTENT_TYPE = "ContentType"
 
-        # Loop through the xml and get the FileType information
-        for child in argET:
-            if child.tag == "DFULogicalFiles":
-                for dfu_file in child:
-                    if dfu_file.tag == "DFULogicalFile":
-                        for fileinfo in dfu_file:
-                            if fileinfo.tag == "NodeGroup":
-                                data_dict.update({fileinfo.tag: fileinfo.text})
-                            if fileinfo.tag == "isSuperfile":
-                                data_dict.update({fileinfo.tag: fileinfo.text})
-                            if fileinfo.tag == "Totalsize":
-                                data_dict.update({fileinfo.tag: fileinfo.text})
-                            if fileinfo.tag == "RecordCount":
-                                data_dict.update({fileinfo.tag: fileinfo.text})
-                            if fileinfo.tag == "ContentType":
-                                data_dict.update({fileinfo.tag: fileinfo.text})
+        ATTRIBUTES = [NODE_GROUP, IS_SUPER_FILE, TOTAL_SIZE, RECORD_COUNT, CONTENT_TYPE]
+        print(response)
+        # Loop through the JSON and get the FileType information
+        if DFU_QUERY_RESPONSE in response:
+            response = response[DFU_QUERY_RESPONSE]
+            if DFU_LOGICAL_FILES in response:
+                response = response[DFU_LOGICAL_FILES]
+                if DFU_LOGICAL_FILE in response:
+                    response = response[DFU_LOGICAL_FILE][0]
+                    for key in ATTRIBUTES:
+                        if key in response:
+                            data_dict.update({key: response[key]})
         return data_dict
     except HPCCException as e:
         raise e
@@ -235,14 +243,41 @@ def get_subfile_names(arg):
         raise e
 
 
-def get_flat_data(arg):
+def get_data_from_response(response):
     """
-    Parses the xml response to get flat data
+    Extract the content from the response
 
     Parameters
     ----------
-    arg : str
-        The xml response
+    response : Response
+        The Response Object
+
+    Returns
+    -------
+    response: dict
+        The response object with content
+
+    """
+    WU_RESULT_RESPONSE = "WUResultResponse"
+    RESULT = "Result"
+    ROW = "Row"
+    response = response.json()
+    if WU_RESULT_RESPONSE in response:
+        response = response[WU_RESULT_RESPONSE]
+        if RESULT in response:
+            response = response[RESULT]
+            if ROW in response:
+                return response[ROW]
+
+
+def get_flat_data(response):
+    """
+    Parses the Response to get flat data
+
+    Parameters
+    ----------
+    response : Response
+        Response Object
 
     Returns
     -------
@@ -255,30 +290,20 @@ def get_flat_data(arg):
         A generic exception.
     """
     try:
-        list_dict = []
-        argET = ET.fromstring(arg.content)
-        for child in argET:
-            if child.tag == "Result":
-                for child in child:
-                    if child.tag == "Dataset":
-                        for row in child:
-                            data_dict = {}
-                            for row_data in row:
-                                data_dict[row_data.tag] = row_data.text
-                            list_dict.append(data_dict)
-        return pd.DataFrame(list_dict)
+        df = pd.json_normalize(get_data_from_response(response))
+        return df
     except HPCCException as e:
         raise e
 
 
-def get_csv_data(arg, csv_separator, csv_header):
+def get_csv_data(response, csv_separator, csv_header):
     """
     Parses the xml response to get csv data
 
     Parameters
     ----------
-    arg : str
-        The xml response
+    response : Response
+        Response Object
     csv_separator : str
         The csv seperator
     csv_header : str
@@ -295,26 +320,13 @@ def get_csv_data(arg, csv_separator, csv_header):
         A generic exception.
     """
     try:
-        argET = ET.fromstring(arg.content)
-        list_dict = []
-        for child in argET:
-            if child.tag == "Result":
-                for child in child:
-                    if child.tag == "Dataset":
-                        for row in child:
-                            data_dict = {}
-                            for row_data in row:
-                                data_dict[row_data.tag] = row_data.text + "\n"
-                            list_dict.append(data_dict)
-        xml_str = ""
-        for each_dict in list_dict:
-            for key, value in list(each_dict.items()):
-                if key == "line":
-                    if "None" in str(value):
-                        xml_str = xml_str
-                    else:
-                        xml_str = xml_str + str(value)
-        csv_format_data = StringIO(xml_str)
+        LINE = "line"
+        csv_format_data = ""
+        rows = get_data_from_response(response)
+        for row in rows:
+            if LINE in row:
+                csv_format_data += row[LINE] + "\n"
+        csv_format_data = StringIO(csv_format_data)
         if csv_header == 0:
             return pd.read_csv(csv_format_data, sep=csv_separator, header=csv_header)
         else:
@@ -415,15 +427,6 @@ def despray_file(hpcc, query_text, cluster, jobn):
 
     except HPCCException as e:
         raise e
-
-
-RUN_UNWANTED_PATTERNS = [
-    r"jsocket\([0-9]+,[0-9]+\) ",
-    "deploying",
-    "Deployed",
-    "Running",
-    "Using eclcc path ",
-]
 
 
 def parse_bash_run_output(response: bytes):

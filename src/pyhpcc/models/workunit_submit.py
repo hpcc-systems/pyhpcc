@@ -259,7 +259,6 @@ class WorkunitSubmit(object):
                 options = conf.DEFAULT_COMPILE_OPTIONS
             compile_config = CompileConfig(options)
             bash_command, output_file = self.get_bash_command(file_name, compile_config)
-            print(bash_command)
             process = subprocess.Popen(
                 bash_command.split(), stdout=subprocess.PIPE, stderr=subprocess.STDOUT
             )
@@ -269,7 +268,7 @@ class WorkunitSubmit(object):
         except Exception as e:
             raise HPCCException("Could not compile: " + str(e))
 
-    def bash_run(self, compiled_file, options: dict = None):
+    def bash_run(self, compiled_file, options: dict = None, show_command=False):
         """Run the compiled ecl file
 
         Parameters
@@ -296,7 +295,13 @@ class WorkunitSubmit(object):
                 bash_command.split(), stdout=subprocess.PIPE, stderr=subprocess.STDOUT
             )
             output, error = process.communicate()
-            return utils.parse_bash_run_output(output)
+            parsed_response = utils.parse_bash_run_output(output)
+            if show_command:
+                masked_run_command = run_config.create_run_bash_command(
+                    compiled_file, password_mask=True
+                )
+                parsed_response[conf.COMMAND] = masked_run_command
+            return parsed_response
         except RunConfigException:
             raise
         except Exception as e:

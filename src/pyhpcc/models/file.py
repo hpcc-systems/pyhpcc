@@ -1,4 +1,5 @@
 from pyhpcc import utils
+from pyhpcc.models.hpcc import HPCC
 
 
 class ReadFileInfo(object):
@@ -64,7 +65,7 @@ class ReadFileInfo(object):
 
     def __init__(
         self,
-        hpcc,
+        hpcc: HPCC,
         logical_file_name,
         cluster,
         file_type,
