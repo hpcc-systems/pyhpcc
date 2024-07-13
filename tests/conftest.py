@@ -1,5 +1,10 @@
 import os
 
+import pytest
+from pyhpcc.models.auth import Auth
+from pyhpcc.models.hpcc import HPCC
+from pyhpcc.models.workunit_submit import WorkunitSubmit
+
 
 class DUMMY_SECRETS:
     HPCC_USERNAME = ""
@@ -14,6 +19,8 @@ class DUMMY_SECRETS:
     WUID = ""
     DEBUG = False
     ENV = "LOCAL"
+    LANDING_ZONE_IP = ""
+    LANDING_ZONE_PATH = ""
 
 
 try:
@@ -33,3 +40,103 @@ DUMMY_HPCC_HOST = os.environ.get("DUMMY_HPCC_HOST") or my_secret.DUMMY_HPCC_HOST
 DUMMY_HPCC_PORT = os.environ.get("DUMMY_HPCC_PORT") or my_secret.DUMMY_HPCC_PORT
 WUID = os.environ.get("WUID") or my_secret.WUID
 ENV = os.environ.get(ENV_VAR) or my_secret.ENV
+LANDING_ZONE_IP = os.environ.get("LANDING_ZONE_IP") or my_secret.LANDING_ZONE_IP
+LANDING_ZONE_PATH = os.environ.get("LANDING_ZONE_IP") or my_secret.LANDING_ZONE_PATH
+DFU_CLUSTER = os.environ.get("DFU_CLUSTER") or my_secret.DFU_CLUSTER
+
+
+@pytest.fixture(scope="session")
+def hpcc_host():
+    return HPCC_HOST
+
+
+@pytest.fixture(scope="session")
+def hpcc_port():
+    return HPCC_PORT
+
+
+@pytest.fixture(scope="session")
+def hpcc_username():
+    return HPCC_USERNAME
+
+
+@pytest.fixture(scope="session")
+def hpcc_password():
+    return HPCC_PASSWORD
+
+
+@pytest.fixture(scope="session")
+def hpcc_protocol():
+    return HPCC_PROTOCOL
+
+
+@pytest.fixture(scope="session")
+def dummy_username():
+    return DUMMY_USERNAME
+
+
+@pytest.fixture(scope="session")
+def dummy_password():
+    return dummy_password
+
+
+@pytest.fixture(scope="session")
+def dummy_hpcc_host():
+    return DUMMY_HPCC_HOST
+
+
+@pytest.fixture(scope="session")
+def dummy_hpcc_port():
+    return DUMMY_HPCC_PORT
+
+
+@pytest.fixture(scope="session")
+def auth(hpcc_host, hpcc_port, hpcc_username, hpcc_password, hpcc_protocol):
+    return Auth(
+        hpcc_host, hpcc_port, hpcc_username, hpcc_password, protocol=hpcc_protocol
+    )
+
+
+@pytest.fixture(scope="session")
+def hpcc(auth):
+    return HPCC(auth)
+
+
+@pytest.fixture
+def ws(hpcc, clusters):
+    return WorkunitSubmit(hpcc, clusters)
+
+
+@pytest.fixture(scope="session")
+def flat_file():
+    return "pyhpcc::employee::dummy::thor"
+
+
+@pytest.fixture(scope="session")
+def logical_file():
+    return "pyhpcc::employee::dummy::thor"
+
+
+@pytest.fixture(scope="session")
+def csv_file():
+    return "pyhpcc::employee::dummy::data"
+
+
+@pytest.fixture(scope="session")
+def super_file():
+    return "class::mdm::sf::alldata"
+
+
+@pytest.fixture(scope="session")
+def landing_zone_ip():
+    return LANDING_ZONE_IP
+
+
+@pytest.fixture(scope="session")
+def landing_zone_path():
+    return LANDING_ZONE_PATH
+
+
+@pytest.fixture(scope="module")
+def dfu_cluster():
+    return DFU_CLUSTER

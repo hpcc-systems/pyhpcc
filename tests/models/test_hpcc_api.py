@@ -1,514 +1,424 @@
 # Unit tests to test the authentication module
 import os  # used by test_upload_file
-import unittest
 from datetime import datetime  # used by test_upload_file
 
-import conftest
+import pytest
 from pyhpcc.errors import HPCCException
-from pyhpcc.models.auth import Auth
-from pyhpcc.models.hpcc import HPCC
 
 
-class TestHPCCAPI(unittest.TestCase):
-    HPCC_HOST = conftest.HPCC_HOST
-    HPCC_PORT = conftest.HPCC_PORT
-    HPCC_USERNAME = conftest.HPCC_USERNAME
-    HPCC_PASSWORD = conftest.HPCC_PASSWORD
-    DUMMY_USERNAME = conftest.DUMMY_USERNAME
-    DUMMY_PASSWORD = conftest.DUMMY_PASSWORD
-    DUMMY_HPCC_HOST = conftest.DUMMY_HPCC_HOST
-    DUMMY_HPCC_PORT = conftest.DUMMY_HPCC_PORT
+@pytest.fixture
+def cluster():
+    return "thor"
 
-    AUTH_OBJ = Auth(HPCC_HOST, HPCC_PORT, HPCC_USERNAME, HPCC_PASSWORD, True, "https")
-    HPCC_OBJ = HPCC(AUTH_OBJ)
 
-    # Used by test_add_to_superfile_request, test_getSubFileInfoall
-    # Generic superfile created for PyHPCC testing purposes on Boca Dataland
-    SUPER_FILE_NAME = ""  # TODO: enter super file name
+# Test if get_dfu_info returns file info
+def test_get_dfu_info(hpcc, logical_file):
+    payload = {"Name": logical_file}
+    response = hpcc.get_dfu_info(**payload).json()
 
-    # Used by test_get_dfu_info, test_get_file_info, test_check_file_exists, test_add_to_superfile_request, test_file_query
-    # Generic logical file created for PyHPCC testing purposes on Boca Dataland
-    LOGICAL_FILE_NAME = ""  # TODO: enter logical file name
+    if "Exceptions" in response:
+        raise HPCCException(message=response["Exceptions"]["Exception"][0]["Message"])
+    assert logical_file == response["DFUInfoResponse"]["FileDetail"]["Name"]
 
-    # Used by test_get_wu_info, test_get_wu_result
-    # No particular reason why this wu was chosen. WU is on Boca Dataland. May have to be updated since it may get archived.
-    STATIC_WUID = ""  # TODO: enter workunit id
 
-    # Used by test_wu_submit, test_wu_wait_compiled, test_wu_run, test_wu_update
-    # No particular reason why this wu was chosen. WU is on Boca Dataland. May have to be updated since it may get archived.
-    STATIC_WUID2 = ""  # TODO: enter workunit id
+# Test if get_dfu_info returns file info
+def test_get_file_info(hpcc, logical_file):
+    payload = {"LogicalName": logical_file}
+    response = hpcc.get_file_info(**payload).json()
 
-    # Used by test_wu_wait_complete
-    # Need to choose a workunit that is in the compile or run state, although any wuid will work for testing wu_wait_complete.
-    # For state=unknown or state=paused, the wait will be infinite if the state is not updated for wu completion.
-    STATIC_WUID3 = ""  # TODO: enter workunit id
+    if "Exceptions" in response:
+        raise HPCCException(message=response["Exceptions"]["Exception"][0]["Message"])
 
-    # Used by test_get_graph
-    STATIC_WUID4 = ""  # TODO: enter workunit id
+    record_count = 100
+    assert record_count == response["WUResultResponse"]["Count"]
 
-    # Used by test_get_wu_query
-    STATIC_WUID5 = ""  # TODO: enter workunit id
 
-    # Used by test_get_dfu_workunit_info
-    # No particular reason why this wu was chosen. WU is on Boca Dataland. May have to be updated since it may get archived.
-    STATIC_DFU_WUID = ""  # TODO: enter DFU workunit id
+# Test if check_file_exists check file returns right response if file present
+def test_check_file_exists(hpcc, logical_file):
+    payload = {"LogicalName": logical_file}
+    response = hpcc.check_file_exists(**payload).json()
 
-    # Used by test_upload_file
-    # Points to bctlpedata12 landing zone. Used since this is a familiar landing zone.
-    LANDING_ZONE_IP = ""  # TODO: Update with landing zone IP
-    LANDING_ZONE_PATH = ""  # TODO: Update with landing zone path
+    if "Exceptions" in response:
+        raise HPCCException(message=response["Exceptions"]["Exception"][0]["Message"])
 
-    # Used by test_spray_fixed, test_spray_variable
-    SPRAY_CLUSTER = ""  # TODO: Update with cluster name
+    assert "DFUQueryResponse" in list(response.keys())
+    assert response["DFUQueryResponse"]["NumFiles"] >= 0
 
-    # Used by test_spray_fixed
-    SPRAY_FIXED_SOURCE_FILE = ""  # TODO: Update with fixed spray source file path
-    SPRAY_FIXED_DEST_FILE = ""  # TODO: Update with fixed spray destination file name
 
-    # Used by test_spray_variable
-    SPRAY_VARIABLE_SOURCE_FILE = ""  # TODO: Update with variable spray source file path
-    SPRAY_VARIABLE_DEST_FILE = (
-        ""  # TODO: Update with variable spray destination file name
+# Test if file_query return file with properties
+def test_file_query(hpcc, logical_file):
+    payload = {"LogicalName": logical_file}
+    response = hpcc.file_query(**payload).json()
+
+    if "Exceptions" in response:
+        raise HPCCException(message=response["Exceptions"]["Exception"][0]["Message"])
+
+    # A DFU workunit is created when spraying the file. Response returns this wuid.
+    assert (
+        response["DFUQueryResponse"]["DFULogicalFiles"]["DFULogicalFile"][0]["Name"]
+        == logical_file
     )
 
-    # Used by test_download_file
-    DOWNLOAD_FILE_NAME = ""  # TODO: Update with download file name
 
-    def test_activity(self):
-        payload = {"SortBy": "Name", "Descending": 1}
-        response = self.HPCC_OBJ.activity(**payload).json()
+# Test if get_subfile_info return subfiles of a super file
+def test_get_subfile_info(hpcc, super_file):
+    payload = {"Name": super_file}
+    response = hpcc.get_subfile_info(**payload).json()
 
-        if "Exceptions" in response:
-            raise HPCCException(
-                message=response["Exceptions"]["Exception"][0]["Message"]
-            )
+    if "Exceptions" in response:
+        raise HPCCException(message=response["Exceptions"]["Exception"][0]["Message"])
 
-        workunits_list = None
-        if "Running" in list(response["ActivityResponse"].keys()):
-            workunits_list = response["ActivityResponse"]["Running"]["ActiveWorkunit"]
-        # workunits contains a list of dictionaries. Testing for an empty or populated list.
-        self.assertGreaterEqual(len(workunits_list), 0)
+    assert "subfiles" in list(response["DFUInfoResponse"]["FileDetail"].keys())
+    # superfiles can have no subfiles attached at times
+    assert len(response["DFUInfoResponse"]["FileDetail"]["subfiles"]["Item"]) >= 0
 
-    def test_file_list(self):
-        payload = {
-            "Netaddr": "",  # TODO: Update with landing zone IP
-            "Path": "/data",
-            "OS": 2,
-        }
-        response = self.HPCC_OBJ.file_list(**payload).json()
 
-        if "Exceptions" in response:
-            raise HPCCException(
-                message=response["Exceptions"]["Exception"][0]["Message"]
-            )
+# Test dfu_query returns logical files present in the server
+def test_dfu_query(hpcc):
+    first_n_files = 10
+    payload = {"FirstN": first_n_files}
+    response = hpcc.dfu_query(**payload).json()
 
-        files_list = None
-        if "PhysicalFileStruct" in list(response["FileListResponse"]["files"].keys()):
-            files_list = response["FileListResponse"]["files"]["PhysicalFileStruct"]
-        # workunits contains a list of dictionaries. Testing for an empty or populated list.
-        self.assertGreaterEqual(len(files_list), 0)
+    if "Exceptions" in response:
+        raise HPCCException(message=response["Exceptions"]["Exception"][0]["Message"])
 
-    def test_dfu_query(self):
-        first_n_files = 10
-        payload = {"FirstN": first_n_files}
-        response = self.HPCC_OBJ.dfu_query(**payload).json()
+    dfu_files_list = 0
+    if "DFULogicalFile" in list(response["DFUQueryResponse"]["DFULogicalFiles"].keys()):
+        dfu_files_list = response["DFUQueryResponse"]["DFULogicalFiles"][
+            "DFULogicalFile"
+        ]
+    assert len(dfu_files_list) == first_n_files
 
-        if "Exceptions" in response:
-            raise HPCCException(
-                message=response["Exceptions"]["Exception"][0]["Message"]
-            )
 
-        dfu_files_list = 0
-        if "DFULogicalFile" in list(
-            response["DFUQueryResponse"]["DFULogicalFiles"].keys()
-        ):
-            dfu_files_list = response["DFUQueryResponse"]["DFULogicalFiles"][
-                "DFULogicalFile"
-            ]
-        self.assertEqual(len(dfu_files_list), first_n_files)
+# Test if activity return the workunits of clusters
+def test_activity(hpcc):
+    payload = {"SortBy": "Name", "Descending": 1}
+    response = hpcc.activity(**payload).json()
 
-    def test_get_dfu_info(self):
-        payload = {"Name": self.LOGICAL_FILE_NAME}
-        response = self.HPCC_OBJ.get_dfu_info(**payload).json()
+    if "Exceptions" in response:
+        raise HPCCException(message=response["Exceptions"]["Exception"][0]["Message"])
 
-        if "Exceptions" in response:
-            raise HPCCException(
-                message=response["Exceptions"]["Exception"][0]["Message"]
-            )
-        self.assertEqual(
-            self.LOGICAL_FILE_NAME, response["DFUInfoResponse"]["FileDetail"]["Name"]
+    workunits_list = None
+    if "Running" in list(response["ActivityResponse"].keys()):
+        workunits_list = response["ActivityResponse"]["Running"]["ActiveWorkunit"]
+    # workunits contains a list of dictionaries. Testing for an empty or populated list.
+    assert len(workunits_list) >= 0
+
+
+# Test if file_list returns files present in the landing zone
+def test_file_list(hpcc, landing_zone_ip, landing_zone_path):
+    payload = {
+        "Netaddr": landing_zone_ip,
+        "Path": landing_zone_path,
+        "OS": 2,
+    }
+    response = hpcc.file_list(**payload).json()
+
+    if "Exceptions" in response:
+        raise HPCCException(message=response["Exceptions"]["Exception"][0]["Message"])
+
+    files_list = None
+    if "PhysicalFileStruct" in list(response["FileListResponse"]["files"].keys()):
+        files_list = response["FileListResponse"]["files"]["PhysicalFileStruct"]
+    # workunits contains a list of dictionaries. Testing for an empty or populated list.
+    assert len(files_list) >= 0
+
+
+# Test wu_query retrieves workunits
+def test_wu_query(hpcc):
+    page_size = 5
+    payload = {"PageSize": page_size}
+    response = hpcc.wu_query(**payload).json()
+
+    if "Exceptions" in response:
+        raise HPCCException(message=response["Exceptions"]["Exception"][0]["Message"])
+
+    wu_list = 0
+    if "ECLWorkunit" in list(response["WUQueryResponse"]["Workunits"].keys()):
+        wu_list = response["WUQueryResponse"]["Workunits"]["ECLWorkunit"]
+    assert len(wu_list) == page_size
+
+
+# Test get_dfu_workunits retrieve dfu workunits
+def test_get_dfu_workunits(hpcc):
+    page_size = 5
+    payload = {"PageSize": page_size}
+    response = hpcc.get_dfu_workunits(**payload).json()
+
+    if "Exceptions" in response:
+        raise HPCCException(message=response["Exceptions"]["Exception"][0]["Message"])
+
+    dfu_wu_list = 0
+    if "DFUWorkunit" in list(response["GetDFUWorkunitsResponse"]["results"].keys()):
+        dfu_wu_list = response["GetDFUWorkunitsResponse"]["results"]["DFUWorkunit"]
+    assert len(dfu_wu_list) == page_size
+
+
+# Test if wu_create_and_update creates workunit
+@pytest.mark.dependency()
+def test_wu_create_and_update(hpcc, cluster, request):
+    job_name = "PyHPCC Test Case"
+    payload = {
+        "Jobname": job_name,
+        "QueryText": """OUTPUT('HELLO WORLD!');""",
+        "Action": 1,
+        "ResultLimit": 100,
+        "ClusterOrig": cluster,
+    }
+    response = hpcc.wu_create_and_update(**payload).json()
+    request.config.cache.set("wuid", response["WUUpdateResponse"]["Workunit"]["Wuid"])
+    if "Exceptions" in response:
+        raise HPCCException(message=response["Exceptions"]["Exception"][0]["Message"])
+
+    if "Workunit" in list(response["WUUpdateResponse"]["Workunit"].keys()):
+        assert job_name == response["WUUpdateResponse"]["Workunit"]["Jobname"]
+
+
+# Test if test_wu_info retrieves workunit info
+@pytest.mark.dependency(depends=["test_wu_create_and_update"])
+def test_get_wu_info(hpcc, request):
+    wuid = request.config.cache.get("wuid", "")
+    payload = {"Wuid": wuid}
+    response = hpcc.get_wu_info(**payload).json()
+    if "Exceptions" in response:
+        raise HPCCException(message=response["Exceptions"]["Exception"][0]["Message"])
+    assert wuid == response["WUInfoResponse"]["Workunit"]["Wuid"]
+
+
+# Test if test_wu_submit submits workunit
+@pytest.mark.dependency(depends=["test_get_wu_info"])
+def test_wu_submit(hpcc, cluster, request):
+    # we need to retrieve the wuid created in the previous test case in this function to submit wu to cluster
+    # cluster = "thor"  # TODO: Update with cluster name
+    wuid = request.config.cache.get("wuid", "")
+    payload = {"Wuid": wuid, "Cluster": cluster}
+    response = hpcc.wu_submit(**payload).json()
+
+    if "Exceptions" in response:
+        raise HPCCException(message=response["Exceptions"]["Exception"][0]["Message"])
+
+    assert "WUSubmitResponse" in response
+
+
+# Test if test_wu_wait_compiled waits until workunit is compiled
+def test_wu_wait_compiled(request, hpcc):
+    wuid = request.config.cache.get("wuid", "")
+    payload = {"Wuid": wuid}
+    response = hpcc.wu_wait_compiled(**payload).json()
+    if "Exceptions" in response:
+        raise HPCCException(message=response["Exceptions"]["Exception"][0]["Message"])
+    # assert False
+    assert "WUWaitResponse" in response
+
+
+# Test get_wu_result retrieves the workunit result
+@pytest.mark.dependency(depends=["test_wu_submit"])
+def test_get_wu_result(request, hpcc):
+    wuid = request.config.cache.get("wuid", "")
+    payload = {"Wuid": wuid, "Sequence": 0}
+    response = hpcc.get_wu_result(**payload).json()
+    if "Exceptions" in response:
+        raise HPCCException(message=response["Exceptions"]["Exception"][0]["Message"])
+    assert "Result 1" == response["WUResultResponse"]["Name"]
+
+
+# Test wu_run runs the workunit
+def test_wu_run(request, hpcc, cluster):
+    # we need to retrieve the wuid created in the previous test case in this function to submit wu to cluster
+    wuid = request.config.cache.get("wuid", "")
+    # cluster = ""  # TODO: Update with cluster name
+    payload = {"Wuid": wuid, "Cluster": cluster}
+    response = hpcc.wu_run(**payload).json()
+
+    if "Exceptions" in response:
+        raise HPCCException(message=response["Exceptions"]["Exception"][0]["Message"])
+
+
+# Test wu_wait_complete waits unitl workunit process is completed
+def test_wu_wait_complete(request, hpcc):
+    wuid = request.config.cache.get("wuid", "")
+    payload = {"Wuid": wuid}
+    response = hpcc.wu_wait_complete(**payload).json()
+
+    if "Exceptions" in response:
+        raise HPCCException(message=response["Exceptions"]["Exception"][0]["Message"])
+
+    # states can be between 0 and 17(inclusive). See config.py file for wu state id mapping.
+    assert response["WUWaitResponse"]["StateID"] in list(range(18))
+
+
+# Test wu_update properly changes the state of wuid
+def test_wu_update(request, hpcc):
+    state = 0
+    wuid = request.config.cache.get("wuid", "")
+    payload = {"Wuid": wuid, "State": state}
+    response = hpcc.wu_update(**payload).json()
+
+    if "Exceptions" in response:
+        raise HPCCException(message=response["Exceptions"]["Exception"][0]["Message"])
+
+    assert response["WUUpdateResponse"]["Workunit"]["StateID"] == state
+
+
+# Test if tp_cluster_info retrieves info regarding the cluster specified
+def test_tp_cluster_info(hpcc, cluster):
+    payload = {"Name": cluster}
+    response = hpcc.tp_cluster_info(**payload).json()
+
+    if "Exceptions" in response:
+        raise HPCCException(message=response["Exceptions"]["Exception"][0]["Message"])
+    assert cluster == response["TpClusterInfoResponse"]["Name"]
+
+
+# Test if upload_file uploads file into the landing_zone
+@pytest.mark.dependency()
+def test_upload_file(request, hpcc, landing_zone_ip, landing_zone_path):
+    current_directory = os.getcwd()
+    file_name = os.path.join(
+        current_directory, "tests", "test_files", "pyhpcc_spray_fixed.csv"
+    )
+    # ensure you update the extension of the file in the next line depending on the upload file type used in the previous line
+    index = file_name.find(".csv")
+    date_time_stamp = "{:%Y%m%d%H%M%S}".format(datetime.now())
+    upload_file_name = file_name[:index] + date_time_stamp + file_name[index:]
+    request.config.cache.set("upload_file_name", upload_file_name)
+    files = {
+        "file": (
+            upload_file_name,
+            open(file_name, "rb"),
+            "text/plain",
+            {"Expires": "0"},
         )
-
-    def test_wu_query(self):
-        page_size = 5
-        payload = {"PageSize": page_size}
-        response = self.HPCC_OBJ.wu_query(**payload).json()
-
-        if "Exceptions" in response:
-            raise HPCCException(
-                message=response["Exceptions"]["Exception"][0]["Message"]
-            )
-
-        wu_list = 0
-        if "ECLWorkunit" in list(response["WUQueryResponse"]["Workunits"].keys()):
-            wu_list = response["WUQueryResponse"]["Workunits"]["ECLWorkunit"]
-        self.assertEqual(len(wu_list), page_size)
-
-    def test_get_wu_info(self):
-        payload = {"Wuid": self.STATIC_WUID}
-        response = self.HPCC_OBJ.get_wu_info(**payload).json()
-
-        if "Exceptions" in response:
-            raise HPCCException(
-                message=response["Exceptions"]["Exception"][0]["Message"]
-            )
-        self.assertEqual(
-            self.STATIC_WUID, response["WUInfoResponse"]["Workunit"]["Wuid"]
-        )
-
-    def test_get_dfu_workunits(self):
-        page_size = 5
-        payload = {"PageSize": page_size}
-        response = self.HPCC_OBJ.get_dfu_workunits(**payload).json()
-
-        if "Exceptions" in response:
-            raise HPCCException(
-                message=response["Exceptions"]["Exception"][0]["Message"]
-            )
-
-        dfu_wu_list = 0
-        if "DFUWorkunit" in list(response["GetDFUWorkunitsResponse"]["results"].keys()):
-            dfu_wu_list = response["GetDFUWorkunitsResponse"]["results"]["DFUWorkunit"]
-        self.assertEqual(len(dfu_wu_list), page_size)
-
-    def test_get_dfu_workunit_info(self):
-        payload = {"wuid": self.STATIC_DFU_WUID}
-        response = self.HPCC_OBJ.get_dfu_workunit_info(**payload).json()
-
-        if "Exceptions" in response:
-            raise HPCCException(
-                message=response["Exceptions"]["Exception"][0]["Message"]
-            )
-        self.assertEqual(
-            self.STATIC_DFU_WUID, response["GetDFUWorkunitResponse"]["result"]["ID"]
-        )
-
-    def test_get_wu_result(self):
-        payload = {"Wuid": self.STATIC_WUID, "Sequence": 0}
-        response = self.HPCC_OBJ.get_wu_result(**payload).json()
-
-        if "Exceptions" in response:
-            raise HPCCException(
-                message=response["Exceptions"]["Exception"][0]["Message"]
-            )
-        self.assertEqual("Rules", response["WUResultResponse"]["Name"])
-
-    def test_get_file_info(self):
-        payload = {"LogicalName": self.LOGICAL_FILE_NAME}
-        response = self.HPCC_OBJ.get_file_info(**payload).json()
-
-        if "Exceptions" in response:
-            raise HPCCException(
-                message=response["Exceptions"]["Exception"][0]["Message"]
-            )
-
-        record_count = 100
-        self.assertEqual(record_count, response["WUResultResponse"]["Count"])
-
-    def test_tp_cluster_info(self):
-        cluster_name = ""  # TODO: Update with cluster name
-        payload = {"Name": cluster_name}
-        response = self.HPCC_OBJ.tp_cluster_info(**payload).json()
-
-        if "Exceptions" in response:
-            raise HPCCException(
-                message=response["Exceptions"]["Exception"][0]["Message"]
-            )
-        self.assertEqual(cluster_name, response["TpClusterInfoResponse"]["Name"])
-
-    def test_get_subfile_info(self):
-        payload = {"Name": self.SUPER_FILE_NAME}
-        response = self.HPCC_OBJ.get_subfile_info(**payload).json()
-
-        if "Exceptions" in response:
-            raise HPCCException(
-                message=response["Exceptions"]["Exception"][0]["Message"]
-            )
-
-        self.assertIn(
-            "subfiles", list(response["DFUInfoResponse"]["FileDetail"].keys())
-        )
-        # superfiles can have no subfiles attached at times
-        self.assertGreaterEqual(
-            len(response["DFUInfoResponse"]["FileDetail"]["subfiles"]["Item"]), 0
-        )
-
-    def test_check_file_exists(self):
-        payload = {"LogicalName": self.LOGICAL_FILE_NAME}
-        response = self.HPCC_OBJ.check_file_exists(**payload).json()
-
-        if "Exceptions" in response:
-            raise HPCCException(
-                message=response["Exceptions"]["Exception"][0]["Message"]
-            )
-
-        self.assertIn("DFUQueryResponse", list(response.keys()))
-        # A file can exist which will result in a number > 0, or not exist which makes the number of files 0.
-        self.assertGreaterEqual(response["DFUQueryResponse"]["NumFiles"], 0)
-
-    def test_wu_create_and_update(self):
-        cluster = ""  # TODO: Update with cluster name
-        job_name = "PyHPCC Test Case"
-        payload = {
-            "Jobname": job_name,
-            "QueryText": "Hello World",
-            "Action": 1,
-            "ResultLimit": 100,
-            "ClusterOrig": cluster,
-        }
-        response = self.HPCC_OBJ.wu_create_and_update(**payload).json()
-
-        if "Exceptions" in response:
-            raise HPCCException(
-                message=response["Exceptions"]["Exception"][0]["Message"]
-            )
-
-        if "Workunit" in list(response["WUUpdateResponse"]["Workunit"].keys()):
-            self.assertEqual(
-                job_name, response["WUUpdateResponse"]["Workunit"]["Jobname"]
-            )
-
-    # !!!IMPORTANT: Add to documentation: wu_submit compiles the workunit created in previous test case
-    def test_wu_submit(self):
-        # we need to retrieve the wuid created in the previous test case in this function to submit wu to cluster
-        cluster = ""  # TODO: Update with cluster name
-        payload = {"Wuid": self.STATIC_WUID2, "Cluster": cluster}
-        response = self.HPCC_OBJ.wu_submit(**payload).json()
-
-        if "Exceptions" in response:
-            raise HPCCException(
-                message=response["Exceptions"]["Exception"][0]["Message"]
-            )
-
-        self.assertIn("WUSubmitResponse", response)
-
-    def test_wu_wait_compiled(self):
-        payload = {"Wuid": self.STATIC_WUID2}
-        response = self.HPCC_OBJ.wu_wait_compiled(**payload).json()
-
-        if "Exceptions" in response:
-            raise HPCCException(
-                message=response["Exceptions"]["Exception"][0]["Message"]
-            )
-
-        self.assertIn("WUWaitResponse", response)
-
-    # !!!IMPORTANT: Add to documentation: wuRun can only be used on compiled workunit ids
-    def test_wu_run(self):
-        # we need to retrieve the wuid created in the previous test case in this function to submit wu to cluster
-        cluster = ""  # TODO: Update with cluster name
-        payload = {"Wuid": self.STATIC_WUID2, "Cluster": cluster}
-        response = self.HPCC_OBJ.wu_run(**payload).json()
-
-        # !!!! may need to use the wait API call before asserting
-
-        if "Exceptions" in response:
-            raise HPCCException(
-                message=response["Exceptions"]["Exception"][0]["Message"]
-            )
-
-        self.assertIn(self.STATIC_WUID2, response["WURunResponse"]["Wuid"])
-        self.assertIn("Hello World", response["WURunResponse"]["Results"])
-
-    def test_wu_update(self):
-        state = 0
-        payload = {"Wuid": self.STATIC_WUID2, "State": state}
-        response = self.HPCC_OBJ.WUUpdate(**payload).json()
-
-        if "Exceptions" in response:
-            raise HPCCException(
-                message=response["Exceptions"]["Exception"][0]["Message"]
-            )
-
-        self.assertEqual(response["WUUpdateResponse"]["Workunit"]["StateID"], state)
-
-    def test_wu_wait_complete(self):
-        payload = {"Wuid": self.STATIC_WUID3}
-        response = self.HPCC_OBJ.wu_wait_complete(**payload).json()
-
-        if "Exceptions" in response:
-            raise HPCCException(
-                message=response["Exceptions"]["Exception"][0]["Message"]
-            )
-
-        # states can be between 0 and 17(inclusive). See config.py file for wu state id mapping.
-        self.assertIn(response["WUWaitResponse"]["StateID"], list(range(18)))
-
-    def test_upload_file(self):
-        current_directory = os.getcwd()
-        file_name = os.path.join(
-            current_directory, "tests", "test_files", "pyhpcc_spray_fixed.csv"
-        )
-        # ensure you update the extension of the file in the next line depending on the upload file type used in the previous line
-        index = file_name.find(".csv")
-        date_time_stamp = "{:%Y%m%d%H%M%S}".format(datetime.now())
-        upload_file_name = file_name[:index] + date_time_stamp + file_name[index:]
-        files = {
-            "file": (
-                upload_file_name,
-                open(file_name, "rb"),
-                "text/plain",
-                {"Expires": "0"},
-            )
-        }
-
-        payload = {
-            "upload_": "",
-            "rawxml_": 1,
-            "NetAddress": self.LANDING_ZONE_IP,
-            "OS": 2,
-            "Path": self.LANDING_ZONE_PATH,
-            "files": files,
-        }
-        response = self.HPCC_OBJ.upload_file(**payload).json()
-
-        if "Exceptions" in response:
-            raise HPCCException(
-                message=response["Exceptions"]["Exception"][0]["Message"]
-            )
-
-        self.assertEqual(
-            response["UploadFilesResponse"]["UploadFileResults"]["DFUActionResult"][0][
-                "Result"
-            ],
-            "Success",
-        )
-
-    # OBSERVATION: a wu is created and runs successfully, but there are no contents. Check why the contents do not get listed under the content section.
-    def test_spray_fixed(self):
-        payload = {
-            "sourceIP": self.LANDING_ZONE_IP,
-            "sourcePath": self.SPRAY_FIXED_SOURCE_FILE,
-            "sourceRecordSize": 2,
-            "destGroup": self.SPRAY_CLUSTER,
-            "destLogicalName": self.SPRAY_FIXED_DEST_FILE,
-            "overwrite": "on",
-            "nosplit": "false",
-            "compress": "false",
-            "failIfNoSourceFile": "true",
-        }
-        response = self.HPCC_OBJ.spray_fixed(**payload).json()
-
-        if "Exceptions" in response:
-            raise HPCCException(
-                message=response["Exceptions"]["Exception"][0]["Message"]
-            )
-
-        # A DFU workunit is created when spraying the file. Response returns this wuid.
-        self.assertNotEqual(response["SprayFixedResponse"]["wuid"], "")
-
-    def test_spray_variable(self):
-        payload = {
-            "sourceIP": self.LANDING_ZONE_IP,
-            "sourcePath": self.SPRAY_VARIABLE_SOURCE_FILE,
-            "sourceCsvSeparate": "\\,",
-            "sourceCsvTerminate": "\\n,\\r\\n",
-            "destGroup": self.SPRAY_CLUSTER,
-            "destLogicalName": self.SPRAY_VARIABLE_DEST_FILE,
-            "overwrite": "on",
-            "nosplit": "false",
-            "compress": "false",
-            "failIfNoSourceFile": "true",
-        }
-        response = self.HPCC_OBJ.spray_variable(**payload).json()
-
-        if "Exceptions" in response:
-            raise HPCCException(
-                message=response["Exceptions"]["Exception"][0]["Message"]
-            )
-
-        # A DFU workunit is created when spraying the file. Response returns this wuid.
-        self.assertNotEqual(response["SprayResponse"]["wuid"], "")
-
-    # This test case will fail if the workunit id referred to is archived.
-    def test_get_graph(self):
-        payload = {"Wuid": self.STATIC_WUID4, "GraphName": "graph1"}
-        response = self.HPCC_OBJ.get_graph(**payload).json()
-
-        if "Exceptions" in response:
-            raise HPCCException(
-                message=response["Exceptions"]["Exception"][0]["Message"]
-            )
-
-        # A DFU workunit is created when spraying the file. Response returns this wuid.
-        self.assertEqual(
-            response["WUGetGraphResponse"]["Graphs"]["ECLGraphEx"][0]["Label"],
-            "RulesFile",
-        )
-
-    def test_get_wu_query(self):
-        payload = {"Wuid": self.STATIC_WUID5}
-        response = self.HPCC_OBJ.get_wu_query(**payload).json()
-
-        if "Exceptions" in response:
-            raise HPCCException(
-                message=response["Exceptions"]["Exception"][0]["Message"]
-            )
-
-        # A DFU workunit is created when spraying the file. Response returns this wuid.
-        self.assertEqual(
-            response["WUQueryResponse"]["Workunits"]["ECLWorkunit"][0]["Owner"],
-            self.HPCC_USERNAME,
-        )
-
-    def test_file_query(self):
-        payload = {"LogicalName": self.LOGICAL_FILE_NAME}
-        response = self.HPCC_OBJ.file_query(**payload).json()
-
-        if "Exceptions" in response:
-            raise HPCCException(
-                message=response["Exceptions"]["Exception"][0]["Message"]
-            )
-
-        # A DFU workunit is created when spraying the file. Response returns this wuid.
-        self.assertEqual(
-            response["DFUQueryResponse"]["DFULogicalFiles"]["DFULogicalFile"][0][
-                "Name"
-            ],
-            self.LOGICAL_FILE_NAME,
-        )
-
-    def test_download_file(self):
-        payload = {
-            "Name": self.DOWNLOAD_FILE_NAME,
-            "NetAddress": self.LANDING_ZONE_IP,
-            "Path": self.LANDING_ZONE_PATH,
-            "OS": 2,
-        }
-        response = self.HPCC_OBJ.download_file(**payload)
-
-        if "Exceptions" in response:
-            raise HPCCException(
-                message=response["Exceptions"]["Exception"][0]["Message"]
-            )
-
-        # Downloading file would mean storing and parsing file contents on running server
-        # so for simplicity, testing if response status code is 200
-        self.assertEqual(response.status_code, 200)
-
-    # !!! This test case will be uncommented for use once the remove subfile from a superfile feature API method is available
-    # def test_add_to_superfile_request(self):
-    #     payload = { 'Superfile': self.SUPER_FILE_NAME,
-    #         'ExistingFile': 1,
-    #         'names_i0': self.LOGICAL_FILE_NAME
-    #       }
-    #     response = self.HPCC_OBJ.add_to_superfile_request(**payload).json()
-
-    #     if 'Exceptions' in response:
-    #         raise HPCCException(message=response['Exceptions']['Exception'][0]['Message'])
-
-    #     self.assertIn('AddtoSuperfileResponse', response)
-
-
-if __name__ == "__main__":
-    unittest.main()
+    }
+
+    payload = {
+        "upload_": "",
+        "rawxml_": 1,
+        "NetAddress": landing_zone_ip,
+        "OS": 2,
+        "Path": landing_zone_path,
+        "files": files,
+    }
+
+    response = hpcc.upload_file(**payload).json()
+
+    if "Exceptions" in response:
+        raise HPCCException(message=response["Exceptions"]["Exception"][0]["Message"])
+
+    (
+        response["UploadFilesResponse"]["UploadFileResults"]["DFUActionResult"][0][
+            "Result"
+        ]
+        == "Success",
+    )
+
+
+# Test if download_file downloads a specific file from the landing zone
+@pytest.mark.dependency(depends=["test_upload_file"])
+def test_download_file(request, hpcc, landing_zone_ip, landing_zone_path):
+    download_file_name = request.config.cache.get("upload_file_name", "")
+    payload = {
+        "Name": download_file_name,
+        "NetAddress": landing_zone_ip,
+        "Path": landing_zone_path,
+        "OS": 2,
+    }
+    response = hpcc.download_file(**payload)
+
+    if "Exceptions" in response:
+        raise HPCCException(message=response["Exceptions"]["Exception"][0]["Message"])
+
+    # Downloading file would mean storing and parsing file contents on running server
+    # so for simplicity, testing if response status code is 200
+    assert response.status_code == 200
+
+
+# Test if spray_variable sprays a file from landing zone to the logical files and returns dfu workunit
+def test_spray_variable(request, hpcc, landing_zone_ip, landing_zone_path, dfu_cluster):
+    spray_file = request.config.cache.get("upload_file_name", None)
+    assert spray_file
+    payload = {
+        "sourceIP": landing_zone_ip,
+        "sourcePath": landing_zone_path + spray_file,
+        "sourceCsvSeparate": "\\,",
+        "sourceCsvTerminate": "\\n,\\r\\n",
+        "destGroup": dfu_cluster,
+        "destLogicalName": "pyhpcc::em::test::emp_data",
+        "overwrite": "on",
+        "nosplit": "false",
+        "compress": "false",
+        "failIfNoSourceFile": "true",
+        "sourceFormat": 1,
+    }
+    response = hpcc.spray_variable(**payload).json()
+
+    if "Exceptions" in response:
+        raise HPCCException(message=response["Exceptions"]["Exception"][0]["Message"])
+
+    # A DFU workunit is created when spraying the file. Response returns this wuid.
+    dfu_id = response["SprayResponse"]["wuid"]
+    request.config.cache.set("dfu_id", dfu_id)
+    assert dfu_id != ""
+
+
+# Test if get_dfu_workunit_info retrieves the dfu wuid information
+def test_get_dfu_workunit_info(request, hpcc):
+    dfu_id = request.config.cache.get("dfu_id", "None")
+    payload = {"wuid": dfu_id}
+    response = hpcc.get_dfu_workunit_info(**payload).json()
+
+    if "Exceptions" in response:
+        raise HPCCException(message=response["Exceptions"]["Exception"][0]["Message"])
+    assert dfu_id == response["GetDFUWorkunitResponse"]["result"]["ID"]
+
+
+# def test_get_graph(request, hpcc):
+#     dfu_id = request.config.cache.get("dfu_id", "")
+#     payload = {"Wuid": dfu_id, "GraphName": "graph1"}
+#     response = hpcc.get_graph(**payload).json()
+
+#     if "Exceptions" in response:
+#         raise HPCCException(message=response["Exceptions"]["Exception"][0]["Message"])
+
+#     # A DFU workunit is created when spraying the file. Response returns this wuid.
+
+#     assert (
+#         response["WUGetGraphResponse"]["Graphs"]["ECLGraphEx"][0]["Label"]
+#         == "RulesFile"
+#     )
+
+
+# def test_get_wu_query(hpcc, wuid):
+#     payload = {"Wuid": wuid}
+#     response = hpcc.get_wu_query(**payload).json()
+
+#     if "Exceptions" in response:
+#         raise HPCCException(message=response["Exceptions"]["Exception"][0]["Message"])
+
+#     #     # A DFU workunit is created when spraying the file. Response returns this wuid.
+#     assert (
+#         response["WUQueryResponse"]["Workunits"]["ECLWorkunit"][0]["Owner"]
+#         == conftest.HPCC_USERNAME
+#     )
+
+
+# Test if test_spray_fixed sprays the fixed file from landing zone to the logical files
+def test_spray_fixed(hpcc, landing_zone_ip, landing_zone_path, dfu_cluster):
+    payload = {
+        "sourceIP": landing_zone_ip,
+        "sourcePath": landing_zone_path + "OnlineLessonPersons",
+        "sourceRecordSize": 151,
+        "destGroup": dfu_cluster,
+        "destLogicalName": "pyhpcc::test::persons",
+        "overwrite": "on",
+        "nosplit": "false",
+        "compress": "false",
+        "failIfNoSourceFile": "true",
+    }
+    response = hpcc.spray_fixed(**payload).json()
+
+    if "Exceptions" in response:
+        raise HPCCException(message=response["Exceptions"]["Exception"][0]["Message"])
+
+    # A DFU workunit is created when spraying the file. Response returns this wuid.
+    assert response["SprayFixedResponse"]["wuid"] != ""

@@ -25,7 +25,7 @@ def test_get_username():
         True,
         HPCC_PROTOCOL,
     )
-    test.get_username() == HPCC_USERNAME
+    assert test.get_username() == HPCC_USERNAME
 
 
 # Test the get_verified method
