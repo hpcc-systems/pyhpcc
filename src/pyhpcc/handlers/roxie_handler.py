@@ -1,5 +1,7 @@
 import logging
 
+from requests.models import Response
+
 import pyhpcc.config as conf
 from pyhpcc.errors import HPCCAuthenticationError
 from pyhpcc.utils import convert_arg_to_utf8_str
@@ -145,7 +147,7 @@ def roxie_handler(**config):
                 auth = self.api.auth.oauth
 
             # Execute request
-            resp = self.session.request(
+            resp: Response = self.session.request(
                 self.method,
                 full_url,
                 data=self.post_data,

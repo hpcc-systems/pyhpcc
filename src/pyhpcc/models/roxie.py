@@ -1,4 +1,4 @@
-from pyhpcc.handlers.thor_handler import roxie_wrapper
+from pyhpcc.handlers.roxie_handler import roxie_handler
 
 
 class Roxie(object):
@@ -60,4 +60,4 @@ class Roxie(object):
                 The response from the API
 
         """
-        return roxie_wrapper(api=self)
+        return roxie_handler(api=self)
