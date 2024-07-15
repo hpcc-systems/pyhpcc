@@ -60,7 +60,7 @@ class ReadFileInfo(object):
         self,
         hpcc: HPCC,
         logical_file_name,
-        cluster,
+        cluster="",
         file_type="",
         infer_header=True,
         file_size_limit=25,
