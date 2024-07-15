@@ -29,7 +29,6 @@ jobs:
       - name: Run Coverage
         run: $POETRY run coverage xml
       - name: Get Cover 
-        uses: orgoro/coverage@v3.1
+        uses: py-cov-action/python-coverage-comment-action@v3
         with:
-          coverageFile: ./coverage.xml
           token: ${{ secrets.GITHUB_TOKEN }}
