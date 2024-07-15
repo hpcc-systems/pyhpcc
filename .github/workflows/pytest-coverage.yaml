@@ -14,6 +14,9 @@ jobs:
   coverage:
     name: PyTest coverage
     runs-on: ubuntu-latest
+    permissions: 
+      pull-requests: write
+      contents: write
     steps:
       - uses: actions/checkout@v4
       - name: Install python
@@ -31,4 +34,4 @@ jobs:
       - name: Get Cover 
         uses: py-cov-action/python-coverage-comment-action@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ github.token }}
