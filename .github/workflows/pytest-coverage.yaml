@@ -34,4 +34,4 @@ jobs:
       - name: Get Cover 
         uses: py-cov-action/python-coverage-comment-action@v3
         with:
-          token: ${{ github.token }}
+          token: ${{ secrets.GITHUB_TOKEN }}
