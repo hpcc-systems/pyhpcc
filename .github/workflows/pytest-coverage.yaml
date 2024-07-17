@@ -11,6 +11,9 @@ jobs:
   coverage:
     name: PyTest coverage
     runs-on: ubuntu-latest
+    permissions: 
+      pull-requests: write
+      contents: write
     steps:
       - uses: actions/checkout@v4
       - name: Install python
@@ -26,7 +29,6 @@ jobs:
       - name: Run Coverage
         run: $POETRY run coverage xml
       - name: Get Cover 
-        uses: orgoro/coverage@v3.1
+        uses: py-cov-action/python-coverage-comment-action@v3
         with:
-          coverageFile: ./coverage.xml
-          token: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
