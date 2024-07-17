@@ -44,6 +44,13 @@ VERBOSE_OPTIONS = [
     "-v",
     "--verbose",
 ]
+RUN_UNWANTED_PATTERNS = [
+    r"jsocket\([0-9]+,[0-9]+\) ",
+    "deploying",
+    "Deployed",
+    "Running",
+    "Using eclcc path ",
+]
 MASKED_PASSWORD = "*****"
 RUN_AUTH_OPTIONS = {*USER_OPTIONS, *PASSWORD_OPTIONS, *SERVER_OPTIONS, PORT_OPTION}
 

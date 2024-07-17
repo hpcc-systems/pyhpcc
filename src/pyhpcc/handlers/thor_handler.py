@@ -1,5 +1,7 @@
 import logging
 
+from requests.models import Response
+
 import pyhpcc.config as conf
 from pyhpcc.errors import HPCCAuthenticationError
 from pyhpcc.utils import convert_arg_to_utf8_str
@@ -152,7 +154,7 @@ def thor_handler(**config):
             if self.api.auth:
                 auth = self.api.auth.oauth
 
-            resp = self.session.request(
+            resp: Response = self.session.request(
                 self.method,
                 full_url,
                 data=self.data,

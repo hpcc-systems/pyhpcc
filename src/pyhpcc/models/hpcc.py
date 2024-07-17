@@ -531,6 +531,7 @@ class HPCC(object):
                 "quotedTerminator",
                 "sourceRowPath",
                 "isJSON",
+                "namePrefix",
             ],
         )
 

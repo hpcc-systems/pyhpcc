@@ -1,4 +1,5 @@
 from pyhpcc import utils
+from pyhpcc.models.hpcc import HPCC
 
 
 class ReadFileInfo(object):
@@ -25,22 +26,12 @@ class ReadFileInfo(object):
             The actual file size
         record_count:
             The number of records in the file
-        despray_ip:
-            The IP address to despray the file to
-        despray_path:
-            The path to despray the file to
-        despray_allow_overwrite:
-            Boolean to determine if the file can be overwritten. Defaults to True
-        should_despray:
-            Boolean to determine if the file should be desprayed. Defaults to False
         check_status:
             Boolean to determine if the file status should be checked. Defaults to False
         csv_separator_for_read:
             The csv seperator for reading the file. Defaults to ','
         read_status:
             The read status. Defaults to 'Not Read'
-        despray_from_cluster:
-            The cluster to despray the file from
         csv_header_flag:
             Int to determine if the file has a csv header. Defaults to 0
 
@@ -60,28 +51,26 @@ class ReadFileInfo(object):
 
         get_data:
             Gets the data from the file
+
+        get_data_iter:
+            Get batch_size data from the file
     """
 
     def __init__(
         self,
-        hpcc,
+        hpcc: HPCC,
         logical_file_name,
-        cluster,
-        file_type,
+        cluster="",
+        file_type="",
+        infer_header=True,
         file_size_limit=25,
         if_exists=-1,
-        is_superfile=-1,
+        is_superfile=False,
         actual_file_size=-1,
         record_count=-1,
-        despray_ip="",
-        despray_path="",
-        despray_allow_overwrite="true",
-        should_despray=False,
         check_status=False,
         csv_separator_for_read=",",
         read_status="Not read",
-        despray_from_cluster="",
-        csv_header_flag=0,
     ):
         """Constructor for the ReadFileInfo class"""
 
@@ -94,15 +83,10 @@ class ReadFileInfo(object):
         self.if_superfile = is_superfile
         self.actual_file_size = actual_file_size
         self.record_count = record_count
-        self.despray_ip = despray_ip
-        self.despray_path = despray_path
-        self.despray_allow_overwrite = despray_allow_overwrite
-        self.should_despray = should_despray
         self.check_status = check_status
         self.csv_separator_for_read = csv_separator_for_read
         self.read_status = read_status
-        self.despray_from_cluster = despray_from_cluster
-        self.csv_header_flag = csv_header_flag
+        self.infer_header = infer_header
 
     def check_if_file_exists_and_is_super_file(self, cluster_from_user):
         """Function to check if the file exists and is a superfile
@@ -126,8 +110,8 @@ class ReadFileInfo(object):
                 if arrFESF["NodeGroup"] is not None
                 else cluster_from_user
             )
-            self.if_super_file = (
-                arrFESF["isSuperfile"] if arrFESF["isSuperfile"] is not None else ""
+            self.if_superfile = (
+                arrFESF["isSuperfile"] if "isSuperfile" in arrFESF else False
             )
             self.actual_file_size = (
                 int(arrFESF["Totalsize"].replace(",", ""))
@@ -142,7 +126,7 @@ class ReadFileInfo(object):
             if bool(arrFESF):
                 if arrFESF["RecordCount"] != "":
                     self.record_count = (
-                        0
+                        9223372036854775807
                         if arrFESF["RecordCount"] is None
                         else int(arrFESF["RecordCount"].replace(",", ""))
                     )
@@ -150,7 +134,7 @@ class ReadFileInfo(object):
                     self.record_count = -2
         else:
             self.file_type = ""
-            self.if_super_file = ""
+            self.if_superfile = False
             self.actual_file_size = None
             self.record_count = None
             self.cluster = ""
@@ -181,11 +165,11 @@ class ReadFileInfo(object):
         """
         if not self.check_status:
             self.check_if_file_exists_and_is_super_file(self.cluster)
-        if self.if_superfile == 1:
+        if self.if_superfile:
             sub_file_info = self.hpcc.get_subfile_info(Name=self.logical_file_name)
-            return utils.get_subfile_names(sub_file_info)
+            return self.if_superfile, utils.get_subfile_names(sub_file_info)
         else:
-            return "Not a superfile"
+            return self.if_superfile, None
 
     def check_file_in_dfu(self):
         """Function to check if the file exists in the DFU queue
@@ -199,12 +183,8 @@ class ReadFileInfo(object):
             dfuFileStatus:
                 A boolean to determine if the file exists in the DFU queue
         """
-        status_details = self.hpcc.check_file_exists(Name=self.logical_file_name)
-        status = utils.check_file_existence(status_details)
-        if status == 0:
-            return False
-        else:
-            return True
+        status_details = self.hpcc.check_file_exists(LogicalName=self.logical_file_name)
+        return utils.check_file_existence(status_details, self.logical_file_name)
 
     def get_data(self):
         """Function to get the data from the file
@@ -220,57 +200,90 @@ class ReadFileInfo(object):
         """
         self.check_if_file_exists_and_is_super_file(self.cluster)
         if self.if_exists != 0 and self.if_exists != "0":
-            file_size_in_mb = (self.actual_file_size / 1024) / 1024
-            if (
-                file_size_in_mb > self.file_size_limit
-                or self.file_type == "xml"
-                or self.should_despray
-            ):
-                if self.despray_ip != "" and self.despray_path != "":
-                    query_string = (
-                        "IMPORT STD; STD.file.despray(~'"
-                        + self.logical_file_name
-                        + "','"
-                        + self.despray_ip
-                        + "','"
-                        + self.despray_path
-                        + "',,,,"
-                        + self.despray_allow_overwrite
-                        + ");"
-                    )
-                    cluster_from = ""
-                    if self.despray_from_cluster == "":
-                        cluster_from = self.cluster
-                    else:
-                        cluster_from = self.despray_from_cluster
-                    setattr(self.hpcc, "response_type", ".json")
-                    self.read_status = utils.despray_file(
-                        self.hpcc,
-                        query_string,
-                        cluster_from,
-                        "Despraying : " + self.logical_file_name,
-                    )
-                else:
-                    self.read_status = "Unable to despray with the given input values. Please provide values for despray IP and folder"
+            if self.record_count == -2:
+                count_updated = 9223372036854775807
             else:
-                if self.record_count == -2:
-                    count_updated = 9223372036854775807
+                count_updated = self.record_count
+                flat_csv_resp = self.hpcc.get_file_info(
+                    LogicalName=self.logical_file_name,
+                    Cluster=self.cluster,
+                    Count=count_updated,
+                )
+                if self.file_type == "flat":
+                    self.read_status = "Read"
+                    return utils.get_flat_data(flat_csv_resp)
                 else:
-                    count_updated = self.record_count
-                    flat_csv_resp = self.hpcc.get_file_info(
-                        LogicalName=self.logical_file_name,
-                        Cluster=self.cluster,
-                        Count=count_updated,
+                    self.read_status = "Read"
+                    return utils.get_csv_data(
+                        flat_csv_resp, self.csv_separator_for_read
                     )
-                    if self.file_type == "flat":
-                        self.read_status = "Read"
-                        return utils.get_flat_data(flat_csv_resp)
-                    else:
-                        self.read_status = "Read"
-                        return utils.get_csv_data(
-                            flat_csv_resp,
-                            self.csv_separator_for_read,
-                            self.csv_header_flag,
-                        )
         else:
-            self.read_status = "File doesn't exist"
+            raise FileNotFoundError("Logical File Not found")
+
+    def get_data_iter(self, start_index, items_size, batch_size):
+        """Function to get the data from the file
+
+        Parameters
+        ----------
+        start_index : int
+            start index of the data
+        items_size: int
+            Total count of the items to retrieve
+        batch_size: int
+            Number of items to retrieve per call
+
+
+        Returns
+        -------
+            data: pd.DataFrame
+                The data from the file
+        """
+        MAX_ITEMS = 9223372036854775807
+        self.check_if_file_exists_and_is_super_file(self.cluster)
+        file_name = self.logical_file_name
+        file_attributes: dict = {
+            "record_count": self.record_count,
+            "cluster": self.cluster,
+            "if_exists": self.if_exists,
+            "file_type": self.file_type,
+        }
+        if file_attributes["if_exists"] != 0 and file_attributes["if_exists"] != "0":
+            csv_header = []
+            if file_attributes["file_type"] == "csv" and self.infer_header:
+                start_index = max(1, start_index)
+                header_response = self.hpcc.get_file_info(
+                    LogicalName=file_name,
+                    Cluster=file_attributes["cluster"],
+                    Start=0,
+                    Count=1,
+                )
+                csv_header = utils.get_csv_header(
+                    header_response, self.csv_separator_for_read
+                )
+            if items_size == -1:
+                items_size = MAX_ITEMS
+            end_index = start_index + items_size
+            while start_index < end_index:
+                curr_chunk_size = min(end_index - start_index, batch_size)
+                self.read_status = "Read"
+                resp = self.hpcc.get_file_info(
+                    LogicalName=file_name,
+                    Cluster=file_attributes["cluster"],
+                    Start=start_index,
+                    Count=curr_chunk_size,
+                )
+                if file_attributes["file_type"] == "flat":
+                    data_attr, df = utils.get_flat_data(resp)
+                else:
+                    data_attr, df = utils.get_csv_data(
+                        resp,
+                        self.csv_separator_for_read,
+                        self.infer_header,
+                        csv_header,
+                    )
+                if data_attr["count"] == 0:
+                    return
+                start_index = start_index + batch_size
+                yield data_attr, df
+        else:
+            raise FileNotFoundError("Logical File Not found")

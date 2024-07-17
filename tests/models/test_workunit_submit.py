@@ -5,8 +5,6 @@ import conftest
 import pytest
 from pyhpcc.command_config import CompileConfig
 from pyhpcc.config import OUTPUT_FILE_OPTION
-from pyhpcc.models.auth import Auth
-from pyhpcc.models.hpcc import HPCC
 from pyhpcc.models.workunit_submit import WorkunitSubmit
 
 DUMMY_OUTPUT = "dummy_output"
@@ -19,23 +17,8 @@ ENV = "LOCAL"
 
 
 @pytest.fixture
-def auth():
-    return Auth(HPCC_HOST, HPCC_PORT, HPCC_USERNAME, HPCC_PASSWORD)
-
-
-@pytest.fixture
-def hpcc(auth):
-    return HPCC(auth)
-
-
-@pytest.fixture
 def clusters():
     return ("thor", "hthor")
-
-
-@pytest.fixture
-def ws(hpcc, clusters):
-    return WorkunitSubmit(hpcc, clusters)
 
 
 # Test if creation of WorkUnitSubmit raises error if no clusters are provided
@@ -181,3 +164,9 @@ def test_configure_run_config(hpcc, options, expected_options):
     ws.job_name = "Basic Job"
     run_config = ws.configure_run_config(options)
     assert run_config.options == expected_options
+
+
+# Test if get_least_active_cluster returns cluster
+def test_get_least_active_cluster(ws):
+    cluster = ws.get_least_active_cluster()
+    assert cluster != ""
