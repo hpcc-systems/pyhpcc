@@ -78,6 +78,7 @@ class WorkunitSubmit(object):
         if len(clusters) == 0:
             raise ValueError("Minimum one cluster should be specified")
         self.clusters: tuple = clusters
+        self.job_name = None
 
     def write_file(self, query_text, folder, job_name):
         """Write a .ecl file to disk
@@ -327,7 +328,10 @@ class WorkunitSubmit(object):
         if conf.CLUSTER_OPTION not in run_config.options:
             run_config.set_target(self.get_least_active_cluster())
         if conf.JOB_NAME_OPTION not in run_config.options:
-            self.job_name = self.job_name.replace(" ", "_")
+            if self.job_name is not None:
+                self.job_name = self.job_name.replace(" ", "_")
+            else:
+                self.job_name = "WorkunitSubmit"
             run_config.set_job_name(self.job_name)
         if conf.LIMIT_OPTION not in run_config.options:
             run_config.set_limit(conf.DEFAULT_LIMIT)
