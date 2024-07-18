@@ -11,8 +11,6 @@ class HPCC(object):
             The authentication object
         timeout:
             The timeout for the requests
-        response_type:
-            The response type for the requests
 
     Methods:
     -------
@@ -102,10 +100,10 @@ class HPCC(object):
 
     """
 
-    def __init__(self, auth, timeout=1200, response_type="json"):
+    def __init__(self, auth, timeout=1200):
         self.auth = auth
         self.timeout = timeout
-        self.response_type = response_type
+        self.response_type = "json"
 
     @property
     def get_wu_info(self):

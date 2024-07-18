@@ -12,28 +12,10 @@ class ReadFileInfo(object):
             The hpcc object
         logical_file_name:
             The logical file name
-        cluster:
-            The cluster to read the file information from
-        file_type:
-            The file type
-        file_size_limit:
-            The file size limit. Defaults to 25MB
-        if_exists:
-            Boolean to determine if the file exists
-        is_superfile:
-            Boolean to determine if the file is a superfile
-        actual_file_size:
-            The actual file size
-        record_count:
-            The number of records in the file
-        check_status:
-            Boolean to determine if the file status should be checked. Defaults to False
         csv_separator_for_read:
             The csv seperator for reading the file. Defaults to ','
-        read_status:
-            The read status. Defaults to 'Not Read'
-        csv_header_flag:
-            Int to determine if the file has a csv header. Defaults to 0
+        infer_header:
+            bool varialbe if the header to be inferred from csv file
 
     Methods
     -------
@@ -60,32 +42,22 @@ class ReadFileInfo(object):
         self,
         hpcc: HPCC,
         logical_file_name,
-        cluster="",
-        file_type="",
         infer_header=True,
-        file_size_limit=25,
-        if_exists=-1,
-        is_superfile=False,
-        actual_file_size=-1,
-        record_count=-1,
-        check_status=False,
         csv_separator_for_read=",",
-        read_status="Not read",
     ):
         """Constructor for the ReadFileInfo class"""
 
         self.hpcc = hpcc
         self.logical_file_name = logical_file_name
-        self.cluster = cluster
-        self.file_size_limit = file_size_limit
-        self.file_type = file_type
-        self.if_exists = if_exists
-        self.if_superfile = is_superfile
-        self.actual_file_size = actual_file_size
-        self.record_count = record_count
-        self.check_status = check_status
+        self.cluster = ""
+        self.file_type = ""
+        self.if_exists = -1
+        self.if_superfile = False
+        self.actual_file_size = -1
+        self.record_count = -1
+        self.check_status = False
         self.csv_separator_for_read = csv_separator_for_read
-        self.read_status = read_status
+        self.read_status = "Not read"
         self.infer_header = infer_header
 
     def check_if_file_exists_and_is_super_file(self, cluster_from_user):

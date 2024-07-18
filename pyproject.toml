@@ -2,25 +2,27 @@
 name = "pyhpcc"
 version = "0.1.0"
 description = "Pyhpcc is a python package that allows accessing hpcc-systems via python."
-authors = ["Amila De silva <Amila.De@lexisnexisrisk.com>", "Rohith Surya Podugu <prsurya1020@gmail.com>"]
+authors = [
+    "Amila De silva <Amila.De@lexisnexisrisk.com>",
+    "Rohith Surya Podugu <prsurya1020@gmail.com>",
+]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.12"
-requests = "^2.32.3" # Supports HTTP requests
-six = "^1.16.0" # Python2 and Python 3 compatibiltiy
+requests = "^2.32.3"         # Supports HTTP requests
+six = "^1.16.0"              # Python2 and Python 3 compatibiltiy
 requests_oauthlib = "^1.3.1" # OAuth Library Support
-sphinx = "^5.2.3" # Documentation library
-sphinx-rtd-theme = "^1.0.0" # Theme for sphinx
-pandas = "^2.2.0" # Data analysis and manipulation library
-elementpath = "^3.0.2" # XPath selectors for XML Data structures
+sphinx = "^7.4.3"            # Documentation library
+pandas = "^2.2.0"            # Data analysis and manipulation library
+furo = "^2024.5.6"
 
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.1.3"
 pytest-mock = "^3.0.2"
-pytest-dependency="^0.6.0"
-pre-commit="^3.7.1"
+pytest-dependency = "^0.6.0"
+pre-commit = "^3.7.1"
 
 [tool.poetry.group.coverage.dependencies]
 coverage = "^7.5.3"

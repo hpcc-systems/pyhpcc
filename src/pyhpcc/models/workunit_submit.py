@@ -3,6 +3,7 @@ import logging
 import os
 import subprocess
 from collections import Counter
+from pathlib import Path
 
 import requests
 
@@ -23,10 +24,10 @@ class WorkunitSubmit(object):
     ----------
         hpcc:
             HPCC object
-        cluster1:
-            Cluster name
-        cluster2:
-            Cluster name
+        clusters: tuple
+            Clusters
+        remove_temp_files:
+            bool value to specify if files created by WorkunitSubmit be removed
 
     Methods
     -------
@@ -70,16 +71,13 @@ class WorkunitSubmit(object):
             Creates run config from given options
     """
 
-    def __init__(
-        self,
-        hpcc: HPCC,
-        clusters: tuple,
-    ):
+    def __init__(self, hpcc: HPCC, clusters: tuple, remove_temp_files=False):
+        self.remove_temp_files = remove_temp_files
+        self.hpcc: HPCC = hpcc
+        self.working_files = []
         if len(clusters) == 0:
             raise ValueError("Minimum one cluster should be specified")
-        self.hpcc: HPCC = hpcc
         self.clusters: tuple = clusters
-        self.stateid = conf.WORKUNIT_STATE_MAP
 
     def write_file(self, query_text, folder, job_name):
         """Write a .ecl file to disk
@@ -107,6 +105,7 @@ class WorkunitSubmit(object):
             words = job_name.split()
             job_name = "_".join(words)
             file_name = os.path.join(folder, job_name + ".ecl")
+            self.working_files.append(file_name)
             f = open(file_name, "w")
             f.write(query_text)
             f.close
@@ -139,9 +138,11 @@ class WorkunitSubmit(object):
         try:
             if conf.OUTPUT_FILE_OPTION not in compile_config.options:
                 output_file = utils.create_compile_file_name(file_name)
+                self.working_files.append(output_file)
                 compile_config.set_output_file(output_file)
             else:
                 output_file = compile_config.get_option(conf.OUTPUT_FILE_OPTION)
+                self.working_files.append(file_name)
             log.info(compile_config.options)
             bash_command = compile_config.create_compile_bash_command(file_name)
             log.info(bash_command)
@@ -466,4 +467,13 @@ class WorkunitSubmit(object):
         else:
             w4 = json.loads(w4.text)
             state = w4["WURunResponse"]["State"]
-            return self.stateid[state]
+            return conf.WORKUNIT_STATE_MAP[state]
+
+    def __delete_workunit_files(self):
+        for file in self.working_files:
+            file = Path(file)
+            file.unlink(missing_ok=True)
+
+    def __del__(self):
+        if self.remove_temp_files:
+            self.__delete_workunit_files()

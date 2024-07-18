@@ -38,9 +38,8 @@ def test_compile_config_option_copy(config_option):
         {"-Rconfig": "config"},
         {"-f": "feature"},
         {"-fconf": "fconf"},
-        {"--debug": bool},
         {"--updaterepos": bool},
-        {"-user": "testuser", "-R": "r", "-fconf": "feature", "--debug": bool},
+        {"-user": "testuser", "-R": "r", "-fconf": "feature"},
     ],
 )
 def test_compile_config_validation_no_errors(options):
@@ -74,9 +73,9 @@ def test_compile_config_validation_errors(options):
         (
             "abc.xml",
             {"--target": "thor", "-f": "dsafda"},
-            "eclcc --target thor -f dsafda abc.xml",
+            "eclcc --target thor -E -f dsafda abc.xml",
         ),
-        ("a.xml", {}, "eclcc a.xml"),
+        ("a.xml", {}, "eclcc -E a.xml"),
         (
             "/usr/loc/Basic_job_submission.ecl",
             {
@@ -177,7 +176,7 @@ def test_run_config_validation_errors(options):
                 "-u": conftest.HPCC_USERNAME,
                 "-pw": conftest.HPCC_PASSWORD,
             },
-            f"ecl run /usr/loc/Basic_job_submission.eclxml --target thor --job-name my_custom_workunit --limit 100 -s {conftest.HPCC_HOST} --port {conftest.HPCC_PORT} -u {conftest.HPCC_USERNAME} -pw {conftest.HPCC_PASSWORD}",
+            f"ecl run /usr/loc/Basic_job_submission.eclxml -v --target thor --job-name my_custom_workunit --limit 100 -s {conftest.HPCC_HOST} --port {conftest.HPCC_PORT} -u {conftest.HPCC_USERNAME} -pw {conftest.HPCC_PASSWORD}",
         ),
         (
             "/usr/loc/Basic_job_submission.eclxml",
@@ -190,7 +189,7 @@ def test_run_config_validation_errors(options):
                 "-u": conftest.HPCC_USERNAME,
                 "-pw": conftest.HPCC_PASSWORD,
             },
-            f"ecl run /usr/loc/Basic_job_submission.eclxml --target thor --job-name Basic_job_submission --limit 100 -s {conftest.HPCC_HOST} --port {conftest.HPCC_PORT} -u {conftest.HPCC_USERNAME} -pw {conftest.HPCC_PASSWORD}",
+            f"ecl run /usr/loc/Basic_job_submission.eclxml -v --target thor --job-name Basic_job_submission --limit 100 -s {conftest.HPCC_HOST} --port {conftest.HPCC_PORT} -u {conftest.HPCC_USERNAME} -pw {conftest.HPCC_PASSWORD}",
         ),
         (
             "/usr/loc/Basic_job_submission.eclxml",
@@ -228,7 +227,7 @@ def test_create_run_bash_command(file_name, options, expected_output):
                 "-u": conftest.HPCC_USERNAME,
                 "-pw": conftest.HPCC_PASSWORD,
             },
-            f"ecl run /usr/loc/Basic_job_submission.eclxml --target thor --job-name my_custom_workunit --limit 100 -s {conftest.HPCC_HOST} --port {conftest.HPCC_PORT} -u {conftest.HPCC_USERNAME} -pw {MASKED_PASSWORD}",
+            f"ecl run /usr/loc/Basic_job_submission.eclxml -v --target thor --job-name my_custom_workunit --limit 100 -s {conftest.HPCC_HOST} --port {conftest.HPCC_PORT} -u {conftest.HPCC_USERNAME} -pw {MASKED_PASSWORD}",
         ),
     ],
 )

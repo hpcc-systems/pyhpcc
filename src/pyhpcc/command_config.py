@@ -7,12 +7,14 @@ from pyhpcc.config import (
     LIMIT_OPTION,
     MASKED_PASSWORD,
     OUTPUT_FILE_OPTION,
+    OUTPUT_XML,
     PASSWORD_OPTIONS,
     PORT_OPTION,
     RUN_AUTH_OPTIONS,
     RUN_OPTIONS,
     SERVER_OPTIONS,
     USER_OPTIONS,
+    VERBOSE_OPTIONS,
 )
 from pyhpcc.errors import CompileConfigException, RunConfigException
 from pyhpcc.models.auth import Auth
@@ -58,7 +60,9 @@ class CompileConfig(object):
             ):
                 invalid_options.append(option)
         if len(invalid_options) > 0:
-            raise CompileConfigException(str(invalid_options))
+            raise CompileConfigException(
+                f"Incorrect or these options are currently not supported {str(invalid_options)}"
+            )
 
     def set_output_file(self, output_file):
         """Set name of output file (default a.out if linking to"""
@@ -66,6 +70,7 @@ class CompileConfig(object):
 
     def create_compile_bash_command(self, input_file):
         """Generate the eclcc command for the given options and input_file"""
+        self.set_output_xml()
         self.validate_options()
         eclcc_command = "eclcc"
         for key, value in self.options.items():
@@ -79,6 +84,9 @@ class CompileConfig(object):
     def get_option(self, option):
         """Get the option available for the option"""
         return self.options[option]
+
+    def set_output_xml(self):
+        self.options[OUTPUT_XML] = bool
 
 
 class RunConfig(object):
@@ -143,6 +151,7 @@ class RunConfig(object):
 
     def create_run_bash_command(self, target_file, password_mask=False):
         """Generate the ecl command for the given options and target_file"""
+        self.set_verbose()
         self.validate_options()
         ecl_command = "ecl run"
         params = ""
@@ -200,3 +209,7 @@ class RunConfig(object):
     def get_option(self, option):
         """Get the option available for the option"""
         return self.options[option]
+
+    def set_verbose(self):
+        if not all(option in self.options for option in VERBOSE_OPTIONS):
+            self.options[VERBOSE_OPTIONS[0]] = bool

@@ -40,6 +40,7 @@ PASSWORD_OPTIONS = ["-pw", "--password"]
 SERVER_OPTIONS = ["-s", "--s"]
 PORT_OPTION = "--port"
 OUTPUT_FILE_OPTION = "-o"
+OUTPUT_XML = "-E"
 VERBOSE_OPTIONS = [
     "-v",
     "--verbose",
@@ -61,16 +62,10 @@ COMPILE_OPTIONS = {
     "--main",
     "-syntax",
     "-platform",
-    "-E",
+    OUTPUT_XML,
     "-q",
     "-qa",
     "-wu",
-    "-S",
-    "-g",
-    "--debug",
-    "-Wc",
-    "-xx",
-    "-shared",
     "-dfs",
     "-scope",
     "-cluster",
@@ -80,8 +75,6 @@ COMPILE_OPTIONS = {
     "--cleanrepos",
     "--cleaninvalidrepos",
     "--fetchrepos",
-    "-help",
-    "--help",
     "--logfile",
     "--metacache",
     "--nosourcepath",
@@ -90,6 +83,7 @@ COMPILE_OPTIONS = {
     *VERBOSE_OPTIONS,
     "-wxxxx",
     "--version",
+    "--help",
     CLUSTER_OPTION,
     OUTPUT_FILE_OPTION,
 }

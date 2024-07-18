@@ -41,17 +41,19 @@ def test_work_unit_creation_noerror(hpcc, clusters):
 @pytest.mark.parametrize(
     "config, input_file, expected_output",
     [
-        ({}, "a.ecl", ("eclcc -o a.eclxml a.ecl", "a.eclxml")),
+        ({}, "a.ecl", ("eclcc -E -o a.eclxml a.ecl", "a.eclxml")),
         (
             {OUTPUT_FILE_OPTION: "hello.eclxml"},
             "a.ecl",
-            ("eclcc -o hello.eclxml a.ecl", "hello.eclxml"),
+            ("eclcc -o hello.eclxml -E a.ecl", "hello.eclxml"),
         ),
     ],
 )
 def test_get_bash_command_output_file(ws, config, input_file, expected_output):
     compile_config = CompileConfig(config)
-    assert expected_output == ws.get_bash_command(input_file, compile_config)
+    bash_command, output_file = ws.get_bash_command(input_file, compile_config)
+    assert set(bash_command.split(" ")) == set(expected_output[0].split(" "))
+    assert output_file == expected_output[1]
 
 
 activity_response_skeleton = {"ActivityResponse": {"Running": {"ActiveWorkunit": []}}}

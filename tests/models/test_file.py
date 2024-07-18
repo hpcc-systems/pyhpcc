@@ -19,7 +19,7 @@ def create_csv_test_data_in_server(
     csv_file,
     dfu_cluster,
 ):
-    read_file_info = ReadFileInfo(hpcc, csv_file, cluster)
+    read_file_info = ReadFileInfo(hpcc, csv_file)
     is_present = read_file_info.check_file_in_dfu()
     if not is_present:
         landing_zone_file = request.param
@@ -49,7 +49,7 @@ def create_flat_test_data_in_sever(
     logical_file,
     dfu_cluster,
 ):
-    read_file_info = ReadFileInfo(hpcc, logical_file, cluster)
+    read_file_info = ReadFileInfo(hpcc, logical_file)
     is_present = read_file_info.check_file_in_dfu()
     if not is_present:
         landing_zone_file = request.param
@@ -151,11 +151,6 @@ def spray_test_csv_file(
     assert dfu_id != ""
 
 
-@pytest.fixture
-def cluster():
-    return "thor"
-
-
 CSV_FILE_ROWS = 20000
 
 FLAT_FILE_ROWS = 20000
@@ -166,10 +161,10 @@ def test_do_nothing():
 
 
 # Test if creation of ReadFileInfo raises error if no clusters are provided
-def test_read_file_info_creation(hpcc, flat_file, cluster):
+def test_read_file_info_creation(hpcc, flat_file):
     try:
-        read_file_info = ReadFileInfo(hpcc, flat_file, cluster)
-        assert read_file_info.cluster == "thor"
+        read_file_info = ReadFileInfo(hpcc, flat_file)
+        # assert read_file_info.cluster == "thor"
         assert read_file_info.infer_header
     except Exception as error:
         pytest.fail(
@@ -178,22 +173,22 @@ def test_read_file_info_creation(hpcc, flat_file, cluster):
 
 
 # Test if get_data_iter raises exception if file doesn't exist
-def test_read_file_info_no_file_found(hpcc, cluster):
-    read_file_info = ReadFileInfo(hpcc, "nofile", cluster)
+def test_read_file_info_no_file_found(hpcc):
+    read_file_info = ReadFileInfo(hpcc, "nofile")
     with pytest.raises(FileNotFoundError):
         next(read_file_info.get_data_iter(0, 1, 2))
 
 
 # Test if get_data retrieves and handles headers
-def test_get_data_iter_with_csv_headers(hpcc, csv_file, cluster):
-    read_file_info = ReadFileInfo(hpcc, csv_file, cluster)
+def test_get_data_iter_with_csv_headers(hpcc, csv_file):
+    read_file_info = ReadFileInfo(hpcc, csv_file)
     data_attr, df = next(read_file_info.get_data_iter(0, -1, 10))
     assert data_attr["start"] == 1
 
 
 # Test if get_data_iter retrieves all records if items_size is -1
-def test_get_data_iter_no_of_records(hpcc, flat_file, cluster):
-    read_file_info = ReadFileInfo(hpcc, flat_file, cluster)
+def test_get_data_iter_no_of_records(hpcc, flat_file):
+    read_file_info = ReadFileInfo(hpcc, flat_file)
     total_rows = 0
     for data_attr, df in read_file_info.get_data_iter(0, -1, 10000):
         total_rows += len(df)
@@ -212,9 +207,9 @@ def test_get_data_iter_no_of_records(hpcc, flat_file, cluster):
     ],
 )
 def test_get_data_iter_flat_file(
-    hpcc, flat_file, cluster, start, count, batch_size, result_length
+    hpcc, flat_file, start, count, batch_size, result_length
 ):
-    read_file_info = ReadFileInfo(hpcc, flat_file, cluster)
+    read_file_info = ReadFileInfo(hpcc, flat_file)
     total_rows = 0
     for data_attr, df in read_file_info.get_data_iter(start, count, batch_size):
         total_rows += len(df)
@@ -234,9 +229,9 @@ def test_get_data_iter_flat_file(
     ],
 )
 def test_get_data_iter_csv_file(
-    hpcc, csv_file, cluster, start, count, batch_size, result_length, infer_header
+    hpcc, csv_file, start, count, batch_size, result_length, infer_header
 ):
-    read_file_info = ReadFileInfo(hpcc, csv_file, cluster, infer_header=infer_header)
+    read_file_info = ReadFileInfo(hpcc, csv_file, infer_header=infer_header)
     total_rows = 0
     for data_attr, df in read_file_info.get_data_iter(start, count, batch_size):
         total_rows += len(df)
@@ -244,30 +239,30 @@ def test_get_data_iter_csv_file(
 
 
 # Test if get_data fetches all records
-def test_get_data_csv(hpcc, csv_file, cluster):
-    read_file_info = ReadFileInfo(hpcc, csv_file, cluster)
+def test_get_data_csv(hpcc, csv_file):
+    read_file_info = ReadFileInfo(hpcc, csv_file)
     data_attr, df = read_file_info.get_data()
     assert len(df) == CSV_FILE_ROWS + 1
 
 
 # Test if get_data throws error if file doesn't exist
-def test_get_data_file_donot_exist(hpcc, cluster):
-    read_file_info = ReadFileInfo(hpcc, "dummy::file::doesnt:exist", cluster)
+def test_get_data_file_donot_exist(hpcc):
+    read_file_info = ReadFileInfo(hpcc, "dummy::file::doesnt:exist")
     with pytest.raises(FileNotFoundError):
         data_attr, df = read_file_info.get_data()
 
 
 # Test if get_sub_file_information_not_super_file return false for flat_file
-def test_get_sub_file_information_not_super_file(hpcc, flat_file, cluster):
-    read_file_info = ReadFileInfo(hpcc, flat_file, cluster)
+def test_get_sub_file_information_not_super_file(hpcc, flat_file):
+    read_file_info = ReadFileInfo(hpcc, flat_file)
     is_super, sub_files = read_file_info.get_sub_file_information()
     assert not is_super
     assert sub_files is None
 
 
 # Test if get_sub_file_information_not_super_file return true and files are present for flat_file
-def test_get_sub_file_information_super_file(hpcc, super_file, cluster):
-    read_file_info = ReadFileInfo(hpcc, super_file, cluster)
+def test_get_sub_file_information_super_file(hpcc, super_file):
+    read_file_info = ReadFileInfo(hpcc, super_file)
     is_super, sub_files = read_file_info.get_sub_file_information()
     assert is_super
     assert sub_files is not None
@@ -278,9 +273,9 @@ def test_get_sub_file_information_super_file(hpcc, super_file, cluster):
     "file",
     [("super_file"), ("flat_file"), ("csv_file")],
 )
-def test_check_file_in_dfu_pass(request, hpcc, cluster, file):
+def test_check_file_in_dfu_pass(request, hpcc, file):
     file = request.getfixturevalue(file)
-    read_file_info = ReadFileInfo(hpcc, file, cluster)
+    read_file_info = ReadFileInfo(hpcc, file)
     assert read_file_info.check_file_in_dfu()
 
 
@@ -289,6 +284,6 @@ def test_check_file_in_dfu_pass(request, hpcc, cluster, file):
     "file",
     [("pyhpccdi::employeed::dummies::datafds")],
 )
-def test_check_file_in_dfu_fail(request, hpcc, cluster, file):
-    read_file_info = ReadFileInfo(hpcc, file, cluster)
+def test_check_file_in_dfu_fail(hpcc, file):
+    read_file_info = ReadFileInfo(hpcc, file)
     assert not read_file_info.check_file_in_dfu()
