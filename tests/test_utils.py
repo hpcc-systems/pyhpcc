@@ -39,7 +39,9 @@ import pytest
     ],
 )
 def test_bash_compile(resp, expected_output):
-    output = utils.parse_bash_compile_output(resp)
+    output = utils.parse_bash_compile_output(resp, "ecl dummy")
+    assert "bash_command" in output
+    output.pop("bash_command", "")
     expected_output["raw_output"] = resp.decode()
     assert output == expected_output
 

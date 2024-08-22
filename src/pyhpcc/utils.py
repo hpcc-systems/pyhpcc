@@ -526,7 +526,7 @@ def parse_bash_run_output(response: bytes):
     return parsed_response
 
 
-def parse_bash_compile_output(response):
+def parse_bash_compile_output(response, bash_command):
     """
     Parse raw compiler output to user-friendly JSON format
 
@@ -562,4 +562,5 @@ def parse_bash_compile_output(response):
         parsed_response["status"] = "error"
         parsed_response["errors"] = errors
     parsed_response["raw_output"] = raw_output
+    parsed_response["bash_command"] = bash_command
     return parsed_response

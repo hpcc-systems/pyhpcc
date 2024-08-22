@@ -1,550 +1,804 @@
-<!DOCTYPE html>
-<html class="writer-html5" lang="en" >
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Index &mdash; PyHPCC 1.0.0 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-    <script src="_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="#" />
-    <link rel="search" title="Search" href="search.html" /> 
-</head>
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="./">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="#" /><link rel="search" title="Search" href="search.html" />
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> PyHPCC
-          </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+    <!-- Generated with Sphinx 7.4.7 and Furo 2024.07.18 --><title>Index - PyHPCC 0.1.0 documentation</title>
+<link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=613ab9ff" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=302659d7" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">PyHPCC 0.1.0 documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  
+  
+  <span class="sidebar-brand-text">PyHPCC 0.1.0 documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><h3>About PyHPCC</h3>
+<p>
+    PyHPCC is a Python library that facilitates easier communication between Python and HPCC Systems.
+</p><h3>Contents</h3>
+
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">pyhpcc</a></li>
+    <li><a href="index.html">Home</a></li>
+
+    <!-- <li><a href="getting-started.html">Get started</a></li> -->
+    <li><a href="how-to/index.html">How-to guides</a></li>
+    <!-- <li><a href="modindex.html">Reference guides</a></li> -->
+    <!-- <li><a href="explanation/index.html">Explanation</a></li>
+    <li><a href="contents.html">Complete table of contents</a></li>
+    <li><a href="example/index.html">Library of examples</a></li> -->
 </ul>
 
-        </div>
+<!-- <h3>About the project</h3> -->
+
+<!-- <ul>
+    <li><a href="changelog.html">Changelog</a></li>
+    <li><a href="contributing.html">Contributing</a></li>
+</ul> -->
+
+<!--
+
+<hr> --><h3>Useful Links</h3>
+<ul>
+    <li><a href="https://pypi.org/project/pyhpcc/">PyHPCC @ PyPI</a></li>
+    <li><a href="https://github.com/amila-desilva/pyhpcc-internal/">PyHPCC @ GitHub</a></li>
+    <li><a href="https://github.com/amila-desilva/pyhpcc-internal/issues/">Issue Tracker</a></li>
+    <!-- <li><a href="https://media.readthedocs.org/pdf/pytest/latest/pytest.pdf">PDF Documentation</a> -->
+</ul></div><style>
+    ul {
+        list-style: none;
+    }
+
+    li {
+        margin: 0.4em 0;
+    }
+
+    @media (min-width: 46em) {
+        #features {
+            width: 50%;
+        }
+    }
+</style>
       </div>
-    </nav>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          
+<section class="genindex-section">
+  <h1 id="index">Index</h1>
+  <div class="genindex-jumpbox"><a href="#_"><strong>_</strong></a> | <a href="#A"><strong>A</strong></a> | <a href="#B"><strong>B</strong></a> | <a href="#C"><strong>C</strong></a> | <a href="#D"><strong>D</strong></a> | <a href="#E"><strong>E</strong></a> | <a href="#F"><strong>F</strong></a> | <a href="#G"><strong>G</strong></a> | <a href="#H"><strong>H</strong></a> | <a href="#I"><strong>I</strong></a> | <a href="#L"><strong>L</strong></a> | <a href="#M"><strong>M</strong></a> | <a href="#P"><strong>P</strong></a> | <a href="#R"><strong>R</strong></a> | <a href="#S"><strong>S</strong></a> | <a href="#T"><strong>T</strong></a> | <a href="#U"><strong>U</strong></a> | <a href="#W"><strong>W</strong></a></div>
+</section>
+<section id="_" class="genindex-section">
+  <h2>_</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="pyhpcc.html#pyhpcc.models.roxie.Roxie.__init__">__init__() (pyhpcc.models.roxie.Roxie method)</a>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">PyHPCC</a>
-      </nav>
+        <ul>
+          <li><a href="pyhpcc.html#pyhpcc.models.workunit_submit.WorkunitSubmit.__init__">(pyhpcc.models.workunit_submit.WorkunitSubmit method)</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
 
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Index</li>
-      <li class="wy-breadcrumbs-aside">
-      </li>
-  </ul>
-  <hr/>
-</div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
+<section id="A" class="genindex-section">
+  <h2>A</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="pyhpcc.html#pyhpcc.models.hpcc.HPCC.activity">activity (pyhpcc.models.hpcc.HPCC property)</a>
+</li>
+        <li><a href="pyhpcc.html#pyhpcc.models.hpcc.HPCC.add_to_superfile_request">add_to_superfile_request (pyhpcc.models.hpcc.HPCC property)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="pyhpcc.html#pyhpcc.models.auth.Auth">Auth (class in pyhpcc.models.auth)</a>
+</li>
+        <li><a href="pyhpcc.html#pyhpcc.models.roxie.Roxie.auth">auth (pyhpcc.models.roxie.Roxie attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
 
-<h1 id="index">Index</h1>
+<section id="B" class="genindex-section">
+  <h2>B</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="pyhpcc.html#pyhpcc.models.workunit_submit.WorkunitSubmit.bash_compile">bash_compile() (pyhpcc.models.workunit_submit.WorkunitSubmit method)</a>
+</li>
+        <li><a href="pyhpcc.html#pyhpcc.models.workunit_submit.WorkunitSubmit.bash_run">bash_run() (pyhpcc.models.workunit_submit.WorkunitSubmit method)</a>
+</li>
+        <li>
+    built-in function
 
-<div class="genindex-jumpbox">
- <a href="#_"><strong>_</strong></a>
- | <a href="#A"><strong>A</strong></a>
- | <a href="#B"><strong>B</strong></a>
- | <a href="#C"><strong>C</strong></a>
- | <a href="#D"><strong>D</strong></a>
- | <a href="#E"><strong>E</strong></a>
- | <a href="#F"><strong>F</strong></a>
- | <a href="#G"><strong>G</strong></a>
- | <a href="#H"><strong>H</strong></a>
- | <a href="#I"><strong>I</strong></a>
- | <a href="#L"><strong>L</strong></a>
- | <a href="#M"><strong>M</strong></a>
- | <a href="#P"><strong>P</strong></a>
- | <a href="#R"><strong>R</strong></a>
- | <a href="#S"><strong>S</strong></a>
- | <a href="#T"><strong>T</strong></a>
- | <a href="#U"><strong>U</strong></a>
- | <a href="#W"><strong>W</strong></a>
- 
-</div>
-<h2 id="_">_</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyhpcc.html#pyhpcc.models.roxie.__init__">__init__() (pyhpcc.models.roxie method)</a>
+        <ul>
+          <li><a href="how-to/readfile.html#get_data_iter">get_data_iter()</a>
+</li>
+          <li><a href="bash_compile.html#WorkUnitSubmit.bash_compile">WorkUnitSubmit.bash_compile()</a>
+</li>
+          <li><a href="bash_run.html#WorkUnitSubmit.bash_run">WorkUnitSubmit.bash_run()</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
 
-      <ul>
-        <li><a href="pyhpcc.html#pyhpcc.models.workunit_submit.__init__">(pyhpcc.models.workunit_submit method)</a>
+<section id="C" class="genindex-section">
+  <h2>C</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="pyhpcc.html#pyhpcc.utils.check_file_existence">check_file_existence() (in module pyhpcc.utils)</a>
 </li>
-      </ul></li>
-  </ul></td>
-</tr></table>
+        <li><a href="pyhpcc.html#pyhpcc.models.hpcc.HPCC.check_file_exists">check_file_exists (pyhpcc.models.hpcc.HPCC property)</a>
+</li>
+        <li><a href="pyhpcc.html#pyhpcc.models.file.ReadFileInfo.check_file_in_dfu">check_file_in_dfu() (pyhpcc.models.file.ReadFileInfo method)</a>
+</li>
+        <li><a href="pyhpcc.html#pyhpcc.models.file.ReadFileInfo.check_if_file_exists_and_is_super_file">check_if_file_exists_and_is_super_file() (pyhpcc.models.file.ReadFileInfo method)</a>
+</li>
+        <li><a href="pyhpcc.html#pyhpcc.models.workunit_submit.WorkunitSubmit.clusters">clusters (pyhpcc.models.workunit_submit.WorkunitSubmit attribute)</a>
+</li>
+        <li><a href="pyhpcc.html#pyhpcc.models.workunit_submit.WorkunitSubmit.compile_workunit">compile_workunit() (pyhpcc.models.workunit_submit.WorkunitSubmit method)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="pyhpcc.html#pyhpcc.errors.CompileConfigException">CompileConfigException</a>
+</li>
+        <li><a href="pyhpcc.html#pyhpcc.models.workunit_submit.WorkunitSubmit.configure_run_config">configure_run_config() (pyhpcc.models.workunit_submit.WorkunitSubmit method)</a>
+</li>
+        <li><a href="pyhpcc.html#pyhpcc.utils.convert_arg_to_utf8_str">convert_arg_to_utf8_str() (in module pyhpcc.utils)</a>
+</li>
+        <li><a href="pyhpcc.html#pyhpcc.utils.create_compile_file_name">create_compile_file_name() (in module pyhpcc.utils)</a>
+</li>
+        <li><a href="pyhpcc.html#pyhpcc.models.workunit_submit.WorkunitSubmit.create_file_name">create_file_name() (pyhpcc.models.workunit_submit.WorkunitSubmit method)</a>
+</li>
+        <li><a href="pyhpcc.html#pyhpcc.models.workunit_submit.WorkunitSubmit.create_workunit">create_workunit() (pyhpcc.models.workunit_submit.WorkunitSubmit method)</a>
+</li>
+        <li><a href="pyhpcc.html#pyhpcc.models.file.ReadFileInfo.csv_separator_for_read">csv_separator_for_read (pyhpcc.models.file.ReadFileInfo attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
 
-<h2 id="A">A</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyhpcc.html#pyhpcc.models.hpcc.Activity">Activity (pyhpcc.models.hpcc property)</a>
+<section id="D" class="genindex-section">
+  <h2>D</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="pyhpcc.html#pyhpcc.models.roxie.Roxie.definition">definition (pyhpcc.models.roxie.Roxie attribute)</a>
 </li>
-      <li><a href="pyhpcc.html#pyhpcc.models.readfileinfo.actualFileSize">actualFileSize (pyhpcc.models.readfileinfo attribute)</a>
+        <li><a href="pyhpcc.html#pyhpcc.models.hpcc.HPCC.dfu_query">dfu_query (pyhpcc.models.hpcc.HPCC property)</a>
 </li>
-      <li><a href="pyhpcc.html#pyhpcc.models.hpcc.AddtoSuperfileRequest">AddtoSuperfileRequest (pyhpcc.models.hpcc property)</a>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="pyhpcc.html#pyhpcc.models.hpcc.HPCC.download_file">download_file (pyhpcc.models.hpcc.HPCC property)</a>
 </li>
-      <li><a href="pyhpcc.html#pyhpcc.errors.HTTPException.api_codes">api_codes (pyhpcc.errors.HTTPException attribute)</a>
+        <li><a href="pyhpcc.html#pyhpcc.models.hpcc.HPCC.drop_zone_files">drop_zone_files (pyhpcc.models.hpcc.HPCC property)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyhpcc.html#pyhpcc.errors.HTTPException.api_errors">api_errors (pyhpcc.errors.HTTPException attribute)</a>
-</li>
-      <li><a href="pyhpcc.html#pyhpcc.errors.HTTPException.api_messages">api_messages (pyhpcc.errors.HTTPException attribute)</a>
-</li>
-      <li><a href="pyhpcc.html#pyhpcc.auth.auth">auth (class in pyhpcc.auth)</a>
+    </ul></td>
+  </tr></table>
+</section>
 
-      <ul>
-        <li><a href="pyhpcc.html#pyhpcc.models.roxie.auth">(pyhpcc.models.roxie attribute)</a>
+<section id="E" class="genindex-section">
+  <h2>E</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="pyhpcc.html#pyhpcc.errors.Error">Error</a>
 </li>
-      </ul></li>
-  </ul></td>
-</tr></table>
+    </ul></td>
+  </tr></table>
+</section>
 
-<h2 id="B">B</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyhpcc.html#pyhpcc.models.workunit_submit.bash_compile">bash_compile() (pyhpcc.models.workunit_submit method)</a>
+<section id="F" class="genindex-section">
+  <h2>F</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="pyhpcc.html#pyhpcc.models.hpcc.HPCC.file_list">file_list (pyhpcc.models.hpcc.HPCC property)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyhpcc.html#pyhpcc.models.workunit_submit.bash_run">bash_run() (pyhpcc.models.workunit_submit method)</a>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="pyhpcc.html#pyhpcc.models.hpcc.HPCC.file_query">file_query (pyhpcc.models.hpcc.HPCC property)</a>
 </li>
-  </ul></td>
-</tr></table>
+    </ul></td>
+  </tr></table>
+</section>
 
-<h2 id="C">C</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyhpcc.html#pyhpcc.utils.checkfileexistence">checkfileexistence() (in module pyhpcc.utils)</a>
+<section id="G" class="genindex-section">
+  <h2>G</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="pyhpcc.html#pyhpcc.models.workunit_submit.WorkunitSubmit.get_bash_command">get_bash_command() (pyhpcc.models.workunit_submit.WorkunitSubmit method)</a>
 </li>
-      <li><a href="pyhpcc.html#pyhpcc.models.hpcc.checkFileExists">checkFileExists (pyhpcc.models.hpcc property)</a>
+        <li><a href="pyhpcc.html#pyhpcc.models.workunit_submit.WorkunitSubmit.get_cluster_from_response">get_cluster_from_response() (pyhpcc.models.workunit_submit.WorkunitSubmit method)</a>
 </li>
-      <li><a href="pyhpcc.html#pyhpcc.models.readfileinfo.checkfileinDFU">checkfileinDFU() (pyhpcc.models.readfileinfo method)</a>
+        <li><a href="pyhpcc.html#pyhpcc.utils.get_csv_data">get_csv_data() (in module pyhpcc.utils)</a>
 </li>
-      <li><a href="pyhpcc.html#pyhpcc.models.readfileinfo.checkIfFileExistsAndIsSuperFile">checkIfFileExistsAndIsSuperFile() (pyhpcc.models.readfileinfo method)</a>
+        <li><a href="pyhpcc.html#pyhpcc.utils.get_csv_header">get_csv_header() (in module pyhpcc.utils)</a>
 </li>
-      <li><a href="pyhpcc.html#pyhpcc.models.readfileinfo.checkStatus">checkStatus (pyhpcc.models.readfileinfo attribute)</a>
+        <li><a href="pyhpcc.html#pyhpcc.models.file.ReadFileInfo.get_data">get_data() (pyhpcc.models.file.ReadFileInfo method)</a>
 </li>
-      <li><a href="pyhpcc.html#pyhpcc.models.readfileinfo.cluster">cluster (pyhpcc.models.readfileinfo attribute)</a>
+        <li><a href="pyhpcc.html#pyhpcc.utils.get_data_from_response">get_data_from_response() (in module pyhpcc.utils)</a>
 </li>
-      <li><a href="pyhpcc.html#pyhpcc.models.workunit_submit.cluster1">cluster1 (pyhpcc.models.workunit_submit attribute)</a>
-</li>
-      <li><a href="pyhpcc.html#pyhpcc.models.workunit_submit.cluster2">cluster2 (pyhpcc.models.workunit_submit attribute)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyhpcc.html#pyhpcc.models.workunit_submit.compileworkunit">compileworkunit() (pyhpcc.models.workunit_submit method)</a>
-</li>
-      <li><a href="pyhpcc.html#pyhpcc.utils.convert_arg_to_utf8_str">convert_arg_to_utf8_str() (in module pyhpcc.utils)</a>
-</li>
-      <li><a href="pyhpcc.html#pyhpcc.utils.create_compile_bash_command">create_compile_bash_command() (in module pyhpcc.utils)</a>
-</li>
-      <li><a href="pyhpcc.html#pyhpcc.utils.create_compile_file_name">create_compile_file_name() (in module pyhpcc.utils)</a>
-</li>
-      <li><a href="pyhpcc.html#pyhpcc.models.workunit_submit.create_filename">create_filename() (pyhpcc.models.workunit_submit method)</a>
-</li>
-      <li><a href="pyhpcc.html#pyhpcc.utils.create_run_bash_command">create_run_bash_command() (in module pyhpcc.utils)</a>
-</li>
-      <li><a href="pyhpcc.html#pyhpcc.models.workunit_submit.createworkunit">createworkunit() (pyhpcc.models.workunit_submit method)</a>
-</li>
-      <li><a href="pyhpcc.html#pyhpcc.models.readfileinfo.csvHeaderFlag">csvHeaderFlag (pyhpcc.models.readfileinfo attribute)</a>
-</li>
-      <li><a href="pyhpcc.html#pyhpcc.models.readfileinfo.csvSeperatorforRead">csvSeperatorforRead (pyhpcc.models.readfileinfo attribute)</a>
-</li>
-  </ul></td>
-</tr></table>
+        <li>
+    get_data_iter()
 
-<h2 id="D">D</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyhpcc.html#pyhpcc.models.roxie.definition">definition (pyhpcc.models.roxie attribute)</a>
+        <ul>
+          <li><a href="how-to/readfile.html#get_data_iter">built-in function</a>
 </li>
-      <li><a href="pyhpcc.html#pyhpcc.models.readfileinfo.desprayallowoverwrite">desprayallowoverwrite (pyhpcc.models.readfileinfo attribute)</a>
+        </ul></li>
+        <li><a href="pyhpcc.html#pyhpcc.models.file.ReadFileInfo.get_data_iter">get_data_iter() (pyhpcc.models.file.ReadFileInfo method)</a>
 </li>
-      <li><a href="pyhpcc.html#pyhpcc.utils.desprayfile">desprayfile() (in module pyhpcc.utils)</a>
+        <li><a href="pyhpcc.html#pyhpcc.models.hpcc.HPCC.get_dfu_info">get_dfu_info (pyhpcc.models.hpcc.HPCC property)</a>
 </li>
-      <li><a href="pyhpcc.html#pyhpcc.models.readfileinfo.desprayFromCluster">desprayFromCluster (pyhpcc.models.readfileinfo attribute)</a>
+        <li><a href="pyhpcc.html#pyhpcc.models.hpcc.HPCC.get_dfu_workunit_info">get_dfu_workunit_info (pyhpcc.models.hpcc.HPCC property)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyhpcc.html#pyhpcc.models.readfileinfo.desprayIP">desprayIP (pyhpcc.models.readfileinfo attribute)</a>
+        <li><a href="pyhpcc.html#pyhpcc.models.hpcc.HPCC.get_dfu_workunits">get_dfu_workunits (pyhpcc.models.hpcc.HPCC property)</a>
 </li>
-      <li><a href="pyhpcc.html#pyhpcc.models.readfileinfo.desprayPath">desprayPath (pyhpcc.models.readfileinfo attribute)</a>
+        <li><a href="pyhpcc.html#pyhpcc.models.hpcc.HPCC.get_file_info">get_file_info (pyhpcc.models.hpcc.HPCC property)</a>
 </li>
-      <li><a href="pyhpcc.html#pyhpcc.models.hpcc.dfuQuery">dfuQuery (pyhpcc.models.hpcc property)</a>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="pyhpcc.html#pyhpcc.utils.get_file_status">get_file_status() (in module pyhpcc.utils)</a>
 </li>
-      <li><a href="pyhpcc.html#pyhpcc.models.hpcc.downloadfile">downloadfile (pyhpcc.models.hpcc property)</a>
+        <li><a href="pyhpcc.html#pyhpcc.utils.get_file_type">get_file_type() (in module pyhpcc.utils)</a>
 </li>
-      <li><a href="pyhpcc.html#pyhpcc.models.hpcc.DropZoneFiles">DropZoneFiles (pyhpcc.models.hpcc property)</a>
+        <li><a href="pyhpcc.html#pyhpcc.utils.get_flat_data">get_flat_data() (in module pyhpcc.utils)</a>
 </li>
-  </ul></td>
-</tr></table>
+        <li><a href="pyhpcc.html#pyhpcc.models.hpcc.HPCC.get_graph">get_graph (pyhpcc.models.hpcc.HPCC property)</a>
+</li>
+        <li><a href="pyhpcc.html#pyhpcc.models.workunit_submit.WorkunitSubmit.get_least_active_cluster">get_least_active_cluster() (pyhpcc.models.workunit_submit.WorkunitSubmit method)</a>
+</li>
+        <li><a href="pyhpcc.html#pyhpcc.models.file.ReadFileInfo.get_sub_file_information">get_sub_file_information() (pyhpcc.models.file.ReadFileInfo method)</a>
+</li>
+        <li><a href="pyhpcc.html#pyhpcc.models.hpcc.HPCC.get_subfile_info">get_subfile_info (pyhpcc.models.hpcc.HPCC property)</a>
+</li>
+        <li><a href="pyhpcc.html#pyhpcc.utils.get_subfile_names">get_subfile_names() (in module pyhpcc.utils)</a>
+</li>
+        <li><a href="pyhpcc.html#pyhpcc.models.auth.Auth.get_url">get_url() (pyhpcc.models.auth.Auth method)</a>
+</li>
+        <li><a href="pyhpcc.html#pyhpcc.models.auth.Auth.get_username">get_username() (pyhpcc.models.auth.Auth method)</a>
+</li>
+        <li><a href="pyhpcc.html#pyhpcc.models.auth.Auth.get_verified">get_verified() (pyhpcc.models.auth.Auth method)</a>
+</li>
+        <li><a href="pyhpcc.html#pyhpcc.models.hpcc.HPCC.get_wu_info">get_wu_info (pyhpcc.models.hpcc.HPCC property)</a>
+</li>
+        <li><a href="pyhpcc.html#pyhpcc.models.hpcc.HPCC.get_wu_query">get_wu_query (pyhpcc.models.hpcc.HPCC property)</a>
+</li>
+        <li><a href="pyhpcc.html#pyhpcc.models.hpcc.HPCC.get_wu_result">get_wu_result (pyhpcc.models.hpcc.HPCC property)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
 
-<h2 id="E">E</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyhpcc.html#pyhpcc.errors.Error">Error</a>
+<section id="H" class="genindex-section">
+  <h2>H</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="pyhpcc.html#pyhpcc.models.hpcc.HPCC">HPCC (class in pyhpcc.models.hpcc)</a>
 </li>
-  </ul></td>
-</tr></table>
+        <li><a href="pyhpcc.html#pyhpcc.models.file.ReadFileInfo.hpcc">hpcc (pyhpcc.models.file.ReadFileInfo attribute)</a>
 
-<h2 id="F">F</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyhpcc.html#pyhpcc.models.hpcc.fileList">fileList (pyhpcc.models.hpcc property)</a>
+        <ul>
+          <li><a href="pyhpcc.html#pyhpcc.models.workunit_submit.WorkunitSubmit.hpcc">(pyhpcc.models.workunit_submit.WorkunitSubmit attribute)</a>
 </li>
-      <li><a href="pyhpcc.html#pyhpcc.models.hpcc.fileQuery">fileQuery (pyhpcc.models.hpcc property)</a>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="pyhpcc.html#pyhpcc.errors.HPCCAuthenticationError">HPCCAuthenticationError</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyhpcc.html#pyhpcc.models.readfileinfo.fileSizelimit">fileSizelimit (pyhpcc.models.readfileinfo attribute)</a>
+        <li><a href="pyhpcc.html#pyhpcc.errors.HPCCException">HPCCException</a>
 </li>
-      <li><a href="pyhpcc.html#pyhpcc.models.readfileinfo.fileType">fileType (pyhpcc.models.readfileinfo attribute)</a>
-</li>
-  </ul></td>
-</tr></table>
+    </ul></td>
+  </tr></table>
+</section>
 
-<h2 id="G">G</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyhpcc.html#pyhpcc.models.workunit_submit.get_bashcommand">get_bashcommand() (pyhpcc.models.workunit_submit method)</a>
+<section id="I" class="genindex-section">
+  <h2>I</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="pyhpcc.html#pyhpcc.models.file.ReadFileInfo.infer_header">infer_header (pyhpcc.models.file.ReadFileInfo attribute)</a>
 </li>
-      <li><a href="pyhpcc.html#pyhpcc.utils.get_graph_skew">get_graph_skew() (in module pyhpcc.utils)</a>
-</li>
-      <li><a href="pyhpcc.html#pyhpcc.auth.auth.get_url">get_url() (pyhpcc.auth.auth method)</a>
-</li>
-      <li><a href="pyhpcc.html#pyhpcc.auth.auth.get_username">get_username() (pyhpcc.auth.auth method)</a>
-</li>
-      <li><a href="pyhpcc.html#pyhpcc.auth.auth.get_verified">get_verified() (pyhpcc.auth.auth method)</a>
-</li>
-      <li><a href="pyhpcc.html#pyhpcc.models.workunit_submit.get_workload">get_workload() (pyhpcc.models.workunit_submit method)</a>
-</li>
-      <li><a href="pyhpcc.html#pyhpcc.models.hpcc.get_wuinfo">get_wuinfo (pyhpcc.models.hpcc property)</a>
-</li>
-      <li><a href="pyhpcc.html#pyhpcc.models.hpcc.get_wuquery">get_wuquery (pyhpcc.models.hpcc property)</a>
-</li>
-      <li><a href="pyhpcc.html#pyhpcc.models.hpcc.get_wuresult">get_wuresult (pyhpcc.models.hpcc property)</a>
-</li>
-      <li><a href="pyhpcc.html#pyhpcc.utils.getcsvdata">getcsvdata() (in module pyhpcc.utils)</a>
-</li>
-      <li><a href="pyhpcc.html#pyhpcc.models.readfileinfo.getData">getData() (pyhpcc.models.readfileinfo method)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyhpcc.html#pyhpcc.models.hpcc.getdfuInfo">getdfuInfo (pyhpcc.models.hpcc property)</a>
-</li>
-      <li><a href="pyhpcc.html#pyhpcc.models.hpcc.getDfuWorkunitInfo">getDfuWorkunitInfo (pyhpcc.models.hpcc property)</a>
-</li>
-      <li><a href="pyhpcc.html#pyhpcc.models.hpcc.getDfuWorkunits">getDfuWorkunits (pyhpcc.models.hpcc property)</a>
-</li>
-      <li><a href="pyhpcc.html#pyhpcc.models.hpcc.getFileInfo">getFileInfo (pyhpcc.models.hpcc property)</a>
-</li>
-      <li><a href="pyhpcc.html#pyhpcc.utils.getfileStatus">getfileStatus() (in module pyhpcc.utils)</a>
-</li>
-      <li><a href="pyhpcc.html#pyhpcc.utils.getfileType">getfileType() (in module pyhpcc.utils)</a>
-</li>
-      <li><a href="pyhpcc.html#pyhpcc.utils.getflatdata">getflatdata() (in module pyhpcc.utils)</a>
-</li>
-      <li><a href="pyhpcc.html#pyhpcc.models.hpcc.getgraph">getgraph (pyhpcc.models.hpcc property)</a>
-</li>
-      <li><a href="pyhpcc.html#pyhpcc.models.hpcc.getSubFileInfo">getSubFileInfo (pyhpcc.models.hpcc property)</a>
-</li>
-      <li><a href="pyhpcc.html#pyhpcc.models.readfileinfo.getSubFileInformation">getSubFileInformation() (pyhpcc.models.readfileinfo method)</a>
-</li>
-      <li><a href="pyhpcc.html#pyhpcc.utils.getSubfileNames">getSubfileNames() (in module pyhpcc.utils)</a>
-</li>
-  </ul></td>
-</tr></table>
+    </ul></td>
+  </tr></table>
+</section>
 
-<h2 id="H">H</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyhpcc.html#pyhpcc.models.hpcc">hpcc (class in pyhpcc.models)</a>
+<section id="L" class="genindex-section">
+  <h2>L</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="pyhpcc.html#pyhpcc.models.file.ReadFileInfo.logical_file_name">logical_file_name (pyhpcc.models.file.ReadFileInfo attribute)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
 
-      <ul>
-        <li><a href="pyhpcc.html#pyhpcc.models.readfileinfo.hpcc">(pyhpcc.models.readfileinfo attribute)</a>
-</li>
-        <li><a href="pyhpcc.html#pyhpcc.models.workunit_submit.hpcc">(pyhpcc.models.workunit_submit attribute)</a>
-</li>
-      </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyhpcc.html#pyhpcc.errors.HPCCAuthenticationError">HPCCAuthenticationError</a>
-</li>
-      <li><a href="pyhpcc.html#pyhpcc.errors.HPCCException">HPCCException</a>
-</li>
-      <li><a href="pyhpcc.html#pyhpcc.errors.HTTPException">HTTPException</a>
-</li>
-  </ul></td>
-</tr></table>
+<section id="M" class="genindex-section">
+  <h2>M</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="pyhpcc.html#pyhpcc.errors.CompileConfigException.message">message (pyhpcc.errors.CompileConfigException attribute)</a>
 
-<h2 id="I">I</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyhpcc.html#pyhpcc.models.readfileinfo.ifExists">ifExists (pyhpcc.models.readfileinfo attribute)</a>
+        <ul>
+          <li><a href="pyhpcc.html#pyhpcc.errors.HPCCAuthenticationError.message">(pyhpcc.errors.HPCCAuthenticationError attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyhpcc.html#pyhpcc.models.readfileinfo.isSuperFile">isSuperFile (pyhpcc.models.readfileinfo attribute)</a>
+          <li><a href="pyhpcc.html#pyhpcc.errors.HPCCException.message">(pyhpcc.errors.HPCCException attribute)</a>
 </li>
-  </ul></td>
-</tr></table>
-
-<h2 id="L">L</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyhpcc.html#pyhpcc.models.readfileinfo.logicalFileName">logicalFileName (pyhpcc.models.readfileinfo attribute)</a>
+          <li><a href="pyhpcc.html#pyhpcc.errors.RunConfigException.message">(pyhpcc.errors.RunConfigException attribute)</a>
 </li>
-  </ul></td>
-</tr></table>
-
-<h2 id="M">M</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyhpcc.html#pyhpcc.errors.HPCCAuthenticationError.message">message (pyhpcc.errors.HPCCAuthenticationError attribute)</a>
-
-      <ul>
-        <li><a href="pyhpcc.html#pyhpcc.errors.HPCCException.message">(pyhpcc.errors.HPCCException attribute)</a>
-</li>
-        <li><a href="pyhpcc.html#pyhpcc.errors.TypeError.message">(pyhpcc.errors.TypeError attribute)</a>
-</li>
-      </ul></li>
-      <li>
+        </ul></li>
+        <li>
     module
 
-      <ul>
-        <li><a href="pyhpcc.html#module-pyhpcc">pyhpcc</a>
+        <ul>
+          <li><a href="index.html#module-pyhpcc">pyhpcc</a>
 </li>
-        <li><a href="pyhpcc.html#module-pyhpcc.auth">pyhpcc.auth</a>
+          <li><a href="pyhpcc.html#module-pyhpcc.errors">pyhpcc.errors</a>
 </li>
-        <li><a href="pyhpcc.html#module-pyhpcc.errors">pyhpcc.errors</a>
+          <li><a href="pyhpcc.html#module-pyhpcc.handlers.roxie_handler">pyhpcc.handlers.roxie_handler</a>
 </li>
-        <li><a href="pyhpcc.html#module-pyhpcc.models">pyhpcc.models</a>
+          <li><a href="pyhpcc.html#module-pyhpcc.handlers.thor_handler">pyhpcc.handlers.thor_handler</a>
 </li>
-        <li><a href="pyhpcc.html#module-pyhpcc.roxie_binder">pyhpcc.roxie_binder</a>
+          <li><a href="pyhpcc.html#module-pyhpcc.models.auth">pyhpcc.models.auth</a>
 </li>
-        <li><a href="pyhpcc.html#module-pyhpcc.thor_binder">pyhpcc.thor_binder</a>
+          <li><a href="pyhpcc.html#module-pyhpcc.models.file">pyhpcc.models.file</a>
 </li>
-        <li><a href="pyhpcc.html#module-pyhpcc.utils">pyhpcc.utils</a>
+          <li><a href="pyhpcc.html#module-pyhpcc.models.hpcc">pyhpcc.models.hpcc</a>
 </li>
-      </ul></li>
-  </ul></td>
-</tr></table>
+          <li><a href="pyhpcc.html#module-pyhpcc.models.roxie">pyhpcc.models.roxie</a>
+</li>
+          <li><a href="pyhpcc.html#module-pyhpcc.models.workunit_submit">pyhpcc.models.workunit_submit</a>
+</li>
+          <li><a href="pyhpcc.html#module-pyhpcc.utils">pyhpcc.utils</a>
+</li>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
 
-<h2 id="P">P</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li>
+<section id="P" class="genindex-section">
+  <h2>P</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="pyhpcc.html#pyhpcc.utils.parse_bash_compile_output">parse_bash_compile_output() (in module pyhpcc.utils)</a>
+</li>
+        <li><a href="pyhpcc.html#pyhpcc.utils.parse_bash_run_output">parse_bash_run_output() (in module pyhpcc.utils)</a>
+</li>
+        <li>
     pyhpcc
 
-      <ul>
-        <li><a href="pyhpcc.html#module-pyhpcc">module</a>
+        <ul>
+          <li><a href="index.html#module-pyhpcc">module</a>
 </li>
-      </ul></li>
-      <li>
-    pyhpcc.auth
-
-      <ul>
-        <li><a href="pyhpcc.html#module-pyhpcc.auth">module</a>
-</li>
-      </ul></li>
-      <li>
+        </ul></li>
+        <li>
     pyhpcc.errors
 
-      <ul>
-        <li><a href="pyhpcc.html#module-pyhpcc.errors">module</a>
+        <ul>
+          <li><a href="pyhpcc.html#module-pyhpcc.errors">module</a>
 </li>
-      </ul></li>
-      <li>
-    pyhpcc.models
+        </ul></li>
+        <li>
+    pyhpcc.handlers.roxie_handler
 
-      <ul>
-        <li><a href="pyhpcc.html#module-pyhpcc.models">module</a>
+        <ul>
+          <li><a href="pyhpcc.html#module-pyhpcc.handlers.roxie_handler">module</a>
 </li>
-      </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li>
-    pyhpcc.roxie_binder
+        </ul></li>
+        <li>
+    pyhpcc.handlers.thor_handler
 
-      <ul>
-        <li><a href="pyhpcc.html#module-pyhpcc.roxie_binder">module</a>
+        <ul>
+          <li><a href="pyhpcc.html#module-pyhpcc.handlers.thor_handler">module</a>
 </li>
-      </ul></li>
-      <li>
-    pyhpcc.thor_binder
+        </ul></li>
+        <li>
+    pyhpcc.models.auth
 
-      <ul>
-        <li><a href="pyhpcc.html#module-pyhpcc.thor_binder">module</a>
+        <ul>
+          <li><a href="pyhpcc.html#module-pyhpcc.models.auth">module</a>
 </li>
-      </ul></li>
-      <li>
+        </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li>
+    pyhpcc.models.file
+
+        <ul>
+          <li><a href="pyhpcc.html#module-pyhpcc.models.file">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyhpcc.models.hpcc
+
+        <ul>
+          <li><a href="pyhpcc.html#module-pyhpcc.models.hpcc">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyhpcc.models.roxie
+
+        <ul>
+          <li><a href="pyhpcc.html#module-pyhpcc.models.roxie">module</a>
+</li>
+        </ul></li>
+        <li>
+    pyhpcc.models.workunit_submit
+
+        <ul>
+          <li><a href="pyhpcc.html#module-pyhpcc.models.workunit_submit">module</a>
+</li>
+        </ul></li>
+        <li>
     pyhpcc.utils
 
-      <ul>
-        <li><a href="pyhpcc.html#module-pyhpcc.utils">module</a>
+        <ul>
+          <li><a href="pyhpcc.html#module-pyhpcc.utils">module</a>
 </li>
-      </ul></li>
-  </ul></td>
-</tr></table>
+        </ul></li>
+    </ul></td>
+  </tr></table>
+</section>
 
-<h2 id="R">R</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyhpcc.html#pyhpcc.models.readfileinfo">readfileinfo (class in pyhpcc.models)</a>
+<section id="R" class="genindex-section">
+  <h2>R</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="pyhpcc.html#pyhpcc.models.file.ReadFileInfo">ReadFileInfo (class in pyhpcc.models.file)</a>
 </li>
-      <li><a href="pyhpcc.html#pyhpcc.models.readfileinfo.readStatus">readStatus (pyhpcc.models.readfileinfo attribute)</a>
+        <li><a href="pyhpcc.html#pyhpcc.models.workunit_submit.WorkunitSubmit.remove_temp_files">remove_temp_files (pyhpcc.models.workunit_submit.WorkunitSubmit attribute)</a>
 </li>
-      <li><a href="pyhpcc.html#pyhpcc.models.readfileinfo.recordCount">recordCount (pyhpcc.models.readfileinfo attribute)</a>
+        <li><a href="pyhpcc.html#pyhpcc.models.roxie.Roxie.response_type">response_type (pyhpcc.models.roxie.Roxie attribute)</a>
 </li>
-      <li><a href="pyhpcc.html#pyhpcc.errors.HTTPException.response">response (pyhpcc.errors.HTTPException attribute)</a>
+        <li><a href="pyhpcc.html#pyhpcc.models.roxie.Roxie">Roxie (class in pyhpcc.models.roxie)</a>
 </li>
-      <li><a href="pyhpcc.html#pyhpcc.models.roxie.response_type">response_type (pyhpcc.models.roxie attribute)</a>
+        <li><a href="pyhpcc.html#id0">roxie_call (pyhpcc.models.roxie.Roxie property)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyhpcc.html#pyhpcc.models.roxie">roxie (class in pyhpcc.models)</a>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="pyhpcc.html#pyhpcc.models.roxie.Roxie.roxie_call">roxie_call() (pyhpcc.models.roxie.Roxie method)</a>
 </li>
-      <li><a href="pyhpcc.html#id0">roxie_call (pyhpcc.models.roxie property)</a>
+        <li><a href="pyhpcc.html#pyhpcc.handlers.roxie_handler.roxie_handler">roxie_handler() (in module pyhpcc.handlers.roxie_handler)</a>
 </li>
-      <li><a href="pyhpcc.html#pyhpcc.models.roxie.roxie_call">roxie_call() (pyhpcc.models.roxie method)</a>
+        <li><a href="pyhpcc.html#pyhpcc.models.roxie.Roxie.roxie_port">roxie_port (pyhpcc.models.roxie.Roxie attribute)</a>
 </li>
-      <li><a href="pyhpcc.html#pyhpcc.models.roxie.roxieport">roxieport (pyhpcc.models.roxie attribute)</a>
+        <li><a href="pyhpcc.html#pyhpcc.models.workunit_submit.WorkunitSubmit.run_workunit">run_workunit() (pyhpcc.models.workunit_submit.WorkunitSubmit method)</a>
 </li>
-      <li><a href="pyhpcc.html#pyhpcc.models.workunit_submit.runworkunit">runworkunit() (pyhpcc.models.workunit_submit method)</a>
+        <li><a href="pyhpcc.html#pyhpcc.errors.RunConfigException">RunConfigException</a>
 </li>
-  </ul></td>
-</tr></table>
+    </ul></td>
+  </tr></table>
+</section>
 
-<h2 id="S">S</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyhpcc.html#pyhpcc.models.roxie.searchservice">searchservice (pyhpcc.models.roxie attribute)</a>
+<section id="S" class="genindex-section">
+  <h2>S</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="pyhpcc.html#pyhpcc.models.roxie.Roxie.search_service">search_service (pyhpcc.models.roxie.Roxie attribute)</a>
 </li>
-      <li><a href="pyhpcc.html#pyhpcc.models.readfileinfo.setFilename">setFilename() (pyhpcc.models.readfileinfo method)</a>
+        <li><a href="pyhpcc.html#pyhpcc.models.file.ReadFileInfo.set_file_name">set_file_name() (pyhpcc.models.file.ReadFileInfo method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyhpcc.html#pyhpcc.models.readfileinfo.shouldDespray">shouldDespray (pyhpcc.models.readfileinfo attribute)</a>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="pyhpcc.html#pyhpcc.models.hpcc.HPCC.spray_fixed">spray_fixed (pyhpcc.models.hpcc.HPCC property)</a>
 </li>
-      <li><a href="pyhpcc.html#pyhpcc.models.hpcc.sprayFixed">sprayFixed (pyhpcc.models.hpcc property)</a>
+        <li><a href="pyhpcc.html#pyhpcc.models.hpcc.HPCC.spray_variable">spray_variable (pyhpcc.models.hpcc.HPCC property)</a>
 </li>
-      <li><a href="pyhpcc.html#pyhpcc.models.hpcc.sprayVariable">sprayVariable (pyhpcc.models.hpcc property)</a>
-</li>
-  </ul></td>
-</tr></table>
+    </ul></td>
+  </tr></table>
+</section>
 
-<h2 id="T">T</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyhpcc.html#pyhpcc.models.roxie.timeout">timeout (pyhpcc.models.roxie attribute)</a>
+<section id="T" class="genindex-section">
+  <h2>T</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="pyhpcc.html#pyhpcc.handlers.thor_handler.thor_handler">thor_handler() (in module pyhpcc.handlers.thor_handler)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyhpcc.html#pyhpcc.models.hpcc.TpClusterInfo">TpClusterInfo (pyhpcc.models.hpcc property)</a>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="pyhpcc.html#pyhpcc.models.roxie.Roxie.timeout">timeout (pyhpcc.models.roxie.Roxie attribute)</a>
 </li>
-      <li><a href="pyhpcc.html#pyhpcc.errors.TypeError">TypeError</a>
+        <li><a href="pyhpcc.html#pyhpcc.models.hpcc.HPCC.tp_cluster_info">tp_cluster_info (pyhpcc.models.hpcc.HPCC property)</a>
 </li>
-  </ul></td>
-</tr></table>
+    </ul></td>
+  </tr></table>
+</section>
 
-<h2 id="U">U</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyhpcc.html#pyhpcc.models.hpcc.UploadFile">UploadFile (pyhpcc.models.hpcc property)</a>
+<section id="U" class="genindex-section">
+  <h2>U</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="pyhpcc.html#pyhpcc.models.hpcc.HPCC.upload_file">upload_file (pyhpcc.models.hpcc.HPCC property)</a>
 </li>
-  </ul></td>
-</tr></table>
+    </ul></td>
+  </tr></table>
+</section>
 
-<h2 id="W">W</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyhpcc.html#pyhpcc.models.workunit_submit">workunit_submit (class in pyhpcc.models)</a>
+<section id="W" class="genindex-section">
+  <h2>W</h2>
+  <table style="width: 100%" class="indextable genindextable"><tr>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="pyhpcc.html#pyhpcc.models.workunit_submit.WorkunitSubmit">WorkunitSubmit (class in pyhpcc.models.workunit_submit)</a>
 </li>
-      <li><a href="pyhpcc.html#pyhpcc.roxie_binder.wrapper">wrapper() (in module pyhpcc.roxie_binder)</a>
+        <li>
+    WorkUnitSubmit.bash_compile()
 
-      <ul>
-        <li><a href="pyhpcc.html#pyhpcc.thor_binder.wrapper">(in module pyhpcc.thor_binder)</a>
+        <ul>
+          <li><a href="bash_compile.html#WorkUnitSubmit.bash_compile">built-in function</a>
 </li>
-      </ul></li>
-      <li><a href="pyhpcc.html#pyhpcc.models.workunit_submit.write_file">write_file() (pyhpcc.models.workunit_submit method)</a>
+        </ul></li>
+        <li>
+    WorkUnitSubmit.bash_run()
+
+        <ul>
+          <li><a href="bash_run.html#WorkUnitSubmit.bash_run">built-in function</a>
 </li>
-      <li><a href="pyhpcc.html#pyhpcc.models.hpcc.wuCreateAndUpdate">wuCreateAndUpdate (pyhpcc.models.hpcc property)</a>
+        </ul></li>
+        <li><a href="pyhpcc.html#pyhpcc.models.workunit_submit.WorkunitSubmit.write_file">write_file() (pyhpcc.models.workunit_submit.WorkunitSubmit method)</a>
 </li>
-      <li><a href="pyhpcc.html#pyhpcc.models.hpcc.wuQuery">wuQuery (pyhpcc.models.hpcc property)</a>
+        <li><a href="pyhpcc.html#pyhpcc.models.hpcc.HPCC.wu_create_and_update">wu_create_and_update (pyhpcc.models.hpcc.HPCC property)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pyhpcc.html#pyhpcc.models.hpcc.wuRun">wuRun (pyhpcc.models.hpcc property)</a>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="pyhpcc.html#pyhpcc.models.hpcc.HPCC.wu_query">wu_query (pyhpcc.models.hpcc.HPCC property)</a>
 </li>
-      <li><a href="pyhpcc.html#pyhpcc.models.hpcc.wuSubmit">wuSubmit (pyhpcc.models.hpcc property)</a>
+        <li><a href="pyhpcc.html#pyhpcc.models.hpcc.HPCC.wu_run">wu_run (pyhpcc.models.hpcc.HPCC property)</a>
 </li>
-      <li><a href="pyhpcc.html#pyhpcc.models.hpcc.WUUpdate">WUUpdate (pyhpcc.models.hpcc property)</a>
+        <li><a href="pyhpcc.html#pyhpcc.models.hpcc.HPCC.wu_submit">wu_submit (pyhpcc.models.hpcc.HPCC property)</a>
 </li>
-      <li><a href="pyhpcc.html#pyhpcc.models.hpcc.WUWaitCompiled">WUWaitCompiled (pyhpcc.models.hpcc property)</a>
+        <li><a href="pyhpcc.html#pyhpcc.models.hpcc.HPCC.wu_update">wu_update (pyhpcc.models.hpcc.HPCC property)</a>
 </li>
-      <li><a href="pyhpcc.html#pyhpcc.models.workunit_submit.WUWaitCompiled">WUWaitCompiled() (pyhpcc.models.workunit_submit method)</a>
+        <li><a href="pyhpcc.html#pyhpcc.models.hpcc.HPCC.wu_wait_compiled">wu_wait_compiled (pyhpcc.models.hpcc.HPCC property)</a>
 </li>
-      <li><a href="pyhpcc.html#pyhpcc.models.hpcc.WUWaitComplete">WUWaitComplete (pyhpcc.models.hpcc property)</a>
+        <li><a href="pyhpcc.html#pyhpcc.models.workunit_submit.WorkunitSubmit.wu_wait_compiled">wu_wait_compiled() (pyhpcc.models.workunit_submit.WorkunitSubmit method)</a>
 </li>
-      <li><a href="pyhpcc.html#pyhpcc.models.workunit_submit.WUWaitComplete">WUWaitComplete() (pyhpcc.models.workunit_submit method)</a>
+        <li><a href="pyhpcc.html#pyhpcc.models.hpcc.HPCC.wu_wait_complete">wu_wait_complete (pyhpcc.models.hpcc.HPCC property)</a>
 </li>
-  </ul></td>
-</tr></table>
+        <li><a href="pyhpcc.html#pyhpcc.models.workunit_submit.WorkunitSubmit.wu_wait_complete">wu_wait_complete() (pyhpcc.models.workunit_submit.WorkunitSubmit method)</a>
+</li>
+    </ul></td>
+  </tr></table>
+</section>
 
 
-
-           </div>
-          </div>
-          <footer>
-
-  <hr/>
-
-  <div role="contentinfo">
-    <p>&#169; Copyright 2022, Innovation Engineering Group.</p>
-  </div>
-
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
-
-</footer>
-        </div>
+        </article>
       </div>
-    </section>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2022, Innovation Engineering Group
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
   </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
-
-</body>
+</div><script src="_static/documentation_options.js?v=01f34227"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=5fa4622c"></script>
+    </body>
 </html>

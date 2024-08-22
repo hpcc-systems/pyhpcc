@@ -16,11 +16,10 @@ class DUMMY_SECRETS:
     HPCC_PROTOCOL = ""
     DUMMY_HPCC_HOST = ""
     DUMMY_HPCC_PORT = 0
-    WUID = ""
-    DEBUG = False
     ENV = "LOCAL"
     LANDING_ZONE_IP = ""
     LANDING_ZONE_PATH = ""
+    DFU_CLUSTER = ""
 
 
 try:
@@ -38,10 +37,9 @@ HPCC_PORT = os.environ.get("HPCC_PORT") or my_secret.HPCC_PORT
 HPCC_PROTOCOL = os.environ.get("HPCC_PROTOCOL") or my_secret.HPCC_PROTOCOL
 DUMMY_HPCC_HOST = os.environ.get("DUMMY_HPCC_HOST") or my_secret.DUMMY_HPCC_HOST
 DUMMY_HPCC_PORT = os.environ.get("DUMMY_HPCC_PORT") or my_secret.DUMMY_HPCC_PORT
-WUID = os.environ.get("WUID") or my_secret.WUID
 ENV = os.environ.get(ENV_VAR) or my_secret.ENV
 LANDING_ZONE_IP = os.environ.get("LANDING_ZONE_IP") or my_secret.LANDING_ZONE_IP
-LANDING_ZONE_PATH = os.environ.get("LANDING_ZONE_IP") or my_secret.LANDING_ZONE_PATH
+LANDING_ZONE_PATH = os.environ.get("LANDING_ZONE_PATH") or my_secret.LANDING_ZONE_PATH
 DFU_CLUSTER = os.environ.get("DFU_CLUSTER") or my_secret.DFU_CLUSTER
 
 
@@ -137,6 +135,6 @@ def landing_zone_path():
     return LANDING_ZONE_PATH
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="session")
 def dfu_cluster():
     return DFU_CLUSTER

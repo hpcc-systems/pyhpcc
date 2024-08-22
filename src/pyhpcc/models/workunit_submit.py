@@ -1,15 +1,16 @@
 import json
 import logging
 import os
+import shutil
 import subprocess
 from collections import Counter
-from pathlib import Path
 
 import requests
 
 import pyhpcc.config as conf
 import pyhpcc.utils as utils
 from pyhpcc.command_config import CompileConfig, RunConfig
+from pyhpcc.config import ECL_OUTPUT_DIR
 from pyhpcc.errors import HPCCException, RunConfigException
 from pyhpcc.models.hpcc import HPCC
 
@@ -44,7 +45,7 @@ class WorkunitSubmit(object):
             Get the workload on the clusters
 
         create_file_name:
-            Create a filename for the workunit
+            Create a file with filename specified for the workunit
 
         bash_compile:
             Compile the workunit
@@ -74,11 +75,11 @@ class WorkunitSubmit(object):
     def __init__(self, hpcc: HPCC, clusters: tuple, remove_temp_files=False):
         self.remove_temp_files = remove_temp_files
         self.hpcc: HPCC = hpcc
-        self.working_files = []
         if len(clusters) == 0:
             raise ValueError("Minimum one cluster should be specified")
         self.clusters: tuple = clusters
         self.job_name = None
+        self.ecl_output_folder = None
 
     def write_file(self, query_text, folder, job_name):
         """Write a .ecl file to disk
@@ -106,7 +107,6 @@ class WorkunitSubmit(object):
             words = job_name.split()
             job_name = "_".join(words)
             file_name = os.path.join(folder, job_name + ".ecl")
-            self.working_files.append(file_name)
             f = open(file_name, "w")
             f.write(query_text)
             f.close
@@ -139,11 +139,9 @@ class WorkunitSubmit(object):
         try:
             if conf.OUTPUT_FILE_OPTION not in compile_config.options:
                 output_file = utils.create_compile_file_name(file_name)
-                self.working_files.append(output_file)
                 compile_config.set_output_file(output_file)
             else:
                 output_file = compile_config.get_option(conf.OUTPUT_FILE_OPTION)
-                self.working_files.append(file_name)
             log.info(compile_config.options)
             bash_command = compile_config.create_compile_bash_command(file_name)
             log.info(bash_command)
@@ -206,7 +204,9 @@ class WorkunitSubmit(object):
                     cluster_activity[cluster] -= 1
         return cluster_activity.most_common(1)[0][0]
 
-    def create_file_name(self, query_text, working_folder, job_name):
+    def create_file_name(
+        self, query_text, working_folder, job_name, output_folder=ECL_OUTPUT_DIR
+    ):
         """Create a filename for the ecl file
 
         Parameters
@@ -230,7 +230,10 @@ class WorkunitSubmit(object):
         """
         try:
             self.job_name = job_name
-            return self.write_file(query_text, working_folder, job_name)
+            self.ecl_output_folder = os.path.join(working_folder, output_folder)
+            if not os.path.exists(self.ecl_output_folder):
+                os.makedirs(self.ecl_output_folder)
+            return self.write_file(query_text, self.ecl_output_folder, job_name)
         except Exception as e:
             raise HPCCException("Could not create file name: " + str(e))
 
@@ -265,7 +268,7 @@ class WorkunitSubmit(object):
                 bash_command.split(), stdout=subprocess.PIPE, stderr=subprocess.STDOUT
             )
             output, error = process.communicate()
-            parsed_output = utils.parse_bash_compile_output(output)
+            parsed_output = utils.parse_bash_compile_output(output, bash_command)
             return parsed_output, output_file
         except Exception as e:
             raise HPCCException("Could not compile: " + str(e))
@@ -277,13 +280,13 @@ class WorkunitSubmit(object):
         ----------
             compiled_file:
                 The name of the compiled ecl file
-            cluster:
-                The HPCC cluster to run the query on
+            options:
+                dictionary of eclcc compiler options
 
         Returns
         -------
-            output:
-                The output from the bash command
+            parsed_response: dict
+                Parsed output from the bash_run
 
         Raises
         ------
@@ -473,11 +476,6 @@ class WorkunitSubmit(object):
             state = w4["WURunResponse"]["State"]
             return conf.WORKUNIT_STATE_MAP[state]
 
-    def __delete_workunit_files(self):
-        for file in self.working_files:
-            file = Path(file)
-            file.unlink(missing_ok=True)
-
     def __del__(self):
-        if self.remove_temp_files:
-            self.__delete_workunit_files()
+        if self.remove_temp_files and self.ecl_output_folder:
+            shutil.rmtree(self.ecl_output_folder, ignore_errors=True)

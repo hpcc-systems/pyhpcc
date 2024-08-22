@@ -1,9 +1,4 @@
 # Configurations for pyhpcc
-import os
-
-## Debug Config
-# If the debug env variable exists, set to False else set to True
-DEBUG = os.environ.get("DEBUG", False) or True
 
 ## Workunit Config
 WORKUNIT_STATE_MAP = {
@@ -30,6 +25,8 @@ WORKUNIT_STATE_MAP = {
 DEFAULT_COMPILE_OPTIONS = {"-platform": "thor", "-wu": bool, "-E": bool}
 DEFUALT_RUN_OPTIONS = {}
 
+ECL_OUTPUT_DIR = "ecl-output"
+
 COMMAND = "command"
 CLUSTER_OPTION = "--target"
 JOB_NAME_OPTION = "--job-name"
@@ -41,6 +38,7 @@ SERVER_OPTIONS = ["-s", "--s"]
 PORT_OPTION = "--port"
 OUTPUT_FILE_OPTION = "-o"
 OUTPUT_XML = "-E"
+XML_WORKUNIT_INFO = "-wu"
 VERBOSE_OPTIONS = [
     "-v",
     "--verbose",
@@ -65,7 +63,7 @@ COMPILE_OPTIONS = {
     OUTPUT_XML,
     "-q",
     "-qa",
-    "-wu",
+    XML_WORKUNIT_INFO,
     "-dfs",
     "-scope",
     "-cluster",
@@ -134,6 +132,9 @@ RUN_ERROR_MSG_PATTERN = [
     "401: Unauthorized",
     "Error checking ESP configuration",
     "Bad host name/ip:",
+    "SSL_connect error",
+    "Error connecting to",
+    "Exception(s):",
 ]
 
 COMPILE_ERROR_MIDDLE_PATTERN = [

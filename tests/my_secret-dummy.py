@@ -1,0 +1,13 @@
+HPCC_USERNAME = "HPCC_USERNAME"
+HPCC_PASSWORD = "HPCC_PASSWORD"
+DUMMY_USERNAME = "dummy_username"
+DUMMY_PASSWORD = "password"
+HPCC_HOST = "university.us-hpccsystems-dev.azure.lnrsg.io"
+HPCC_PORT = 8010
+HPCC_PROTOCOL = "http"
+DUMMY_HPCC_HOST = "university.us-hpccsystems"
+DUMMY_HPCC_PORT = 801
+ENV = "LOCAL"
+LANDING_ZONE_IP = "localhost"
+LANDING_ZONE_PATH = "/var/lib/HPCCSystems/mydropzone/"
+DFU_CLUSTER = "data"

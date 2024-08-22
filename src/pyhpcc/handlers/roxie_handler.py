@@ -2,7 +2,6 @@ import logging
 
 from requests.models import Response
 
-import pyhpcc.config as conf
 from pyhpcc.errors import HPCCAuthenticationError
 from pyhpcc.utils import convert_arg_to_utf8_str
 
@@ -136,11 +135,10 @@ def roxie_handler(**config):
             )
 
             # Debugging
-            if conf.DEBUG:
-                print("full_url: ", full_url)
-                print("self.session.params: ", self.session.params)
-                print("self.session.headers: ", self.session.headers)
-                print("self.post_data: ", self.post_data)
+            log.info("full_url: %s", full_url)
+            log.info("self.session.params: %s", self.session.params)
+            log.info("self.session.headers: %s", self.session.headers)
+            log.info("self.session.data: %s", self.post_data)
 
             # If auth is required, add auth to the session
             if self.api.auth:

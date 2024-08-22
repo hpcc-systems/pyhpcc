@@ -1,69 +1,90 @@
+.. _pyhpcc_reference:
+
 pyhpcc package
 ==============
 
 Submodules
-----------
+----------------
 
-pyhpcc.auth module
-------------------
+pyhpcc.models.auth module
+-------------------------------------
 
-.. automodule:: pyhpcc.auth
+.. automodule:: pyhpcc.models.auth
    :members:
    :undoc-members:
    :show-inheritance:
 
-.. pyhpcc.config module
-.. --------------------
+pyhpcc.models.hpcc module
+------------------------------------
 
-.. .. automodule:: pyhpcc.config
-..    :members:
-..    :undoc-members:
-..    :show-inheritance:
-
-pyhpcc.errors module
---------------------
-
-.. automodule:: pyhpcc.errors
+.. automodule:: pyhpcc.models.hpcc
    :members:
    :undoc-members:
    :show-inheritance:
 
-pyhpcc.models module
---------------------
+pyhpcc.models.workunit_submit module
+-----------------------------------------------
 
-.. automodule:: pyhpcc.models
+.. automodule:: pyhpcc.models.workunit_submit
    :members:
    :undoc-members:
    :show-inheritance:
 
-pyhpcc.roxie\_binder module
----------------------------
+pyhpcc.models.file module
+------------------------------------
 
-.. automodule:: pyhpcc.roxie_binder
+.. automodule:: pyhpcc.models.file
    :members:
    :undoc-members:
    :show-inheritance:
 
-pyhpcc.thor\_binder module
---------------------------
 
-.. automodule:: pyhpcc.thor_binder
+pyhpcc.models.roxie module
+-----------------------------------------------
+
+.. automodule:: pyhpcc.models.roxie
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+pyhpcc.handlers.roxie_handler module
+-------------------------------------------------
+
+.. automodule:: pyhpcc.handlers.roxie_handler
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+pyhpcc.handlers.thor_handler module
+-----------------------------------------------
+
+.. automodule:: pyhpcc.handlers.thor_handler
    :members:
    :undoc-members:
    :show-inheritance:
 
 pyhpcc.utils module
--------------------
+--------------------------------------------------
 
 .. automodule:: pyhpcc.utils
    :members:
    :undoc-members:
    :show-inheritance:
 
-Module contents
----------------
 
-.. automodule:: pyhpcc
+pyhpcc.errors module
+----------------------------------
+
+.. automodule:: pyhpcc.errors
    :members:
    :undoc-members:
    :show-inheritance:
+
+.. Module contents
+.. --------------------------------------------------
+
+.. .. automodule:: pyhpcc
+..    :members:
+..    :undoc-members:
+..    :show-inheritance:

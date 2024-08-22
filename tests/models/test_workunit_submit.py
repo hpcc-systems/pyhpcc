@@ -4,7 +4,7 @@ import os
 import conftest
 import pytest
 from pyhpcc.command_config import CompileConfig
-from pyhpcc.config import OUTPUT_FILE_OPTION
+from pyhpcc.config import ECL_OUTPUT_DIR, OUTPUT_FILE_OPTION
 from pyhpcc.models.workunit_submit import WorkunitSubmit
 
 DUMMY_OUTPUT = "dummy_output"
@@ -13,12 +13,21 @@ HPCC_HOST = conftest.HPCC_HOST
 HPCC_PASSWORD = conftest.HPCC_PASSWORD
 HPCC_PORT = conftest.HPCC_PORT
 HPCC_USERNAME = conftest.HPCC_USERNAME
-ENV = "LOCAL"
 
 
 @pytest.fixture
 def clusters():
     return ("thor", "hthor")
+
+
+@pytest.fixture
+def ecl_output_dir():
+    return "ecl-output"
+
+
+@pytest.fixture
+def ecl_hello_query():
+    return "OUTPUT('HELLO WORLD!');"
 
 
 # Test if creation of WorkUnitSubmit raises error if no clusters are provided
@@ -95,11 +104,12 @@ def test_get_cluster_when_one_cluster(hpcc):
     "content, job_name, expected_file",
     [("OUTPUT('HELLO WORLD!');", "Basic Job", "Basic_Job.ecl")],
 )
-def test_create_file(tmp_path, ws, content, job_name, expected_file):
-    output = ws.create_file_name(content, tmp_path, job_name)
-    ecl_file_path = tmp_path / expected_file
+def test_create_file(tmpdir, ws, content, job_name, expected_file):
+    working_directory = tmpdir
+    output = ws.create_file_name(content, working_directory, job_name)
+    ecl_file_path = os.path.join(working_directory, ECL_OUTPUT_DIR, expected_file)
     assert output == str(ecl_file_path)
-    assert ecl_file_path.read_text() == content
+    assert open(ecl_file_path, "r").read() == content
 
 
 # Test if compilation is working for bash_compile: Runs only in local
@@ -117,17 +127,78 @@ def test_create_file(tmp_path, ws, content, job_name, expected_file):
             "OUTPUT('HELLO WORLD!');",
             "success",
         ),
-        # ("Basic Job", "Basic_job.eclxml", {"-E": True}, "OUTPUT('HELLO WORL", 185),
         ("Basic Job", "Basic_job.eclxml", None, "OUTPUT('HELLO WORLD!');", "success"),
     ],
 )
 def test_bash_compile_full(
-    tmp_path, ws, job_name, options, expected_file, content, status
+    tmpdir, ws, job_name, options, expected_file, content, status
 ):
-    output_file = ws.create_file_name(content, tmp_path, job_name)
-    output, error = ws.bash_compile(output_file, options)
-    assert os.path.exists(tmp_path / expected_file)
+    working_directory = tmpdir
+    output_file = ws.create_file_name(content, working_directory, job_name)
+    output, error = ws.bash_compile(
+        output_file,
+        options,
+    )
+    assert os.path.exists(
+        os.path.join(working_directory, ECL_OUTPUT_DIR, expected_file)
+    )
     assert output["status"] == status
+
+
+# Test if bash_run is working: Runs only in local
+@pytest.mark.skipif(
+    conftest.ENV != "LOCAL",
+    reason="ECL Client Tools required. Can't run on github runner",
+)
+@pytest.mark.parametrize(
+    "job_name, compile_options, content, show_command, run_options",
+    [
+        ("Basic Job", {"-E": bool}, "OUTPUT('HELLO WORLD!');", False, None),
+        (
+            "Basic Job",
+            None,
+            "OUTPUT('HELLO WORLD!');",
+            True,
+            {"--wait-connect": "5000"},
+        ),
+    ],
+)
+def test_bash_run_full(
+    tmp_path, ws, job_name, compile_options, content, show_command, run_options
+):
+    working_directory = tmp_path
+    output_file = ws.create_file_name(content, working_directory, job_name)
+    output, error = ws.bash_compile(output_file, options=compile_options)
+    output = ws.bash_run(output_file, options=run_options, show_command=show_command)
+    assert output["wu_info"]["wuid"] is not None
+
+
+# Test if WorkunitSubmit.create_workunit, WorkunitSubmit.compile_workunit and WorkunitSubmit.run_workunit can create, compile and run a workunit successfully
+def test_run_workunit(ws, ecl_hello_query):
+    wuid = ws.create_workunit(
+        action=1,
+        result_limit=100,
+        query_text=ecl_hello_query,
+        job_name="Test Run Workunit",
+    )
+    assert wuid is not None
+    wustate = ws.compile_workunit(wuid=wuid)
+    ws.wu_wait_compiled(wuid)
+    assert wustate in [1, 3]
+    state = ws.run_workunit(wuid=wuid)
+    assert state != 4
+    ws.wu_wait_complete(wuid=wuid)
+
+
+# Test if an output directory for current workunit submit
+def test_output_working_directory(tmp_path, hpcc, ecl_hello_query, clusters):
+    ws = WorkunitSubmit(hpcc, clusters)
+    working_directory = tmp_path
+    output_folder = "output"
+    ws.create_file_name(
+        ecl_hello_query, working_directory, "Basic Job", output_folder="output"
+    )
+    assert os.path.exists(os.path.join(working_directory, output_folder))
 
 
 # Test if RunConfig options are properly instantiated.
