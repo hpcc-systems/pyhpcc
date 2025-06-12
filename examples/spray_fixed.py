@@ -5,17 +5,17 @@ from pyhpcc.models.hpcc import HPCC
 
 # Configurations
 environment = (
-    "university.us-hpccsystems-dev.azure.lnrsg.io"  # Eg: myuniversity.hpccsystems.io
+    "play.hpccsystems.com"  # Eg: myuniversity.hpccsystems.io
 )
-port = "8010"  # Eg: 8010
+port = "18010"  # Eg: 8010
 user_name = "user_name"  # HPCC username
 password = "password"  # HPCC password
-protocol = "http"  # Specify HTTP or HTTPS
+protocol = "https"  # Specify HTTP or HTTPS
 logical_file = "pyhpcc::testing::internet::thor"
-landing_zone_ip = "localhost"  # IP of dropzone
-spray_file = "employee_data_thor"  # file to be sprayed from landing zone
+landing_zone_ip = "."  # IP of dropzone
+spray_file = "OnlineLessonPersons"  # file to be sprayed from landing zone
 landing_zone_path = "/var/lib/HPCCSystems/mydropzone/"  # Path in dropzone
-dfu_cluster = "data"
+dfu_cluster = "mythor"
 try:
     auth_object = Auth(
         environment,

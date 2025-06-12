@@ -6,12 +6,12 @@ from pyhpcc.models.workunit_submit import WorkunitSubmit as ws
 
 # Configurations
 environment = (
-    "university.us-hpccsystems-dev.azure.lnrsg.io"  # Eg: myuniversity.hpccsystems.io
+    "play.hpccsystems.com"  # Eg: myuniversity.hpccsystems.io
 )
-port = "8010"  # Eg: 8010
+port = "18010"  # Eg: 8010
 user_name = "user_name"  # HPCC username
 password = "password"  # HPCC password
-protocol = "http"  # Specify HTTP or HTTPS
+protocol = "https"  # Specify HTTP or HTTPS
 cluster = "thor"  # Specify the cluster name to be used
 ecl_query = """OUTPUT('HELLO WORLD!');"""  # ECL Query to execute
 job_name = "Basic job submission"
