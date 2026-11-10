@@ -12,6 +12,8 @@ Some core functionalities PyHPCC supports are
 3. Uploading/Downloading files to a landing zone
 4. Spray fixed and variable files
 5. Making Roxie calls.
+6. Running read-only SQL queries through a Python DB-API 2.0 driver for HPCC WsSQL2.
+
 ## ⚙️ Installation
 
 ### Prerequisites
@@ -69,10 +71,36 @@ See the following [example](examples/work_unit_hello_world.py) to compile and ru
 
 If you would like more examples, please check the [examples](examples) folder.
 
+## SQL driver
+
+PyHPCC provides a read-only [DB-API 2.0 SQL driver](docs/source/sql.rst) for
+HPCC Systems WsSQL2. It uses an existing `Auth` object:
+
+```python
+from pyhpcc.models.auth import Auth
+from pyhpcc.sql import connect
+
+auth = Auth("my-hpcc.example.com", "8010", "user", "password", protocol="http")
+with connect(auth) as connection:
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM hpcc_scan('regress::local::people')")
+        for row in cursor:
+            print(row)
+```
+
+By default, the SQL and metadata endpoints use ports 8510/8010 for HTTP and
+18510/18010 for HTTPS. See the [SQL driver guide](docs/source/sql.rst) for
+endpoint overrides, scripts, metadata, data types, and limitations.
+
 
 ## For Contributors
 Contributions to PyHPCC are welcomed and encouraged.<br>
 Please have a look at [CONTRIBUTING.md](CONTRIBUTING.md) for specific contribution guidelines.
+After installing development dependencies with `poetry install --with dev`, run the SQL driver tests with:
+
+```bash
+poetry run pytest tests/test_sql_driver.py
+```
 
 
 ## License

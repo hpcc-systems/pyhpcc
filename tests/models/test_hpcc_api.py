@@ -5,6 +5,8 @@ from datetime import datetime  # used by test_upload_file
 import pytest
 from pyhpcc.errors import HPCCException
 
+pytestmark = pytest.mark.integration
+
 
 @pytest.fixture
 def cluster():

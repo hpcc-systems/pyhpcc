@@ -52,28 +52,43 @@ To install the dependencies, run the following command, which downloads the depe
 poetry install
 ```
 
-## How to run tests  
+## How to run tests
 Since ecl client tools aren't installed in the GitHub runner, some tests are skipped in the github runner.
 
 Some tests will fail if `ecl client tools` aren't installed.
 
 Create `my-secret.py` in project root and copy the contents of `my-secret-dummy.py`. Since, some of the tests require access to HPCC Cluster.
 
-Running whole test suite
+Install the project and its development dependencies from the project root:
 
-```
-pytest # Run in project root
-```
-
-Running a specific test file
-
-```
-pytest tests/models/test_workunit_submit.py # /path/to/test_file
+```bash
+poetry install --with dev
 ```
 
-Running a specific test
+Run the whole test suite:
+
+```bash
+poetry run pytest
 ```
-pytest tests/models/test_workunit_submit.py::test_create_file # /path/to/test_file::test_name
+
+By default, tests that require live HPCC services are skipped so that tests
+can run without cluster credentials, including on fork pull requests.
+To include the integration tests, configure the HPCC settings and test data
+described above and run:
+
+```bash
+poetry run pytest --run-integration
+```
+
+The SQL integration tests additionally require WsSQL2 and WsDfu. Configure
+`PYHPCC_SQL_URL` and `PYHPCC_DFU_URL` for non-default endpoints.
+
+Run a specific test file or test:
+
+```bash
+poetry run pytest tests/models/test_workunit_submit.py
+poetry run pytest tests/models/test_workunit_submit.py::test_create_file
+poetry run pytest tests/test_sql_driver.py
 ```
 
 ## How to build docs
@@ -95,7 +110,7 @@ Before raising a pull request, make sure the code is formatted and lint errors a
 You can also install `ruff` using pip
 
 ``` bash
-pip install ruff
+pip install ruff==0.5.0 # Matches CI and the pre-commit hooks
 ruff check # For check any lint errors
 ruff check --fix # Applies fix to resolve lint violations for safe fixes
 ruff format # For formatting your code.

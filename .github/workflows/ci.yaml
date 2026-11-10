@@ -40,8 +40,7 @@ jobs:
         run: ./scripts/poetry-install.sh
       - name: Run Tests
         run: |
-          $POETRY run coverage run
-        continue-on-error: true
+          "$POETRY" run coverage run
       - name: Get Cover 
         id: coverage_comment
         uses: py-cov-action/python-coverage-comment-action@v3

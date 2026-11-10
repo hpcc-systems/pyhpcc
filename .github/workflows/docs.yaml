@@ -23,4 +23,4 @@ jobs:
       run: ./scripts/poetry-install.sh
     - name: Check docs
       working-directory: ./docs
-      run: $POETRY run make html
+      run: '"$POETRY" run make html'
