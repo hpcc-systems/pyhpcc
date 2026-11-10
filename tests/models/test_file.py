@@ -5,6 +5,8 @@ import pytest
 from pyhpcc.errors import HPCCException
 from pyhpcc.models.file import ReadFileInfo
 
+pytestmark = pytest.mark.integration
+
 
 @pytest.fixture(
     autouse=True,

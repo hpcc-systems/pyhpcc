@@ -117,6 +117,7 @@ def test_create_file(tmpdir, ws, content, job_name, expected_file):
     conftest.ENV != "LOCAL",
     reason="ECL Client Tools required. Can't run on github runner",
 )
+@pytest.mark.integration
 @pytest.mark.parametrize(
     "job_name, expected_file, options, content, status",
     [
@@ -146,6 +147,7 @@ def test_bash_compile_full(
 
 
 # Test if bash_run is working: Runs only in local
+@pytest.mark.integration
 @pytest.mark.skipif(
     conftest.ENV != "LOCAL",
     reason="ECL Client Tools required. Can't run on github runner",
@@ -174,6 +176,7 @@ def test_bash_run_full(
 
 
 # Test if WorkunitSubmit.create_workunit, WorkunitSubmit.compile_workunit and WorkunitSubmit.run_workunit can create, compile and run a workunit successfully
+@pytest.mark.integration
 def test_run_workunit(ws, ecl_hello_query):
     wuid = ws.create_workunit(
         action=1,
@@ -240,6 +243,7 @@ def test_configure_run_config(hpcc, options, expected_options):
 
 
 # Test if get_least_active_cluster returns cluster
+@pytest.mark.integration
 def test_get_least_active_cluster(ws):
     cluster = ws.get_least_active_cluster()
     assert cluster != ""

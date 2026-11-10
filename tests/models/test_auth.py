@@ -29,6 +29,7 @@ def test_get_username():
 
 
 # Test the get_verified method
+@pytest.mark.integration
 def test_get_verified():
     test = Auth(
         HPCC_HOST,
@@ -42,6 +43,7 @@ def test_get_verified():
 
 
 # Test the get_verified method with an invalid username and password
+@pytest.mark.integration
 def test_get_verified_invalid_username_password():
     test = Auth(
         HPCC_HOST,
@@ -56,6 +58,7 @@ def test_get_verified_invalid_username_password():
 
 
 # Test the get_verified method with only required parameters
+@pytest.mark.integration
 def test_get_verified_only_required_parameters():
     test = Auth(
         HPCC_HOST,
@@ -68,6 +71,7 @@ def test_get_verified_only_required_parameters():
 
 
 # Test the get_verified method with an invalid IP address
+@pytest.mark.integration
 def test_get_verified_invalid_ip():
     test = Auth(
         DUMMY_HPCC_HOST,
@@ -82,6 +86,7 @@ def test_get_verified_invalid_ip():
 
 
 # Test the get_verified method with an invalid port
+@pytest.mark.integration
 def test_get_verified_invalid_port():
     test = Auth(
         HPCC_HOST,

@@ -43,6 +43,30 @@ LANDING_ZONE_PATH = os.environ.get("LANDING_ZONE_PATH") or my_secret.LANDING_ZON
 DFU_CLUSTER = os.environ.get("DFU_CLUSTER") or my_secret.DFU_CLUSTER
 
 
+def pytest_addoption(parser):
+    parser.addoption(
+        "--run-integration",
+        action="store_true",
+        default=False,
+        help="Run tests that require live HPCC services and configured test data",
+    )
+
+
+def pytest_configure(config):
+    config.addinivalue_line(
+        "markers", "integration: requires live HPCC services and configured test data"
+    )
+
+
+def pytest_collection_modifyitems(config, items):
+    if config.getoption("--run-integration"):
+        return
+    skip = pytest.mark.skip(reason="Use --run-integration to run live HPCC tests")
+    for item in items:
+        if "integration" in item.keywords:
+            item.add_marker(skip)
+
+
 @pytest.fixture(scope="session")
 def hpcc_host():
     return HPCC_HOST

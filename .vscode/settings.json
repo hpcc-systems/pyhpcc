@@ -1,12 +1,17 @@
 {
-    "[python]": {
-      "editor.formatOnSave": true,
-      "editor.codeActionsOnSave": {
-        "source.organizeImports": "explicit"
-      },
-      "editor.defaultFormatter": "charliermarsh.ruff"
+  "[python]": {
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
     },
-    "python.analysis.extraPaths": [
-      "./src"
-    ]
-  }
+    "editor.defaultFormatter": "charliermarsh.ruff"
+  },
+  "python.analysis.extraPaths": [
+    "./src"
+  ],
+  "python.testing.pytestArgs": [
+    "tests"
+  ],
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": true
+}

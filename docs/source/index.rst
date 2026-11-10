@@ -7,6 +7,9 @@ Welcome to PyHPCC's documentation!
 ==================================
 .. toctree::
    :maxdepth: 2
+   :caption: Guides
+
+   sql
 
 PyHPCC: helps you to interact with HPCC easier
 =======================================
